@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>経営サマリー｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="exec" data-role="nakata">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">経営管理</div><h1>経営サマリー</h1></div>
+    <span class="sample">数値はサンプル</span>
+    <div style="margin-left:auto"><select class="inp" style="width:150px"><option>2026年7月</option><option>2026年6月</option></select></div>
+  </div>
+  <div class="content">
+
+    <div class="bento">
+      <!-- HERO 1：粗利（先月・当月・次月） -->
+      <div class="tile b4">
+        <div class="tl">粗利（限界利益）<span class="lk" onclick="openModal('mGross')">内訳を見る</span></div>
+        <div class="hero tnum" style="color:var(--good)">1,038<small>万円</small></div>
+        <div style="font-size:11px;color:var(--faint);margin-top:4px">当月実績 ・ 合格ライン 991万 <a href="rules.html">→ルール</a></div>
+        <div class="tri">
+          <div class="tcol"><span class="tv tnum">925</span><i style="height:58%"></i><span class="tk">6月 実績</span></div>
+          <div class="tcol cur ok"><span class="tv tnum">1,038</span><i style="height:66%"></i><span class="tk">7月 実績</span></div>
+          <div class="tcol" style="opacity:.6"><span class="tv tnum">980</span><i style="height:62%"></i><span class="tk">8月 予定</span></div>
+        </div>
+        <div class="thresh" style="margin-top:-46px"><span>991万</span></div>
+        <div style="height:30px"></div>
+      </div>
+
+      <!-- HERO 2：営業利益 -->
+      <div class="tile b4">
+        <div class="tl">営業利益<span class="lk" onclick="openModal('mGross')">内訳を見る</span></div>
+        <div class="hero tnum" style="color:var(--orange-d)">418<small>万円</small></div>
+        <div style="font-size:11px;color:var(--faint);margin-top:4px">当月実績 ・ 合格ライン 441万（あと23万）</div>
+        <div class="tri">
+          <div class="tcol"><span class="tv tnum">362</span><i style="height:48%"></i><span class="tk">6月 実績</span></div>
+          <div class="tcol cur"><span class="tv tnum">418</span><i style="height:56%"></i><span class="tk">7月 実績</span></div>
+          <div class="tcol" style="opacity:.6"><span class="tv tnum">455</span><i style="height:61%"></i><span class="tk">8月 予定</span></div>
+        </div>
+        <div class="thresh" style="margin-top:-44px"><span>441万</span></div>
+        <div style="height:28px"></div>
+      </div>
+
+      <!-- 右カラム：資金・受注 -->
+      <div class="b4" style="display:flex;flex-direction:column;gap:14px">
+        <a class="tile" href="cashflow.html" style="display:block">
+          <div class="tl">資金</div>
+          <div class="mid"><span class="badge b-warn" style="font-size:13px;padding:5px 14px"><span class="d"></span>イエロー</span></div>
+          <div style="font-size:11.5px;color:var(--sub);margin-top:9px" class="tnum">残高 2,140万円 ・ あと6ヶ月（2027年2月に当月支払を割る見込み）</div>
+        </a>
+        <div class="tile">
+          <div class="tl">受注（7月）<span class="lk" onclick="openModal('mOrders')">内訳を見る</span></div>
+          <div class="mid tnum">9<small>件</small></div>
+          <div style="font-size:11.5px;color:var(--sub);margin-top:8px">レポート 7件 ・ BPO 2件（前月 7件）</div>
+        </div>
+      </div>
+
+      <!-- 要対応（事実＋期限＋窓口） -->
+      <div class="tile b8" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">要対応</span><span class="sp"></span><span class="badge b-red"><span class="d"></span>4件</span></div>
+        <div class="list-row">
+          <span class="badge b-red"><span class="d"></span>支払</span>
+          <div class="bd"><div class="nm tnum">50万円以上の支払 1件が未承認（クリエイト 82万円）</div><div class="sub">振込予定日 7/25。経営層会議の承認が必要です</div></div>
+          <a class="btn btn-primary btn-sm" href="invoices.html">承認画面へ</a>
+        </div>
+        <div class="list-row">
+          <span class="badge b-red"><span class="d"></span>入金</span>
+          <div class="bd"><div class="nm tnum">期日を過ぎた未入金が 2件・35万円（下の内訳参照）</div><div class="sub">担当営業からお客様へ催促します</div></div>
+          <a class="btn btn-ghost btn-sm" href="reconcile.html">消込画面へ</a>
+        </div>
+        <div class="list-row">
+          <span class="badge b-warn"><span class="d"></span>案件</span>
+          <div class="bd"><div class="nm">7営業日以上 動きのない補助金案件が 2件</div><div class="sub tnum">アストロラボ（顧客の書類待ち・8日）／リサスティー（顧客の入力待ち・9日）</div></div>
+          <a class="btn btn-ghost btn-sm" href="deals.html">案件へ</a>
+        </div>
+        <div class="list-row">
+          <span class="badge b-warn"><span class="d"></span>提案</span>
+          <div class="bd"><div class="nm">補助金の申請が始まっていないBPO顧客が 2社</div><div class="sub">ティーガイア・久恵比寿。契約から6ヶ月以内に申請がなく、受給目標（契約額×2 <a href="rules.html">→ルール</a>）に届かない恐れ</div></div>
+          <a class="btn btn-ghost btn-sm" href="companies.html">会社へ</a>
+        </div>
+      </div>
+
+      <!-- 入金漏れ内訳（期間明示） -->
+      <div class="tile b4" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">未入金の内訳</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">7/17時点・期日超過分</span></div>
+        <div class="list-row"><div class="bd"><div class="nm tnum">deex｜実績報告 残金 33万円</div><div class="sub tnum">期日 6/30（17日超過）・担当 幸田</div></div><span class="badge b-red"><span class="d"></span>催促中</span></div>
+        <div class="list-row"><div class="bd"><div class="nm tnum">47マーケ｜着手金 差額 2万円</div><div class="sub tnum">期日 7/10（7日超過）・入金28万/請求30万</div></div><span class="badge b-warn"><span class="d"></span>調査中</span></div>
+        <div style="padding:10px 17px;font-size:11px;color:var(--faint)">期日内の請求残（30万円・期日7/31）は含みません。</div>
+      </div>
+
+      <!-- 部門スコア -->
+      <div class="tile b6" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">部門スコア（7月）</span><span class="sp"></span><a class="badge b-blue" href="evaluation.html"><span class="d"></span>評価・賞与</a></div>
+        <div class="list-row"><span class="av" style="background:var(--orange-d)">営</span><div class="bd"><div class="nm">営業＝獲得</div><div class="sub">レポート7件・BPO2件</div></div><b class="tnum" style="font-size:17px;color:var(--good)">67<small style="font-size:11px;color:var(--faint)">点</small></b></div>
+        <div class="list-row"><span class="av" style="background:var(--blue)">コ</span><div class="bd"><div class="nm">コンサル＝採択金額</div><div class="sub tnum">四半期 520万円／目標560万円</div></div><b class="tnum" style="font-size:17px;color:var(--orange-d)">58<small style="font-size:11px;color:var(--faint)">点</small></b></div>
+        <div class="list-row"><span class="av" style="background:var(--good)">管</span><div class="bd"><div class="nm">管理＝時間削減</div><div class="sub">残業ゼロ</div></div><b class="tnum" style="font-size:17px">60<small style="font-size:11px;color:var(--faint)">点</small></b></div>
+      </div>
+
+      <!-- 締め -->
+      <div class="tile b6" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">締めの状態（7月）</span></div>
+        <div class="list-row"><span class="badge b-good"><span class="d"></span>完了</span><div class="bd"><div class="nm">15日記帳（入金消込・出金記帳）</div><div class="sub">7/15 今井</div></div></div>
+        <div class="list-row"><span class="badge b-sub"><span class="d"></span>予定</span><div class="bd"><div class="nm">契約締め（岩下）・月末記帳（今井）</div><div class="sub">7/31</div></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- 粗利・営業利益の内訳（当月の集計対象） -->
+<div class="modal-bg" id="mGross">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-h"><span class="t">7月の集計内訳（何がこの数字に入っているか）</span><span class="x" onclick="closeModal('mGross')">✕</span></div>
+    <div class="modal-b" style="padding:0">
+      <table class="drill">
+        <thead><tr><th>計上</th><th>会社・内容</th><th class="r">売上</th><th class="r">粗利</th></tr></thead>
+        <tbody>
+          <tr><td class="tnum">7/10</td><td>菱洋エレクトロ｜商材構築 第2回請求（IS-2026-0032）</td><td class="r tnum">1,200万円</td><td class="r tnum">590万円</td></tr>
+          <tr><td class="tnum">7/1</td><td>アストロラボ｜BPO顧問料（IS-2026-0058・割引後）</td><td class="r tnum">235万円</td><td class="r tnum">145万円</td></tr>
+          <tr><td class="tnum">7/15</td><td>47マーケ｜補助金 着手金＋成果報酬（IS-2026-0048）</td><td class="r tnum">48万円</td><td class="r tnum">44万円</td></tr>
+          <tr><td class="tnum">7月</td><td>診断レポート 7件（納品月計上）</td><td class="r tnum">35万円</td><td class="r tnum">28万円</td></tr>
+          <tr><td class="tnum">7月</td><td>その他（スポット・BPO既存 ほか5件）</td><td class="r tnum">354万円</td><td class="r tnum">231万円</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="2">合計（freee突合済）</td><td class="r tnum">1,872万円</td><td class="r tnum">1,038万円</td></tr></tfoot>
+      </table>
+      <div style="padding:11px 20px;font-size:11px;color:var(--sub)">粗利＝売上 − 営業紹介料 − 営業経費 − 現場人件費。営業利益 418万円＝粗利 1,038万 − 販管費 620万。<a href="budget.html">予算・実績で詳細 →</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- 受注内訳 -->
+<div class="modal-bg" id="mOrders">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-h"><span class="t">7月の受注 9件の内訳</span><span class="x" onclick="closeModal('mOrders')">✕</span></div>
+    <div class="modal-b" style="padding:0">
+      <table class="drill">
+        <thead><tr><th>受注日</th><th>会社</th><th>種別</th><th>担当</th></tr></thead>
+        <tbody>
+          <tr><td class="tnum">7/16</td><td>コスコ</td><td>レポート</td><td>杉山</td></tr>
+          <tr><td class="tnum">7/14</td><td>ワタナベ工業</td><td>レポート</td><td>新谷</td></tr>
+          <tr><td class="tnum">7/11</td><td>ヤマモト食品</td><td><b>BPO（240万円/年）</b></td><td>新谷</td></tr>
+          <tr><td class="tnum">7/9</td><td>古山精機</td><td>レポート</td><td>北山</td></tr>
+          <tr><td class="tnum">7/8</td><td>サンエイ電装</td><td><b>BPO（240万円/年）</b></td><td>北山</td></tr>
+          <tr><td class="tnum">7/5〜</td><td>ほか4社</td><td>レポート×4</td><td>新谷2・杉山1・瀬川1</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:11px 20px;font-size:11px;color:var(--sub)">カウント基準：レポート＝ヒアリングフォーム入力時点／BPO＝契約日（<a href="rules.html">ルール</a>）。</div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

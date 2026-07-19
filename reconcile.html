@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>入金消込｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="reconcile" data-role="imai">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">経理</div><h1>入金消込（freee明細 × 予定の突合）</h1></div>
+    <div class="search">相手先・金額で検索<span class="kbd">⌘K</span></div>
+    <span class="badge b-blue"><span class="d"></span>最終取得 7/17 06:00（日次）</span>
+  </div>
+  <div class="content">
+
+    <div class="toolbar">
+      <span class="chip active">未消込 3</span>
+      <span class="chip">消込済 24</span>
+      <span class="chip" style="border-color:var(--red);color:var(--red)">差異 2</span>
+      <span style="flex:1"></span>
+      <span class="seg"><span class="on">入金</span><span>出金</span></span>
+    </div>
+
+    <!-- 未消込明細 -->
+    <div class="card" style="overflow-x:auto;margin-bottom:16px">
+      <div class="card-h"><span class="t">未消込の明細（freee入金）</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">行を選ぶと下に突合候補が出ます</span></div>
+      <table>
+        <thead><tr><th></th><th>着金日</th><th>明細（摘要）</th><th class="r">金額</th><th>自動候補</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr style="background:var(--blue-bg)"><td>▶</td><td class="tnum">7/15</td><td>ﾕｱｰｽﾞｼｽﾞｵｶ(ｶ</td><td class="r tnum" style="font-weight:800">50,000円</td><td><span class="badge b-good"><span class="d"></span>1件（一致度 高）</span></td><td><span class="badge b-warn"><span class="d"></span>確定待ち</span></td></tr>
+          <tr><td></td><td class="tnum">7/15</td><td>ﾃｨｰｶﾞｲｱ(ｶ</td><td class="r tnum" style="font-weight:800">30,000円</td><td><span class="badge b-red"><span class="d"></span>0件</span></td><td><span class="badge b-red"><span class="d"></span>予定なし入金</span></td></tr>
+          <tr><td></td><td class="tnum">7/14</td><td>47ﾏｰｹﾃｨﾝｸﾞ(ｶ</td><td class="r tnum" style="font-weight:800">280,000円</td><td><span class="badge b-warn"><span class="d"></span>1件（金額乖離）</span></td><td><span class="badge b-red"><span class="d"></span>乖離 ▲2万円</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 突合パネル -->
+    <div class="cols-2">
+      <div class="card" style="padding:16px 18px">
+        <div style="font-size:13px;font-weight:800;margin-bottom:4px">選択中の明細</div>
+        <div class="kv" style="padding-left:0;padding-right:0"><span class="k">着金日</span><span class="v tnum">2026/07/15</span></div>
+        <div class="kv" style="padding-left:0;padding-right:0"><span class="k">摘要</span><span class="v">ﾕｱｰｽﾞｼｽﾞｵｶ(ｶ</span></div>
+        <div class="kv" style="padding-left:0;padding-right:0"><span class="k">金額</span><span class="v tnum" style="font-size:16px">50,000円</span></div>
+        <div style="font-size:12px;font-weight:800;color:var(--sub);margin:14px 0 8px">突合候補（金額＋相手先＋時期で自動抽出）</div>
+        <div class="cand sel">
+          <span class="rd"></span>
+          <div style="flex:1"><div style="font-size:12.5px;font-weight:800">レポート請求｜ユアーズ静岡（IS-2026-0092）</div><div style="font-size:11px;color:var(--faint)">請求 5万円・7/1 発行・期日 7/31・担当 新谷</div></div>
+          <span class="badge b-good"><span class="d"></span>一致度 高</span>
+        </div>
+        <div class="cand">
+          <span class="rd"></span>
+          <div style="flex:1"><div style="font-size:12.5px;font-weight:800">（その他の候補から検索…）</div><div style="font-size:11px;color:var(--faint)">会社・案件番号で手動検索</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <span class="btn btn-ghost btn-sm">保留</span>
+          <span class="btn btn-primary" style="margin-left:auto" onclick="openModal('mDone')">消込を確定</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card">
+          <div class="card-h"><span class="t">差異アラート</span><span class="sp"></span><span class="badge b-red"><span class="d"></span>2件</span></div>
+          <div class="list-row"><span class="badge b-red"><span class="d"></span>予定なし</span><div class="bd"><div class="nm tnum">ティーガイア 3万円（7/15）</div><div class="sub">入金予定に該当なし → 内容を調査して手動割当</div></div><span class="btn btn-ghost btn-sm">調査</span></div>
+          <div class="list-row"><span class="badge b-red"><span class="d"></span>金額乖離</span><div class="bd"><div class="nm tnum">47マーケ 28万円 ≠ 予定30万円（▲2万）</div><div class="sub">振込手数料か一部入金か確認 → 差額処理を選択</div></div><span class="btn btn-ghost btn-sm">調査</span></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><span class="t">消込の反映先</span></div>
+          <div class="list-row"><span class="badge b-good"><span class="d"></span>済</span><div class="bd"><div class="nm tnum">アストロラボ 235万円 → 見込を実額へ置換</div><div class="sub">キャッシュフローの残高・持続月数を実績更新（7/16）</div></div></div>
+          <div class="list-row"><span class="badge b-sub"><span class="d"></span>待機</span><div class="bd"><div class="nm">未消込3件は反映保留</div><div class="sub">誤った実績を資金予測に入れない</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 消込確定モーダル -->
+<div class="modal-bg" id="mDone">
+  <div class="modal">
+    <div class="modal-h"><span class="t">消込の確定</span><span class="x" onclick="closeModal('mDone')">✕</span></div>
+    <div class="modal-b">
+      <div style="font-size:13px" class="tnum"><b>入金 50,000円（ﾕｱｰｽﾞｼｽﾞｵｶ 7/15）</b> ⇔ <b>レポート請求 IS-2026-0092</b></div>
+      <div class="hint-t" style="margin-top:10px">確定すると：請求ステータス＝入金済／キャッシュフローの実績更新／会社の累計入金に加算。取り消しは履歴から可能です。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mDone')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mDone')">確定</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

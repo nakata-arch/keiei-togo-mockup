@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>勤怠｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="attendance" data-role="arakaki">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">人事・総務</div><h1>勤怠（自前勤怠・スーパーフレックス）</h1></div>
+    <span class="badge b-sub"><span class="d"></span>業務委託者は対象外（請求書が正）</span>
+    <div style="margin-left:auto"><select class="inp" style="width:150px"><option>2026年7月</option><option>6月</option></select></div>
+  </div>
+  <div class="content">
+
+    <!-- 打刻（自己入力・断続区間） -->
+    <div class="cols-2">
+      <div class="card" style="padding:18px 20px">
+        <div style="font-size:13px;font-weight:800">今日の打刻（7/17 金）</div>
+        <div style="display:flex;gap:10px;margin-top:12px;align-items:center">
+          <span class="btn btn-primary" style="padding:12px 26px;font-size:14px">出勤</span>
+          <span class="btn btn-ghost" style="padding:12px 26px;font-size:14px">退勤</span>
+          <span class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="openModal('mSpan')">＋ 区間を追加（断続）</span>
+        </div>
+        <table style="margin-top:14px;font-size:12px">
+          <thead><tr><th>区間</th><th>開始</th><th>終了</th><th class="r">時間</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="tnum">9:02</td><td class="tnum">12:15</td><td class="r tnum">3:13</td></tr>
+            <tr><td>2</td><td class="tnum">13:30</td><td class="tnum">—（勤務中）</td><td class="r tnum">—</td></tr>
+          </tbody>
+          <tfoot><tr><td colspan="3">当日合計（区間合算）</td><td class="r tnum">3:13＋</td></tr></tfoot>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="kpi-grid" style="grid-template-columns:1fr 1fr">
+          <div class="kpi card"><div class="lbl">今月の労働時間</div><div class="val tnum">98:20<small> / 所定112:00</small></div></div>
+          <div class="kpi card"><div class="lbl">残業（申告＋検知）</div><div class="val tnum">2:45<small>時間</small></div><div class="meta"><span class="delta up">前月 ▲1:10</span></div></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><span class="t">未打刻の稼働痕跡（本人＋管理部のみ）</span></div>
+          <div class="list-row"><span class="badge b-warn"><span class="d"></span>7/15</span><div class="bd"><div class="nm">打刻外にツール利用（21:10-22:05）</div><div class="sub">利用の有無のみ・内容は取得していません</div></div><span class="btn btn-primary btn-sm" onclick="openModal('mFixTime')">補正する</span></div>
+          <div style="padding:9px 17px;border-top:1px solid var(--line);background:var(--surface-2);font-size:10.5px;color:var(--faint);border-radius:0 0 var(--r) var(--r)">目的は残業代の適正支払と打刻漏れ是正。評価には使われません。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 月次一覧 -->
+    <div class="sec"><h2>月次の記録</h2><span class="hint">月末に確定 → 給与計算（外部）へ</span><span class="sp"></span><span class="btn btn-ghost btn-sm">月次を確定（管理部）</span></div>
+    <div class="card" style="overflow-x:auto">
+      <table>
+        <thead><tr><th>日付</th><th>区間</th><th class="r">労働時間</th><th class="r">うち残業</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td class="tnum">7/17（金）</td><td class="tnum">9:02-12:15 / 13:30-…</td><td class="r tnum">—</td><td class="r tnum">—</td><td><span class="badge b-blue"><span class="d"></span>勤務中</span></td></tr>
+          <tr><td class="tnum">7/16（木）</td><td class="tnum">8:55-12:00 / 13:00-18:10</td><td class="r tnum">8:15</td><td class="r tnum">0:15</td><td><span class="badge b-good"><span class="d"></span>確定</span></td></tr>
+          <tr style="background:#fffdf8"><td class="tnum">7/15（水）</td><td class="tnum">9:00-18:00 ＋ 検知21:10-22:05</td><td class="r tnum">8:00</td><td class="r tnum" style="color:var(--orange-d)">要補正</td><td><span class="badge b-warn"><span class="d"></span>補正待ち</span></td></tr>
+          <tr><td class="tnum">7/14（火）</td><td class="tnum">9:10-12:30 / 14:00-18:20</td><td class="r tnum">7:40</td><td class="r tnum">0:00</td><td><span class="badge b-good"><span class="d"></span>確定</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 区間追加モーダル -->
+<div class="modal-bg" id="mSpan">
+  <div class="modal">
+    <div class="modal-h"><span class="t">勤務区間を追加</span><span class="x" onclick="closeModal('mSpan')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">開始</span><input class="inp" type="time" value="20:00" /></label>
+        <label class="field"><span class="fl">終了</span><input class="inp" type="time" value="21:30" /></label>
+      </div>
+      <div class="hint-t">スーパーフレックス：1日の断続区間を合算して当日労働時間になります。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mSpan')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mSpan')">追加</span></div>
+  </div>
+</div>
+
+<!-- 打刻補正モーダル -->
+<div class="modal-bg" id="mFixTime">
+  <div class="modal">
+    <div class="modal-h"><span class="t">打刻補正の申請（7/15）</span><span class="x" onclick="closeModal('mFixTime')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">追加区間 開始</span><input class="inp" type="time" value="21:10" /></label>
+        <label class="field"><span class="fl">終了</span><input class="inp" type="time" value="22:05" /></label>
+      </div>
+      <label class="field"><span class="fl">理由</span><input class="inp" value="申請書類の最終確認（打刻忘れ）" /></label>
+      <div class="hint-t">承認されると残業 0:55 が加算され、残業代に反映されます。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mFixTime')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mFixTime')">申請</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

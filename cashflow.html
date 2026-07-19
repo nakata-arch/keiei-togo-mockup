@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>キャッシュフロー｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="cashflow" data-role="kitayama">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">経営管理</div><h1>キャッシュフロー</h1></div>
+    <span class="sample">数値はサンプル</span>
+    <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
+      <span style="font-size:11.5px;color:var(--sub)">交付入金 +3ヶ月遅れを想定</span><span class="tgl" onclick="swScenario(this)"></span>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="bento">
+      <!-- HERO：現在の状態 -->
+      <div class="tile b4">
+        <div class="tl">現在の資金 <span class="lk"><a href="rules.html" style="color:var(--blue)">4段階のルール</a></span></div>
+        <div class="hero"><span class="badge b-warn" style="font-size:16px;padding:8px 18px"><span class="d"></span>イエロー</span></div>
+        <div style="font-size:12px;color:var(--sub);margin-top:12px;line-height:1.9" class="tnum">
+          残高 <b style="font-size:15px">2,140万円</b>（freee・7/17 6:00）<br>
+          当月支払を割る月：<b style="font-size:15px" id="coDate">2027年2月</b><span id="coNote">（あと6ヶ月）</span>
+        </div>
+      </div>
+
+      <!-- 7月のキャッシュブリッジ -->
+      <div class="tile b8">
+        <div class="tl">7月のお金の動き（期首 → 期末）</div>
+        <div class="wf" style="height:210px">
+          <div class="wcol"><span class="wv tnum">2,140万</span><i style="height:132px;background:var(--navy)"></i><span class="wk">期首残高</span></div>
+          <div class="wcol"><span class="wv tnum" style="color:var(--good)">＋612万</span><i style="height:38px;margin-bottom:132px;background:var(--good)"></i><span class="wk">入金<br>確定480＋加重132</span></div>
+          <div class="wcol"><span class="wv tnum" style="color:var(--red)">▲481万</span><i style="height:30px;margin-bottom:140px;background:var(--red)"></i><span class="wk">支払<br>承認済のみ</span></div>
+          <div class="wcol"><span class="wv tnum" style="color:var(--red)">▲330万</span><i style="height:20px;margin-bottom:120px;background:#a03027"></i><span class="wk">借入返済<br>固定</span></div>
+          <div class="wcol"><span class="wv tnum">1,941万</span><i style="height:120px;background:var(--navy-3)"></i><span class="wk">期末見込</span></div>
+        </div>
+      </div>
+
+      <!-- 残高推移 -->
+      <div class="tile b12" style="padding:18px 20px 12px">
+        <div class="tl">月末残高の見通し（実績＋予測）<span class="lk" style="color:var(--faint)">破線＝翌月の支払額（これを割るとブラック）</span></div>
+        <div class="vchart" style="height:180px;padding:14px 4px 4px">
+          <div class="vbar"><span class="vv tnum">2140</span><i style="height:76%;background:var(--navy)"></i><span class="vl">7月</span></div>
+          <div class="vbar"><span class="vv tnum">1941</span><i style="height:69%"></i><span class="vl">8月</span></div>
+          <div class="vbar"><span class="vv tnum">1714</span><i style="height:61%"></i><span class="vl">9月</span></div>
+          <div class="vbar"><span class="vv tnum">1439</span><i style="height:51%"></i><span class="vl">10月</span></div>
+          <div class="vbar"><span class="vv tnum">1362</span><i style="height:48%"></i><span class="vl">11月</span></div>
+          <div class="vbar"><span class="vv tnum">1180</span><i style="height:42%"></i><span class="vl">12月</span></div>
+          <div class="vbar"><span class="vv tnum" style="color:var(--orange-d)">760</span><i style="height:27%;background:var(--gold)"></i><span class="vl">1月</span></div>
+          <div class="vbar"><span class="vv tnum" style="color:var(--red)">▲45</span><i style="height:3%;background:var(--red)"></i><span class="vl" style="color:var(--red);font-weight:800">2月</span></div>
+        </div>
+        <div class="thresh" style="margin-top:-58px;border-color:var(--red)"><span style="color:var(--red)">翌月支払 約810万</span></div>
+        <div style="height:40px"></div>
+        <div style="font-size:11px;color:var(--faint)">着金のたびに見込 → 実額へ置換（入金消込）。返済 330万円/月は管理会計Excelの前提。</div>
+      </div>
+
+      <!-- 入金予定 -->
+      <div class="tile b6" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">入金予定（確度加重）</span><span class="sp"></span><span class="btn btn-ghost btn-sm" onclick="openModal('mYomi')">ヨミ%を編集</span></div>
+        <table>
+          <thead><tr><th>月</th><th>会社・種別</th><th class="r">額面</th><th class="r">確度</th><th class="r">加重後</th></tr></thead>
+          <tbody>
+            <tr><td class="tnum">7月</td><td>アストロラボ｜BPO（着金済）</td><td class="r tnum">235万</td><td class="r tnum">実績</td><td class="r tnum" style="font-weight:800">235万</td></tr>
+            <tr><td class="tnum">7月</td><td>レポート5件ほか（請求済）</td><td class="r tnum">245万</td><td class="r tnum">100%</td><td class="r tnum" style="font-weight:800">245万</td></tr>
+            <tr><td class="tnum">8月</td><td>ティーガイア｜BPO見込</td><td class="r tnum">240万</td><td class="r tnum">50%</td><td class="r tnum" style="font-weight:800">120万</td></tr>
+            <tr><td class="tnum">8月</td><td>リサスティー｜成果報酬</td><td class="r tnum">60万</td><td class="r tnum">68%</td><td class="r tnum" style="font-weight:800">41万</td></tr>
+            <tr><td class="tnum">9月</td><td>セルプスJ｜着手金（契約見込）</td><td class="r tnum">30万</td><td class="r tnum">70%</td><td class="r tnum" style="font-weight:800">21万</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:9px 17px;border-top:1px solid var(--line);font-size:11px;color:var(--faint)">確度：レポート/BPO＝ヨミ%・補助金＝採択率（<a href="rules.html">ルール</a>）。</div>
+      </div>
+
+      <!-- 支払予定 -->
+      <div class="tile b6" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">支払予定（7月・承認済のみ計上）</span><span class="sp"></span><a class="badge b-blue" href="invoices.html"><span class="d"></span>支払処理</a></div>
+        <table>
+          <thead><tr><th>支払日</th><th>内容</th><th class="r">金額</th><th>状態</th></tr></thead>
+          <tbody>
+            <tr><td class="tnum">7/25</td><td>業務委託・顧問ほか</td><td class="r tnum">64万</td><td><span class="badge b-good"><span class="d"></span>計上済</span></td></tr>
+            <tr><td class="tnum">7/25</td><td>クリエイト外注（商材構築）</td><td class="r tnum">82万</td><td><span class="badge b-red"><span class="d"></span>未承認＝計上外</span></td></tr>
+            <tr><td class="tnum">月末</td><td>給与・出向負担金</td><td class="r tnum">105万</td><td><span class="badge b-good"><span class="d"></span>計上済</span></td></tr>
+            <tr><td class="tnum">月末</td><td>仕入・経費ほか</td><td class="r tnum">312万</td><td><span class="badge b-good"><span class="d"></span>計上済</span></td></tr>
+            <tr><td class="tnum">月末</td><td>借入返済（IS 211.2万＋秋葉原 118.8万）</td><td class="r tnum">330万</td><td><span class="badge b-navy">固定</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ヨミ%編集 -->
+<div class="modal-bg" id="mYomi">
+  <div class="modal">
+    <div class="modal-h"><span class="t">確度（ヨミ%）の編集</span><span class="x" onclick="closeModal('mYomi')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">案件</span><input class="inp" value="ティーガイア｜BPO見込" readonly /></label>
+        <label class="field"><span class="fl">ヨミ%</span><select class="inp"><option>80%（口頭合意）</option><option selected>50%（提案中）</option><option>20%（初期）</option></select></label>
+      </div>
+      <div class="hint-t">補助金の成果報酬は採択率で自動加重（編集不可）。変更は履歴に記録されます。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mYomi')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mYomi')">保存</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+<script>
+function swScenario(t){
+  var on=t.classList.contains('on');
+  document.getElementById('coDate').textContent = on ? '2026年12月' : '2027年2月';
+  document.getElementById('coNote').textContent = on ? '（あと4ヶ月・交付入金 +3ヶ月遅れ）' : '（あと6ヶ月）';
+}
+</script>
+</body>
+</html>

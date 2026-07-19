@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>設定｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="settings" data-role="nakata">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">管理者</div><h1>設定</h1></div>
+  </div>
+  <div class="content">
+
+    <div class="dtabs">
+      <span class="dtab on" data-g="s" data-t="staff" onclick="swTab('s','staff')">スタッフマスタ</span>
+      <span class="dtab" data-g="s" data-t="perm" onclick="swTab('s','perm')">権限</span>
+      <span class="dtab" data-g="s" data-t="num" onclick="swTab('s','num')">案件番号・ルール</span>
+      <span class="dtab" data-g="s" data-t="link" onclick="swTab('s','link')">外部連携</span>
+    </div>
+
+    <!-- スタッフマスタ -->
+    <div class="dpane on" data-g="s" data-t="staff">
+      <div class="toolbar" style="margin-bottom:12px"><span style="font-size:11.5px;color:var(--sub)">全画面の担当・ロール・部門の唯一のソース。人員配置は随時変更あり。</span><span style="flex:1"></span><span class="btn btn-primary btn-sm" onclick="openModal('mStaff')">＋ スタッフ追加</span></div>
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>氏名</th><th>ロール</th><th>部門</th><th>契約種別</th><th>源泉/インボイス</th><th>状態</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700">中田</td><td>管理者/経営（CAIO）</td><td>管理部統括</td><td>業務委託（法人）</td><td>源泉なし・登録済</td><td><span class="badge b-good"><span class="d"></span>有効</span></td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr><td style="font-weight:700">北山</td><td>管理者/経営（代表）</td><td>営業部</td><td>役員</td><td>—</td><td><span class="badge b-good"><span class="d"></span>有効</span></td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr><td style="font-weight:700">黒田</td><td>経営（COO）</td><td>コンサル部</td><td>役員</td><td>—</td><td><span class="badge b-good"><span class="d"></span>有効</span></td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr><td style="font-weight:700">幸田</td><td>部門長</td><td>コンサル部（PM）</td><td>業務委託</td><td>要確認</td><td><span class="badge b-good"><span class="d"></span>有効</span></td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr style="background:#fff8f7"><td style="font-weight:700">今井</td><td>管理部</td><td>管理部（経理）</td><td>出向（秋葉原C）</td><td>負担金＝支払処理</td><td><span class="badge b-red"><span class="d"></span>出向契約 未締結</span></td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr style="background:#fff8f7"><td style="font-weight:700">岩下</td><td>管理部</td><td>管理部（総務）</td><td>出向（秋葉原C）</td><td>負担金＝支払処理</td><td><span class="badge b-red"><span class="d"></span>出向契約 未締結</span></td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr><td style="font-weight:700">國分</td><td>一般</td><td>社長秘書（予定）</td><td>業務委託</td><td>要確認</td><td><span class="badge b-good"><span class="d"></span>有効</span></td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 権限 -->
+    <div class="dpane" data-g="s" data-t="perm">
+      <div class="card" style="overflow-x:auto">
+        <div class="card-h"><span class="t">ロール × 画面 マトリクス</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">「全件／自部門＋全社利益／担当分／自分／非表示」の5値</span></div>
+        <table class="mxt">
+          <thead><tr><th style="text-align:left">画面</th><th>管理者/経営</th><th>管理部</th><th>部門長</th><th>一般</th></tr></thead>
+          <tbody>
+            <tr><th>経営サマリー</th><td class="ok">●</td><td class="ok">●</td><td class="lim">原資数字まで</td><td class="lim">粗利・営利まで</td></tr>
+            <tr><th>予算・実績</th><td class="ok">●</td><td class="ok">●</td><td class="lim">自部門＋全社利益</td><td class="lim">粗利・営利まで</td></tr>
+            <tr><th>評価・賞与</th><td class="ok">●</td><td class="ok">●</td><td class="lim">自部門（配分編集可）</td><td class="lim">自分のみ</td></tr>
+            <tr><th>キャッシュフロー</th><td class="ok">●</td><td class="ok">●</td><td class="ok">●</td><td class="no">—</td></tr>
+            <tr><th>会社・案件</th><td class="ok">●</td><td class="ok">●</td><td class="lim">担当分</td><td class="lim">担当分</td></tr>
+            <tr><th>支払・消込</th><td class="ok">●</td><td class="ok">●</td><td class="no">—</td><td class="no">—</td></tr>
+            <tr><th>明細</th><td class="ok">●</td><td class="ok">●</td><td class="lim">自分</td><td class="lim">自分</td></tr>
+            <tr><th>設定（本画面）</th><td class="ok">●</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 採番・ルール -->
+    <div class="dpane" data-g="s" data-t="num">
+      <div class="cols-2">
+        <div class="card" style="padding:16px 18px">
+          <div style="font-size:13px;font-weight:800;margin-bottom:10px">案件番号の自動採番</div>
+          <div class="inp-row">
+            <label class="field"><span class="fl">形式</span><input class="inp tnum" value="IS-{年}-{連番4桁}" /></label>
+            <label class="field"><span class="fl">次の番号</span><input class="inp tnum" value="IS-2026-0102" readonly /></label>
+          </div>
+          <div class="hint-t">起票時に採番し、board件名・カレンダー・フォルダ名へ自動配布します。</div>
+        </div>
+        <div class="card" style="padding:16px 18px">
+          <div style="font-size:13px;font-weight:800;margin-bottom:10px">ルール（変更は管理者のみ）</div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">停滞アラート</span><span class="v">7営業日 動きなし</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">承認しきい値（経営層会議）</span><span class="v tnum">50万円以上</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">受給目標</span><span class="v">BPO契約金額 × 2（1年）</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">成果報酬率</span><span class="v tnum">受給目標 × 15%</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">レポート割引</span><span class="v tnum">BPO初回請求から 5万円 控除</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">順序ガード</span><span class="v">交付決定前の発注＝警告のみ</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 外部連携 -->
+    <div class="dpane" data-g="s" data-t="link">
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>連携先</th><th>用途</th><th>識別情報</th><th>状態</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700">HubSpot</td><td>会社・取引・solution・親子系譜</td><td class="tnum">Portal 45826066</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="tgl on"></span></td></tr>
+            <tr><td style="font-weight:700">freee 会計</td><td>P&L実績・入出金・残高（日次）</td><td class="tnum">事業所 2517817</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="tgl on"></span></td></tr>
+            <tr><td style="font-weight:700">board</td><td>案件登録・発行請求（hubspot_deal_id保持）</td><td class="tnum">api.the-board.jp/v1</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="tgl on"></span></td></tr>
+            <tr><td style="font-weight:700">TimeRex</td><td>日程調整・担当特定（第一の正）</td><td>プレミアム</td><td><span class="badge b-warn"><span class="d"></span>取引紐付けは隠しパラメータ運用</span></td><td class="r"><span class="tgl on"></span></td></tr>
+            <tr><td style="font-weight:700">GreatSign</td><td>電子契約 → 契約書自動保存</td><td>Zapier経由</td><td><span class="badge b-warn"><span class="d"></span>取引ID変数 要検証</span></td><td class="r"><span class="tgl on"></span></td></tr>
+            <tr><td style="font-weight:700">Gmail（seikyu@／kanri@）</td><td>受領請求の全件集約／受領契約の一本化</td><td>—</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="tgl on"></span></td></tr>
+            <tr><td style="font-weight:700">LINE公式</td><td>顧客連絡・ポータル送付・ID自動取得</td><td>—</td><td><span class="badge b-red"><span class="d"></span>ID自動取得 未整備</span></td><td class="r"><span class="tgl"></span></td></tr>
+            <tr><td style="font-weight:700">Googleカレンダー</td><td>面談・納品予定（取引ID記載＝第二の正）</td><td>双方向同期</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="tgl on"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- スタッフ追加モーダル -->
+<div class="modal-bg" id="mStaff">
+  <div class="modal">
+    <div class="modal-h"><span class="t">スタッフの追加</span><span class="x" onclick="closeModal('mStaff')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">氏名<span class="req">*</span></span><input class="inp" /></label>
+        <label class="field"><span class="fl">ロール</span><select class="inp"><option>一般</option><option>部門長</option><option>管理部</option><option>管理者/経営</option></select></label>
+      </div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">部門</span><select class="inp"><option>営業部</option><option>コンサル部</option><option>管理部</option></select></label>
+        <label class="field"><span class="fl">契約種別</span><select class="inp"><option>雇用</option><option>業務委託</option><option>業務委託（法人）</option><option>出向</option></select></label>
+      </div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">源泉徴収</span><select class="inp"><option>要</option><option>不要（法人）</option></select></label>
+        <label class="field"><span class="fl">インボイス登録番号</span><input class="inp" placeholder="T1234…" /></label>
+      </div>
+      <div class="hint-t">雇用の場合は労働条件通知書の所定労働時間も登録してください（勤怠・人時生産性の基準）。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mStaff')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mStaff')">追加</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

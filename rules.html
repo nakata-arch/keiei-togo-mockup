@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ルール｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="rules" data-role="kouda">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">共通認識</div><h1>ルール</h1></div>
+    <div class="search">ルールを検索<span class="kbd">⌘K</span></div>
+  </div>
+  <div class="content">
+
+    <p style="font-size:12.5px;color:var(--sub);margin-bottom:18px;max-width:760px">システム全体で使われる判定・しきい値の正本です。各画面ではルールの説明を繰り返さず、このページを共通認識とします。変更は管理者のみ（設定）。</p>
+
+    <div class="bento">
+      <!-- 資金の4段階 -->
+      <div class="tile b6">
+        <div class="tl">資金の4段階（キャッシュフロー）</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+          <div style="display:flex;align-items:center;gap:12px"><span class="badge" style="background:#1b2430;color:#fff;width:86px;justify-content:center">ブラック</span><span style="font-size:12.5px">当月の支払いを割る（当月ショート）</span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span class="badge b-red" style="width:86px;justify-content:center"><span class="d"></span>レッド</span><span style="font-size:12.5px">3ヶ月はもつ</span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span class="badge b-warn" style="width:86px;justify-content:center"><span class="d"></span>イエロー</span><span style="font-size:12.5px">6ヶ月はもつ</span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span class="badge b-good" style="width:86px;justify-content:center"><span class="d"></span>グリーン</span><span style="font-size:12.5px">7ヶ月以上もつ</span></div>
+        </div>
+        <div class="hint-t" style="margin-top:10px">残高＝freee。入金予定はヨミ%（レポート/BPO）・採択率（補助金）で確度加重。</div>
+      </div>
+
+      <!-- 評価スコア -->
+      <div class="tile b6">
+        <div class="tl">評価スコア（0〜100点）</div>
+        <div class="gauge" style="margin-top:26px"><i style="width:60%;background:linear-gradient(90deg,var(--red),var(--gold) 40%,var(--good))"></i><span class="mk" data-l="40点＝返済ライン（必達）" style="left:40%"></span><span class="mk" data-l="60点＝合格" style="left:60%"></span></div>
+        <div style="height:22px"></div>
+        <table style="font-size:12px;margin-top:6px">
+          <tbody>
+            <tr><td>粗利 60点</td><td class="r tnum" style="font-weight:800">991万円/月</td><td style="color:var(--faint)">営業利益 60点</td><td class="r tnum" style="font-weight:800">441万円/月</td></tr>
+            <tr><td>60点超過分の配分</td><td class="r tnum">褒賞33／裁量33／留保34</td><td style="color:var(--faint)">部門スコア</td><td class="r">営業＝獲得・コンサル＝採択金額・管理＝時間削減</td></tr>
+          </tbody>
+        </table>
+        <div class="hint-t" style="margin-top:8px">基準値は管理会計Excel準拠・四半期更新。60点未満は配分なし。</div>
+      </div>
+
+      <!-- 請求ルール -->
+      <div class="tile b6">
+        <div class="tl">請求の起点（締め → 翌月請求）</div>
+        <table style="font-size:12.5px;margin-top:10px">
+          <thead><tr><th>種別</th><th>締め月</th><th class="r">標準金額</th></tr></thead>
+          <tbody>
+            <tr><td>レポート</td><td>納品した月</td><td class="r tnum">5万円</td></tr>
+            <tr><td>BPO顧問料 <span style="color:var(--faint)">※レポート代5万円を割引</span></td><td>契約締結の月</td><td class="r tnum">契約による（例 240万円）</td></tr>
+            <tr><td>補助金 着手金</td><td>契約締結の月</td><td class="r tnum">30万円</td></tr>
+            <tr><td>補助金 成果報酬</td><td>採択の月</td><td class="r tnum">受給目標 × 15%</td></tr>
+          </tbody>
+        </table>
+        <div class="hint-t" style="margin-top:8px">発行は経理に一本化。成果報酬はPMが採択を記録 → 経理へ請求連携。</div>
+      </div>
+
+      <!-- 案件・アラート -->
+      <div class="tile b6">
+        <div class="tl">案件のしきい値・アラート</div>
+        <table style="font-size:12.5px;margin-top:10px">
+          <tbody>
+            <tr><td>停滞</td><td class="r" style="font-weight:800">7営業日 動きなしで発報</td></tr>
+            <tr><td>受給目標</td><td class="r" style="font-weight:800">BPO契約金額 × 2（契約日起点の1年・分子＝採択金額）</td></tr>
+            <tr><td>受給目標 先行アラート</td><td class="r">前半6ヶ月以内に補助金の申請が無い場合</td></tr>
+            <tr><td>受給目標 結果アラート</td><td class="r">1年時点で採択金額が目標未達の場合</td></tr>
+            <tr><td>順序ガード</td><td class="r">交付決定前の発注入力＝警告のみ（ブロックしない）</td></tr>
+            <tr><td>補助金フェーズ</td><td class="r">申請 → 交付決定 → 実施 → 実績報告（一方向・最長2年）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 承認・支払 -->
+      <div class="tile b6">
+        <div class="tl">承認・支払</div>
+        <table style="font-size:12.5px;margin-top:10px">
+          <tbody>
+            <tr><td>承認しきい値</td><td class="r" style="font-weight:800">50万円以上＝経営層会議／未満＝一次承認（北山）</td></tr>
+            <tr><td>振込日</td><td class="r tnum">25日・月末</td></tr>
+            <tr><td>記帳・消込</td><td class="r tnum">15日・月末（入金消込＋出金記帳）</td></tr>
+            <tr><td>支払予定への計上</td><td class="r">承認済のみ（未承認は資金予測に入れない）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 担当・キー -->
+      <div class="tile b6">
+        <div class="tl">担当・データの決め方</div>
+        <table style="font-size:12.5px;margin-top:10px">
+          <tbody>
+            <tr><td>実施担当（第一）</td><td class="r" style="font-weight:800">TimeRex参加者</td></tr>
+            <tr><td>実施担当（第二）</td><td class="r">カレンダー予定に記載した取引ID＋参加者</td></tr>
+            <tr><td>案件番号</td><td class="r tnum">IS-{年}-{連番}（起票時に自動採番・全ツールへ配布）</td></tr>
+            <tr><td>会社ステータス</td><td class="r">見込み →（フォーム入力）→ 顧客 →（BPO契約）→ リピート顧客</td></tr>
+            <tr><td>成果報酬の発生時点</td><td class="r">面談fee＝アポ／レポート＝受注／BPO＝契約日／補助金＝採択</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

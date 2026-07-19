@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>予算・実績｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+<style>
+.pl-mx td,.pl-mx th{white-space:nowrap}
+.pl-mx td.cur,.pl-mx th.cur{background:#fff8f2;border-left:1px solid #ffe3c9;border-right:1px solid #ffe3c9}
+.pl-mx td.plan{color:var(--faint)}
+.vr{font-size:10.5px;font-weight:800;border-radius:var(--r-full);padding:1px 7px;margin-left:6px}
+.vr.up{background:var(--good-bg);color:var(--good)}
+.vr.dn{background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body data-page="budget" data-role="kitayama">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">経営管理</div><h1>予算・実績</h1></div>
+    <span class="sample">数値はサンプル</span>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <select class="inp" style="width:180px"><option>2026年度（5月〜4月）</option><option>2025年度</option></select>
+      <span class="btn btn-ghost btn-sm" onclick="openModal('mBudget')">年間予算を編集</span>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="bento">
+      <!-- 当月の予実差（額と%併記） -->
+      <div class="tile b6" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">7月の予実</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">実績＝freee</span></div>
+        <table>
+          <thead><tr><th>階層</th><th class="r">予算</th><th class="r">実績</th><th class="r">差異</th></tr></thead>
+          <tbody>
+            <tr><td>総売上高</td><td class="r tnum plan">2,000万</td><td class="r tnum" style="font-weight:800">1,872万</td><td class="r tnum" style="color:var(--red)">▲128万<span class="vr dn">▲6.4%</span></td></tr>
+            <tr><td>純額売上高</td><td class="r tnum plan">1,800万</td><td class="r tnum" style="font-weight:800">1,690万</td><td class="r tnum" style="color:var(--red)">▲110万<span class="vr dn">▲6.1%</span></td></tr>
+            <tr style="background:var(--good-bg)"><td style="font-weight:800">粗利（限界利益）</td><td class="r tnum plan">991万</td><td class="r tnum" style="font-weight:800">1,038万</td><td class="r tnum" style="color:var(--good)">＋47万<span class="vr up">＋4.7%</span></td></tr>
+            <tr><td>販管費</td><td class="r tnum plan">550万</td><td class="r tnum" style="font-weight:800">620万</td><td class="r tnum" style="color:var(--red)">＋70万 超過<span class="vr dn">＋12.7%</span></td></tr>
+            <tr style="background:var(--cream)"><td style="font-weight:800">営業利益</td><td class="r tnum plan">441万</td><td class="r tnum" style="font-weight:800">418万</td><td class="r tnum" style="color:var(--red)">▲23万<span class="vr dn">▲5.2%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 予算→実績ブリッジ（ウォーターフォール） -->
+      <div class="tile b6">
+        <div class="tl">営業利益：予算 → 実績のブリッジ（7月）</div>
+        <div class="wf">
+          <div class="wcol"><span class="wv tnum">441万</span><i style="height:136px;background:var(--navy)"></i><span class="wk">予算</span></div>
+          <div class="wcol"><span class="wv tnum" style="color:var(--good)">＋47万</span><i style="height:14px;margin-bottom:136px;background:var(--good)"></i><span class="wk">粗利の上振れ<br>（商材構築 前倒し）</span></div>
+          <div class="wcol"><span class="wv tnum" style="color:var(--red)">▲70万</span><i style="height:22px;margin-bottom:128px;background:var(--red)"></i><span class="wk">販管費の超過<br>（採用費・一時）</span></div>
+          <div class="wcol"><span class="wv tnum">418万</span><i style="height:128px;background:var(--navy-3)"></i><span class="wk">実績</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--faint);margin-top:6px">差異の要因を予算から実績へ橋渡しで表示。要因の内訳は行をクリック（実装時）。</div>
+      </div>
+
+      <!-- 月次推移マトリクス -->
+      <div class="tile b12" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0">
+          <span class="t">月次P&L（実績 → 予定）</span><span class="sp"></span>
+          <span style="font-size:10.5px;color:var(--faint)">5〜7月＝実績／8月以降＝予算（淡色）・単位 万円</span>
+        </div>
+        <div style="overflow-x:auto">
+        <table class="pl-mx">
+          <thead><tr><th>階層</th><th class="r">5月</th><th class="r">6月</th><th class="r cur">7月（当月）</th><th class="r">8月</th><th class="r">9月</th><th class="r">10月</th><th class="r">…</th><th class="r">年度見込</th><th class="r">年間計画</th></tr></thead>
+          <tbody class="tnum">
+            <tr><td>総売上高</td><td class="r">1,610</td><td class="r">1,742</td><td class="r cur" style="font-weight:800">1,872</td><td class="r plan">1,800</td><td class="r plan">1,850</td><td class="r plan">1,950</td><td class="r plan">…</td><td class="r" style="font-weight:800">22,900</td><td class="r plan">24,000</td></tr>
+            <tr><td>純額売上高</td><td class="r">1,450</td><td class="r">1,568</td><td class="r cur" style="font-weight:800">1,690</td><td class="r plan">1,620</td><td class="r plan">1,665</td><td class="r plan">1,755</td><td class="r plan">…</td><td class="r" style="font-weight:800">20,650</td><td class="r plan">21,600</td></tr>
+            <tr style="background:var(--good-bg)"><td style="font-weight:800">粗利</td><td class="r">870</td><td class="r">925</td><td class="r cur" style="font-weight:800">1,038</td><td class="r plan">980</td><td class="r plan">1,010</td><td class="r plan">1,060</td><td class="r plan">…</td><td class="r" style="font-weight:800">11,650</td><td class="r plan">11,900</td></tr>
+            <tr><td>販管費</td><td class="r">545</td><td class="r">563</td><td class="r cur" style="font-weight:800">620</td><td class="r plan">525</td><td class="r plan">545</td><td class="r plan">560</td><td class="r plan">…</td><td class="r" style="font-weight:800">6,690</td><td class="r plan">6,600</td></tr>
+            <tr style="background:var(--cream)"><td style="font-weight:800">営業利益</td><td class="r">325</td><td class="r">362</td><td class="r cur" style="font-weight:800">418</td><td class="r plan">455</td><td class="r plan">465</td><td class="r plan">500</td><td class="r plan">…</td><td class="r" style="font-weight:800">4,960</td><td class="r plan">5,296</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div style="display:flex;gap:16px;padding:10px 17px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">
+          <span>合格ライン（60点）：粗利 991万/月・営業利益 441万/月 <a href="rules.html">→ルール</a></span>
+          <span style="margin-left:auto">計算エンジン＝管理会計Excel（接続・作り直さない）</span>
+        </div>
+      </div>
+
+      <!-- 部門別 -->
+      <div class="tile b12" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">部門別（売上〜粗利・7月）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">案件から積み上げ（solution判定）・販管費以下は全社のみ</span></div>
+        <table>
+          <thead><tr><th>部門</th><th class="r">売上 予算</th><th class="r">売上 実績</th><th class="r">差異</th><th class="r">粗利 実績</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700">営業部（レポート・BPO・商材構築）</td><td class="r tnum plan">1,100万</td><td class="r tnum" style="font-weight:800">1,022万</td><td class="r tnum" style="color:var(--red)">▲78万<span class="vr dn">▲7.1%</span></td><td class="r tnum">628万</td><td class="r"><span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="openModal('mDept')">内訳</span></td></tr>
+            <tr><td style="font-weight:700">コンサル部（補助金助成金）</td><td class="r tnum plan">900万</td><td class="r tnum" style="font-weight:800">850万</td><td class="r tnum" style="color:var(--red)">▲50万<span class="vr dn">▲5.6%</span></td><td class="r tnum">410万</td><td class="r"><span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="openModal('mDept')">内訳</span></td></tr>
+          </tbody>
+          <tfoot><tr><td>全社</td><td class="r tnum">2,000万</td><td class="r tnum">1,872万</td><td class="r tnum" style="color:var(--red)">▲128万</td><td class="r tnum">1,038万</td><td></td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- 年間予算の編集 -->
+<div class="modal-bg" id="mBudget">
+  <div class="modal">
+    <div class="modal-h"><span class="t">年間予算の編集（2026年度）</span><span class="x" onclick="closeModal('mBudget')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">売上計画（年間・円）</span><input class="inp tnum" value="240,000,000" /></label>
+        <label class="field"><span class="fl">粗利計画（年間・円）</span><input class="inp tnum" value="119,000,000" /></label>
+      </div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">営業利益計画（年間・円）</span><input class="inp tnum" value="52,960,000" /></label>
+        <label class="field"><span class="fl">月次按分</span><select class="inp"><option>実態カーブ（管理会計Excel）</option><option>均等割（固定費のみ）</option></select></label>
+      </div>
+      <div class="hint-t">保存すると60点基準（評価・賞与）と部門別目標に反映されます。数値ロジックの正＝管理会計Excel。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mBudget')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mBudget')">保存</span></div>
+  </div>
+</div>
+
+<!-- 部門内訳 -->
+<div class="modal-bg" id="mDept">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-h"><span class="t">営業部 売上 1,022万円の内訳（7月）</span><span class="x" onclick="closeModal('mDept')">✕</span></div>
+    <div class="modal-b" style="padding:0">
+      <table class="drill">
+        <thead><tr><th>会社・内容</th><th>案件番号</th><th class="r">売上</th></tr></thead>
+        <tbody>
+          <tr><td>菱洋エレクトロ｜商材構築 第2回（按分）</td><td class="tnum">IS-2026-0032</td><td class="r tnum">700万円</td></tr>
+          <tr><td>アストロラボ｜BPO顧問料（割引後）</td><td class="tnum">IS-2026-0058</td><td class="r tnum">235万円</td></tr>
+          <tr><td>診断レポート 7件</td><td class="tnum">—</td><td class="r tnum">35万円</td></tr>
+          <tr><td>その他（既存BPO・スポット）</td><td class="tnum">—</td><td class="r tnum">52万円</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="2">合計</td><td class="r tnum">1,022万円</td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

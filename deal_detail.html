@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IS-2026-0074 アストロラボ｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="deals">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="crumbs"><a href="deals.html">案件</a><span>›</span><span style="color:var(--ink)" class="tnum">IS-2026-0074</span></div>
+      <h1>課題解決型補助金（東京都）｜<a href="company_detail.html">アストロラボ株式会社</a></h1>
+    </div>
+    <span class="badge b-good"><span class="d"></span>補助金</span>
+    <span class="badge b-red"><span class="d"></span>停滞8日</span>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <span class="btn btn-ghost btn-sm" onclick="openModal('mAdopt')">採択を登録</span>
+      <span class="btn btn-primary btn-sm" onclick="openModal('mPhase')">フェーズを進める →</span>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- フェーズステッパー -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="stepper">
+        <div class="step now"><span class="sn">1</span><span class="st">申請</span></div>
+        <div class="step-line"></div>
+        <div class="step"><span class="sn">2</span><span class="st">交付決定</span></div>
+        <div class="step-line"></div>
+        <div class="step"><span class="sn">3</span><span class="st">実施</span></div>
+        <div class="step-line"></div>
+        <div class="step"><span class="sn">4</span><span class="st">実績報告</span></div>
+        <div style="margin-left:auto;display:flex;gap:14px;align-items:center;padding-left:14px">
+          <span style="font-size:11px;color:var(--faint)">経過 2ヶ月／最長2年</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;padding:0 18px 13px;flex-wrap:wrap" class="tnum">
+        <span class="badge b-blue"><span class="d"></span>申請額 248万円</span><span style="color:var(--faint)">→</span>
+        <span class="badge b-sub"><span class="d"></span>交付決定額 —</span><span style="color:var(--faint)">→</span>
+        <span class="badge b-sub"><span class="d"></span>採択金額 —</span><span style="color:var(--faint)">→</span>
+        <span class="badge b-sub"><span class="d"></span>実績確定額 —</span>
+      </div>
+    </div>
+
+    <!-- 次にやること（この画面の主役） -->
+    <div class="card" style="display:flex;align-items:center;gap:16px;padding:16px 20px;margin-bottom:16px;border-left:4px solid var(--orange)">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:11px;font-weight:800;color:var(--orange-d);letter-spacing:.04em">次にやること</div>
+        <div style="font-size:15px;font-weight:800;margin-top:3px">相見積（残り2社）を受領する — 先方は「決算書は今週中」と回答済み（7/16 LINE）</div>
+        <div style="font-size:11.5px;color:var(--faint);margin-top:2px" class="tnum">これが揃うと電子申請へ進めます ・ 公募〆切 9/30 まで75日</div>
+      </div>
+      <span class="btn btn-primary btn-sm" style="flex-shrink:0">LINEで再案内</span>
+      <span class="btn btn-ghost btn-sm" style="flex-shrink:0">担当を交代</span>
+    </div>
+
+    <div class="cols">
+      <div>
+        <div class="dtabs" style="margin-bottom:12px">
+          <span class="dtab on" data-g="d" data-t="task" onclick="swTab('d','task')">タスク<span class="n">3/5</span></span>
+          <span class="dtab" data-g="d" data-t="money" onclick="swTab('d','money')">請求</span>
+          <span class="dtab" data-g="d" data-t="docs" onclick="swTab('d','docs')">書類・証憑<span class="n">4</span></span>
+          <span class="dtab" data-g="d" data-t="log" onclick="swTab('d','log')">履歴</span>
+        </div>
+
+        <!-- タスク -->
+        <div class="dpane on" data-g="d" data-t="task">
+          <div class="card">
+            <div class="card-h"><span class="t">申請フェーズのタスク（テンプレ自動発行）</span><span class="sp"></span><span class="btn btn-ghost btn-sm">＋ タスク追加</span></div>
+            <div style="padding:4px 17px 12px">
+              <div class="chk done"><span class="bx">✓</span><span>要件確認（公募要領・対象経費）</span><span style="margin-left:auto;font-size:10.5px;color:var(--faint)">5/28 幸田</span></div>
+              <div class="chk done"><span class="bx">✓</span><span>事業計画・申請書 作成</span><span style="margin-left:auto;font-size:10.5px;color:var(--faint)">6/20 幸田</span></div>
+              <div class="chk done"><span class="bx">✓</span><span>決算書・賃金台帳の依頼</span><span style="margin-left:auto;font-size:10.5px;color:var(--faint)">7/8 幸田</span></div>
+              <div class="chk"><span class="bx"></span><span>見積取得（相見積 3社）</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>書類待ち・停滞8日</span></div>
+              <div class="chk"><span class="bx"></span><span>電子申請 提出（お客様入力＋PM同席）・受付番号の保管</span></div>
+            </div>
+            <div style="display:flex;gap:8px;padding:11px 17px;border-top:1px solid var(--line);background:var(--surface-2);border-radius:0 0 var(--r) var(--r)">
+              <span style="font-size:11.5px;color:var(--sub);align-self:center">停滞の原因：先方の決算書待ち（7/16 LINEで「今週中」と回答あり）</span>
+              <span class="btn btn-ghost btn-sm" style="margin-left:auto">LINEで再案内</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 請求 -->
+        <div class="dpane" data-g="d" data-t="money">
+          <div class="card" style="overflow-x:auto">
+            <table>
+              <thead><tr><th>項目</th><th class="r">金額</th><th>締め</th><th>状態</th><th></th></tr></thead>
+              <tbody>
+                <tr><td>着手金</td><td class="r tnum">30万円</td><td class="tnum">2026/06（契約月）</td><td><span class="badge b-warn"><span class="d"></span>請求済・期日 7/31</span></td><td></td></tr>
+                <tr><td>成果報酬（採択時・受給目標×15%）</td><td class="r tnum" style="color:var(--faint)">37.2万円（予定）</td><td>採択月</td><td><span class="badge b-sub"><span class="d"></span>採択待ち</span></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="openModal('mAdopt')">採択を登録</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 書類・証憑 -->
+        <div class="dpane" data-g="d" data-t="docs">
+          <div class="card" style="overflow-x:auto">
+            <div class="card-h"><span class="t">customer／アストロラボ／IS-2026-0074／</span><span class="sp"></span><span class="btn btn-ghost btn-sm">＋ アップロード</span></div>
+            <table>
+              <thead><tr><th>日付</th><th>種別</th><th>文書</th><th>取込</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="tnum">7/11</td><td><span class="badge b-blue"><span class="d"></span>見積</span></td><td>見積依頼書（相見積 1/3）</td><td>メール自動</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+                <tr><td class="tnum">6/30</td><td><span class="badge b-warn"><span class="d"></span>請求</span></td><td>着手金 請求書</td><td>board自動</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+                <tr><td class="tnum">6/20</td><td><span class="badge b-sub"><span class="d"></span>計画</span></td><td>事業計画書 v2（申請用）</td><td>手動</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+                <tr><td class="tnum">5/28</td><td><span class="badge b-sub"><span class="d"></span>議事録</span></td><td>キックオフ議事録（Notta）</td><td>自動</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+              </tbody>
+            </table>
+            <div style="padding:10px 17px;border-top:1px solid var(--line);font-size:11.5px;color:var(--sub)">証憑チェックリスト：申請フェーズは <b style="color:var(--red)">相見積（残2社）</b> が不足。</div>
+          </div>
+        </div>
+
+        <!-- 履歴 -->
+        <div class="dpane" data-g="d" data-t="log">
+          <div class="card">
+            <div class="tl-row"><span class="tt">7/16 9:02</span><span class="ch"><span class="badge b-good"><span class="d"></span>LINE</span></span><div>先方より「決算書は今週中に送ります」</div></div>
+            <div class="tl-row"><span class="tt">7/9 6:00</span><span class="ch"><span class="badge b-red"><span class="d"></span>検知</span></span><div>停滞アラート発報（7営業日 動きなし）</div></div>
+            <div class="tl-row"><span class="tt">6/30 10:12</span><span class="ch"><span class="badge b-warn"><span class="d"></span>請求</span></span><div>着手金 30万円をboardで発行（今井）</div></div>
+            <div class="tl-row"><span class="tt">6/2 15:00</span><span class="ch"><span class="badge b-blue"><span class="d"></span>作成</span></span><div>案件を起票・タスクテンプレ5件を自動発行</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右サイド：基本情報 -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card" style="padding:16px 18px">
+          <div style="font-size:12px;font-weight:800;margin-bottom:8px">基本情報</div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">案件番号</span><span class="v tnum">IS-2026-0074</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">取引ID（HubSpot）</span><span class="v tnum">33812945201</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">親案件</span><span class="v"><a href="deal_detail.html">IS-2026-0058（BPO）</a></span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">担当PM</span><span class="v">幸田</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">申請日（予定）</span><span class="v tnum">2026/08/05</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">公募〆切</span><span class="v tnum">2026/09/30</span></div>
+          <div style="margin-top:10px"><span class="btn btn-ghost btn-sm" onclick="openModal('mEditDeal')">編集</span></div>
+        </div>
+        <div class="card" style="padding:14px 18px;border-color:#f3c7c2;background:#fff8f7">
+          <div style="font-size:11.5px;font-weight:800;color:var(--red)">⚠ 順序ガード</div>
+          <div style="font-size:11.5px;color:var(--sub);margin-top:4px">交付決定フェーズ未到達のため、発注・支払の入力は警告されます（ブロックはしません）。</div>
+        </div>
+        <div class="card" style="padding:14px 18px">
+          <div style="font-size:11.5px;font-weight:800;color:var(--sub)">★ 顧客ポータルの表示</div>
+          <div style="font-size:11.5px;color:var(--sub);margin-top:4px">この案件は顧客ポータルに「申請の準備中」と表示中。閲覧3回。</div>
+          <a class="btn btn-ghost btn-sm" style="margin-top:8px" href="portal.html">顧客が見る画面</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- フェーズを進めるモーダル -->
+<div class="modal-bg" id="mPhase">
+  <div class="modal">
+    <div class="modal-h"><span class="t">フェーズを進める：申請 → 交付決定</span><span class="x" onclick="closeModal('mPhase')">✕</span></div>
+    <div class="modal-b">
+      <div style="font-size:12.5px;color:var(--sub);margin-bottom:12px">未完了タスクが2件あります。進めると交付決定フェーズのタスクテンプレ（4件）が自動発行されます。</div>
+      <div class="chk"><span class="bx"></span><span>見積取得（相見積 3社）— 未完了</span></div>
+      <div class="chk"><span class="bx"></span><span>電子申請 提出・受付番号の保管 — 未完了</span></div>
+      <label class="field" style="margin-top:12px"><span class="fl">交付決定額（円）<span class="req">*</span></span><input class="inp tnum" placeholder="2,480,000" /></label>
+      <div class="hint-t">フェーズは一方向です（戻せません）。日付・金額は履歴に記録されます。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mPhase')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mPhase')">進める（タスク自動発行）</span></div>
+  </div>
+</div>
+
+<!-- 採択登録モーダル -->
+<div class="modal-bg" id="mAdopt">
+  <div class="modal">
+    <div class="modal-h"><span class="t">採択の登録｜IS-2026-0074</span><span class="x" onclick="closeModal('mAdopt')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">採択発表日<span class="req">*</span></span><input class="inp" type="date" /></label>
+        <label class="field"><span class="fl">採択金額（円）<span class="req">*</span></span><input class="inp tnum" placeholder="2,480,000" style="font-weight:800" /></label>
+      </div>
+      <div class="hint-t">確定すると自動で連鎖します：成果報酬 37.2万円（15%）を経理へ請求連携（採択月締め・翌月請求）／会社の受給目標 分子へ加算／キャッシュフロー入金予定を更新。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mAdopt')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mAdopt')">確定して連携</span></div>
+  </div>
+</div>
+
+<!-- 案件編集モーダル -->
+<div class="modal-bg" id="mEditDeal">
+  <div class="modal">
+    <div class="modal-h"><span class="t">案件の編集</span><span class="x" onclick="closeModal('mEditDeal')">✕</span></div>
+    <div class="modal-b">
+      <label class="field"><span class="fl">案件名</span><input class="inp" value="課題解決型補助金（東京都）" /></label>
+      <div class="inp-row">
+        <label class="field"><span class="fl">申請額（円）</span><input class="inp tnum" value="2,480,000" /></label>
+        <label class="field"><span class="fl">公募〆切</span><input class="inp" type="date" value="2026-09-30" /></label>
+      </div>
+      <label class="field"><span class="fl">担当PM</span><select class="inp"><option>幸田</option><option>黒田</option><option>丸田</option></select></label>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mEditDeal')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mEditDeal')">保存</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

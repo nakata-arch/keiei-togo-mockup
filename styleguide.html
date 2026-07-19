@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>レイアウトガイド｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="styleguide" data-role="nakata">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">開発・デザイン</div><h1>レイアウトガイド</h1></div>
+    <span class="badge b-navy">v4.2 ・ 実装とレビューの基準</span>
+  </div>
+  <div class="content">
+
+    <div class="bento">
+      <!-- グリッド -->
+      <div class="tile b12">
+        <div class="tl">1. グリッド（Bento）— タイルの大きさ＝情報の重要度</div>
+        <div style="font-size:12.5px;color:var(--sub);line-height:2;margin-top:8px">
+          ・12カラム・gap 14px 固定。タイルは <b>Hero（span4〜6・数字38px）</b>／<b>Standard（span4〜6・数字24px）</b>／<b>List（span4〜8・表やリスト）</b> の3階層。<br>
+          ・<b>Hero は1画面に2枚まで</b>。全タイルを同じ大きさにしない（それはただのカード並べで、重要度が消える）。<br>
+          ・データの重い一覧・明細は Bento にせず<b>従来のテーブル</b>で出す（表はスプレッドシート型が最速）。
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:8px;margin-top:12px">
+          <div style="grid-column:span 4;background:var(--cream);border:1px dashed var(--orange-d);border-radius:9px;padding:9px;text-align:center;font-size:11px;font-weight:800;color:var(--orange-d)">Hero（最重要・2枚まで）</div>
+          <div style="grid-column:span 4;background:var(--cream);border:1px dashed var(--orange-d);border-radius:9px;padding:9px;text-align:center;font-size:11px;font-weight:800;color:var(--orange-d)">Hero</div>
+          <div style="grid-column:span 4;background:var(--blue-bg);border:1px dashed var(--blue);border-radius:9px;padding:9px;text-align:center;font-size:11px;font-weight:800;color:var(--blue)">Standard ×2 縦積み</div>
+          <div style="grid-column:span 8;background:var(--line-2);border:1px dashed var(--faint);border-radius:9px;padding:9px;text-align:center;font-size:11px;font-weight:800;color:var(--sub)">List（要対応・表）</div>
+          <div style="grid-column:span 4;background:var(--line-2);border:1px dashed var(--faint);border-radius:9px;padding:9px;text-align:center;font-size:11px;font-weight:800;color:var(--sub)">List（内訳）</div>
+        </div>
+      </div>
+
+      <!-- タイポ階層 -->
+      <div class="tile b6">
+        <div class="tl">2. 数字の階層（コントラスト）</div>
+        <div style="margin-top:10px">
+          <div style="display:flex;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line-2)"><span style="width:150px;font-size:10.5px;color:var(--faint)">Hero 38px/800</span><span class="tnum" style="font-size:38px;font-weight:800;letter-spacing:-.03em">1,038<small style="font-size:15px;color:var(--sub)">万円</small></span></div>
+          <div style="display:flex;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line-2)"><span style="width:150px;font-size:10.5px;color:var(--faint)">Standard 24px/800</span><span class="tnum" style="font-size:24px;font-weight:800">9<small style="font-size:12px;color:var(--sub)">件</small></span></div>
+          <div style="display:flex;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line-2)"><span style="width:150px;font-size:10.5px;color:var(--faint)">表の数字 12.5px tnum</span><span class="tnum" style="font-size:12.5px;font-weight:800">1,872万円</span></div>
+          <div style="display:flex;align-items:baseline;gap:12px;padding:7px 0"><span style="width:150px;font-size:10.5px;color:var(--faint)">補足 11px/faint</span><span style="font-size:11px;color:var(--faint)">当月実績 ・ 合格ライン 991万</span></div>
+        </div>
+        <div class="hint-t" style="margin-top:8px">最重要の数字は補足の3倍以上の大きさに。中間サイズを増やさない（4段まで）。</div>
+      </div>
+
+      <!-- 色の意味 -->
+      <div class="tile b6">
+        <div class="tl">3. 色は意味にだけ使う</div>
+        <table style="font-size:12px;margin-top:10px">
+          <tbody>
+            <tr><td><span class="badge b-red"><span class="d"></span>赤</span></td><td>今日手当てすべきもの（期日超過・停滞・未承認）だけ。<b>警告のインフレ禁止</b></td></tr>
+            <tr><td><span class="badge b-warn"><span class="d"></span>橙/金</span></td><td>注意・進行中・Yellow状態。CTAボタンのオレンジと混同しない</td></tr>
+            <tr><td><span class="badge b-good"><span class="d"></span>緑</span></td><td>達成・完了・入金。増加の「＋」はテキストでも緑</td></tr>
+            <tr><td><span class="badge b-blue"><span class="d"></span>青</span></td><td>リンク・情報・連携。装飾に使わない</td></tr>
+            <tr><td><span class="badge b-navy">紺</span></td><td>基調・確定値・固定費。グラフの基本色</td></tr>
+          </tbody>
+        </table>
+        <div class="hint-t" style="margin-top:8px">色だけに頼らない（色＋ラベル/アイコンの二重表現）。負数・減少＝▲、増加＝＋。金額は万円/億円。</div>
+      </div>
+
+      <!-- 数字の見せ方 -->
+      <div class="tile b6">
+        <div class="tl">4. 数字は必ず「文脈」と「内訳」を持つ</div>
+        <div style="font-size:12.5px;color:var(--sub);line-height:2.1;margin-top:8px">
+          ・単月の数字だけ出さない：<b>先月実績・当月実績・次月予定</b>の3期をミニバーで添える。<br>
+          ・期間を明示する：「入金漏れ 2件」ではなく「<b>7/17時点・期日超過分</b> 2件」。<br>
+          ・集計値には<b>「内訳を見る」</b>を必ず付け、どの案件が入っているかまで辿れるようにする。<br>
+          ・しきい値（60点・4段階など）は画面で説明しない。<b>ルールページへのリンク</b>で共通認識にする。
+        </div>
+      </div>
+
+      <!-- 文体 -->
+      <div class="tile b6">
+        <div class="tl">5. アラート・通知の文体</div>
+        <div style="font-size:12.5px;line-height:2;margin-top:8px">
+          <div style="color:var(--red)">✗ 「本日承認しないと7/25振込に間に合わない！」（煽り・演出）</div>
+          <div style="color:var(--good)">✓ タイトル＝事実：「50万円以上の支払 1件が未承認（82万円）」</div>
+          <div style="color:var(--good)">✓ 詳細＝期限と次の一手：「振込予定日 7/25。経営層会議の承認が必要です」＋ボタン</div>
+        </div>
+        <div class="hint-t" style="margin-top:8px">タイトルと詳細の内容を一致させる。専門用語（先行アラート等）は平易な言い換えを先に。会議名・社内儀式の名前は画面に出さない。</div>
+      </div>
+
+      <!-- 定番チャート -->
+      <div class="tile b12">
+        <div class="tl">6. 財務データの定番チャート（この型以外を発明しない）</div>
+        <table style="font-size:12.5px;margin-top:10px">
+          <thead><tr><th>見せたいもの</th><th>型</th><th>使用画面</th></tr></thead>
+          <tbody>
+            <tr><td>予算と実績の差の「理由」</td><td><b>ウォーターフォール</b>（予算→要因→実績）</td><td>予算・実績</td></tr>
+            <tr><td>お金の出入り</td><td><b>キャッシュブリッジ</b>（期首→入金→支払→返済→期末）</td><td>キャッシュフロー</td></tr>
+            <tr><td>推移</td><td>棒/折れ線＋<b>しきい値の破線</b></td><td>残高見通し・月次P&L</td></tr>
+            <tr><td>P&Lの月次比較</td><td><b>マトリクス表</b>（行=階層×列=月・当月ハイライト・予定は淡色）</td><td>予算・実績</td></tr>
+            <tr><td>構成</td><td>積み上げバー（支給額の内訳など）</td><td>明細</td></tr>
+            <tr><td>差異</td><td>額と%を併記＋条件付き色</td><td>予実・消込</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

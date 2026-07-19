@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ホーム（営業）｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="home" data-role="shintani">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、新谷さん</h1></div>
+    <div class="search">会社・案件番号で検索<span class="kbd">⌘K</span></div>
+  </div>
+  <div class="content">
+
+    <!-- 自分の数字（担当分のみ・⑨権限） -->
+    <div class="kpi-grid">
+      <div class="kpi card"><div class="lbl">今日のアポ（TimeRex）</div><div class="val tnum">2<small>件</small></div>
+        <div class="meta"><span>次：11:00 新規ヒアリング</span></div></div>
+      <div class="kpi card"><div class="lbl">今月の新規アポ</div><div class="val tnum">6<small>件</small></div>
+        <div class="meta"><span class="delta up">部内 2位</span></div><div class="bar"><i style="width:60%;background:var(--navy-3)"></i></div></div>
+      <div class="kpi card"><div class="lbl">レポート獲得（受注＝フォーム入力）</div><div class="val tnum">2<small> / 個人目標3件</small></div>
+        <div class="meta"><span class="delta up">67%</span></div><div class="bar"><i style="width:67%;background:var(--orange)"></i></div></div>
+      <div class="kpi card"><div class="lbl">BPO化</div><div class="val tnum">1<small>件</small></div>
+        <div class="meta"><span>BPO化率 50%</span></div><div class="bar"><i style="width:50%;background:var(--good)"></i></div></div>
+    </div>
+
+    <div class="cols" style="margin-top:18px">
+      <div>
+        <!-- 今日の動き -->
+        <div class="card">
+          <div class="card-h"><span class="t">今日の予定（TimeRex／カレンダー）</span></div>
+          <div class="list-row"><span class="badge b-navy">11:00</span><div class="bd"><div class="nm">新規ヒアリング｜株式会社ワタナベ工業（紹介：CC）</div><div class="sub">TimeRex予約 → 参加者＝あなたが実施担当として自動記録されます</div></div><span class="btn btn-primary btn-sm" onclick="openModal('mForm')">ヒアリングフォーム</span></div>
+          <div class="list-row"><span class="badge b-blue"><span class="d"></span>15:00</span><div class="bd"><div class="nm">ユアーズ静岡｜診断レポート 納品打合せ（明日）の前確認</div><div class="sub">IS-2026-0092・レポート作成完了・査定同梱</div></div><a class="btn btn-ghost btn-sm" href="deal_detail.html">案件</a></div>
+        </div>
+
+        <!-- 自分のタスク -->
+        <div class="sec"><h2>自分のタスク</h2></div>
+        <div class="card" style="padding:4px 17px 10px">
+          <div class="chk"><span class="bx"></span><span><b>ユアーズ静岡</b>｜納品打合せ 7/18 10:00 の最終確認（資料・査定）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>明日</span></div>
+          <div class="chk"><span class="bx"></span><span><b>ワタナベ工業</b>｜boardに案件登録・見積書 作成（ヒアリング後）</span></div>
+          <div class="chk"><span class="bx"></span><span><b>コスコ</b>｜レポート提案の御礼フォロー（杉山さんと分担）</span></div>
+          <div class="chk done"><span class="bx">✓</span><span>古山精機 紹介の御礼連絡</span></div>
+        </div>
+
+        <!-- 担当案件 -->
+        <div class="sec"><h2>担当案件（あなたの分のみ表示）</h2></div>
+        <div class="card" style="overflow-x:auto">
+          <table>
+            <thead><tr><th>案件番号</th><th>会社</th><th>種別</th><th>状態</th><th class="r">金額</th><th></th></tr></thead>
+            <tbody>
+              <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-good"><span class="d"></span>納品 7/18</span></td><td class="r tnum">5万円</td><td class="r" style="color:var(--faint)">›</td></tr>
+              <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0101</td><td>ワタナベ工業</td><td><span class="badge b-blue"><span class="d"></span>レポート（見込）</span></td><td><span class="badge b-sub"><span class="d"></span>本日ヒアリング</span></td><td class="r tnum">—</td><td class="r" style="color:var(--faint)">›</td></tr>
+              <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-warn"><span class="d"></span>BPO</span></td><td><span class="badge b-good"><span class="d"></span>契約中</span></td><td class="r tnum">240万円/年</td><td class="r" style="color:var(--faint)">›</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <!-- 自分の成果報酬 -->
+        <div class="card">
+          <div class="card-h"><span class="t">自分の成果（⑦連携・当月）</span><span class="sp"></span><a class="badge b-blue" href="evaluation_member.html"><span class="d"></span>評価</a></div>
+          <div class="list-row"><div class="bd"><div class="nm">面談fee（アポ 6件）</div><div class="sub">発生時点＝アポ</div></div><b class="tnum">6件</b></div>
+          <div class="list-row"><div class="bd"><div class="nm">レポート受注 2件</div><div class="sub">発生時点＝フォーム入力</div></div><b class="tnum">2件</b></div>
+          <div class="list-row"><div class="bd"><div class="nm">BPO契約 1件</div><div class="sub">発生時点＝契約日</div></div><b class="tnum">1件</b></div>
+        </div>
+        <!-- 通知 -->
+        <div class="card">
+          <div class="card-h"><span class="t">通知</span></div>
+          <div class="list-row"><span class="badge b-good"><span class="d"></span>入金</span><div class="bd"><div class="nm tnum">ユアーズ静岡 5万円 着金（消込は経理）</div></div></div>
+          <div class="list-row"><span class="badge b-warn"><span class="d"></span>依頼</span><div class="bd"><div class="nm">担当外です：47マーケの催促は北山さん宛</div><div class="sub">あなた宛の催促依頼は現在ありません</div></div></div>
+        </div>
+        <!-- 権限の説明 -->
+        <div class="card" style="padding:13px 17px;background:var(--surface-2)">
+          <div style="font-size:11px;font-weight:800;color:var(--sub)">🔒 このアカウントの表示範囲（一般）</div>
+          <div style="font-size:11px;color:var(--faint);margin-top:4px;line-height:1.9">会社・案件＝担当分のみ／評価＝自分のみ／全社は粗利・営業利益の点数まで。キャッシュフロー・支払処理は表示されません。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ヒアリングフォームモーダル -->
+<div class="modal-bg" id="mForm">
+  <div class="modal">
+    <div class="modal-h"><span class="t">ヒアリングフォーム（名人）を開く</span><span class="x" onclick="closeModal('mForm')">✕</span></div>
+    <div class="modal-b">
+      <div style="font-size:12.5px;color:var(--sub)">お客様がフォームに入力すると：<b>見込み → 顧客</b> に自動遷移／<b>レポート受注</b>としてカウント（あなたの獲得）／同意項目が申込条件の同意を兼ねます。</div>
+      <label class="field" style="margin-top:12px"><span class="fl">対象会社</span><input class="inp" value="株式会社ワタナベ工業" readonly /></label>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mForm')">閉じる</span><span class="btn btn-primary" onclick="closeModal('mForm')">フォームURLを共有</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

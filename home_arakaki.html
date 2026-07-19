@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ホーム（アシスタント）｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="home" data-role="arakaki">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、新垣さん</h1></div>
+    <div class="search">案件番号・文書で検索<span class="kbd">⌘K</span></div>
+    <span class="badge b-good"><span class="d"></span>勤務中 9:02〜</span>
+  </div>
+  <div class="content">
+
+    <div class="kpi-grid">
+      <div class="kpi card"><div class="lbl">今日のタスク</div><div class="val tnum">4<small>件</small></div></div>
+      <div class="kpi card"><div class="lbl">作成中の報告書</div><div class="val tnum">2<small>本</small></div>
+        <div class="meta"><span>実績報告1・事業化状況報告1</span></div></div>
+      <div class="kpi card"><div class="lbl">保存待ちの書類</div><div class="val tnum" style="color:var(--orange-d)">3<small>点</small></div>
+        <div class="meta"><span>受領済み・フォルダ振分け待ち</span></div></div>
+      <a class="kpi card" href="attendance.html" style="display:block"><div class="lbl">今日の勤務</div><div class="val tnum">3:13<small>＋勤務中</small></div>
+        <div class="meta"><span>区間2つ目（スーパーフレックス）</span></div></a>
+    </div>
+
+    <div class="cols" style="margin-top:18px">
+      <div>
+        <!-- 作成タスク（アシスタントの主業務） -->
+        <div class="card">
+          <div class="card-h"><span class="t">報告書の作成（あなたの担当）</span></div>
+          <div class="list-row">
+            <span class="badge b-warn"><span class="d"></span>作成中</span>
+            <div class="bd"><div class="nm">deex｜持続化 実績報告書</div><div class="sub">IS-2025-0126・PM幸田の確認待ち箇所 2点・提出目標 7/25</div></div>
+            <span class="btn btn-primary btn-sm" onclick="openModal('mReport')">続きを作成</span>
+          </div>
+          <div class="list-row">
+            <span class="badge b-sub"><span class="d"></span>着手前</span>
+            <div class="bd"><div class="nm">47マーケ｜人材開発支援 事業化状況報告（1年目）</div><div class="sub">IS-2026-0048・必要書類はPM受領済み・期限 8/31</div></div>
+            <span class="btn btn-ghost btn-sm">開始</span>
+          </div>
+        </div>
+
+        <!-- 今日のタスク -->
+        <div class="sec"><h2>今日のタスク</h2></div>
+        <div class="card" style="padding:4px 17px 10px">
+          <div class="chk"><span class="bx"></span><span><b>deex</b>｜実績報告書の経費一覧を証憑と突合（不足があればPMへ）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>今日</span></div>
+          <div class="chk"><span class="bx"></span><span><b>菱洋エレクトロ</b>｜受領した支払証憑2点を「顧客名→案件番号」へ保存</span></div>
+          <div class="chk"><span class="bx"></span><span><b>アストロラボ</b>｜先方から届いた決算書をフォルダへ保存し、PMへ通知</span></div>
+          <div class="chk done"><span class="bx">✓</span><span>先週分の議事録（Notta）の保存確認</span></div>
+        </div>
+
+        <!-- 保存キュー -->
+        <div class="sec"><h2>書類の保存キュー（メール受領 → フォルダ振分け）</h2></div>
+        <div class="card" style="overflow-x:auto">
+          <table>
+            <thead><tr><th>受領</th><th>書類</th><th>振分け先（自動候補）</th><th></th></tr></thead>
+            <tbody>
+              <tr><td class="tnum">7/17 8:40</td><td>決算書2期分.pdf（アストロラボ）</td><td class="tnum">アストロラボ／IS-2026-0074</td><td class="r"><span class="btn btn-primary btn-sm">保存</span></td></tr>
+              <tr><td class="tnum">7/16 17:22</td><td>支払証憑_振込明細.pdf（菱洋）</td><td class="tnum">菱洋エレクトロ／IS-2026-0032／証憑</td><td class="r"><span class="btn btn-primary btn-sm">保存</span></td></tr>
+              <tr><td class="tnum">7/16 17:20</td><td>検収書_署名済.pdf（菱洋）</td><td class="tnum">菱洋エレクトロ／IS-2026-0032／証憑</td><td class="r"><span class="btn btn-primary btn-sm">保存</span></td></tr>
+            </tbody>
+          </table>
+          <div style="padding:9px 17px;border-top:1px solid var(--line);background:var(--surface-2);font-size:11px;color:var(--sub);border-radius:0 0 var(--r) var(--r)">保存すると案件の証憑チェックリストに自動で反映されます（菱洋の不足2点が解消）。</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <!-- 勤怠 -->
+        <div class="card">
+          <div class="card-h"><span class="t">勤怠</span><span class="sp"></span><a class="badge b-blue" href="attendance.html"><span class="d"></span>勤怠画面</a></div>
+          <div class="list-row"><span class="badge b-good"><span class="d"></span>勤務中</span><div class="bd"><div class="nm tnum">9:02〜12:15 ／ 13:30〜</div><div class="sub">今月 98:20 / 所定 112:00</div></div></div>
+          <div class="list-row"><span class="badge b-warn"><span class="d"></span>補正</span><div class="bd"><div class="nm">7/15 未打刻の稼働痕跡（21:10-22:05）</div><div class="sub">補正すると残業代に反映されます</div></div><span class="btn btn-ghost btn-sm">補正</span></div>
+        </div>
+        <!-- 通知 -->
+        <div class="card">
+          <div class="card-h"><span class="t">通知</span></div>
+          <div class="list-row"><span class="badge b-blue"><span class="d"></span>PM</span><div class="bd"><div class="nm">幸田さん：deex報告書の§3を確認しました。修正2点をコメント済み</div></div></div>
+          <div class="list-row"><span class="badge b-good"><span class="d"></span>明細</span><div class="bd"><div class="nm">7月分の給与明細が配布されました</div></div><a class="btn btn-ghost btn-sm" href="payslips.html">開く</a></div>
+        </div>
+        <!-- 権限の説明 -->
+        <div class="card" style="padding:13px 17px;background:var(--surface-2)">
+          <div style="font-size:11px;font-weight:800;color:var(--sub)">🔒 このアカウントの表示範囲（アシスタント）</div>
+          <div style="font-size:11px;color:var(--faint);margin-top:4px;line-height:1.9">案件＝担当分のみ／評価・明細＝自分のみ。会社の金額サマリー・経営管理・経理処理は表示されません。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 報告書作成モーダル -->
+<div class="modal-bg" id="mReport">
+  <div class="modal">
+    <div class="modal-h"><span class="t">実績報告書の作成｜deex（持続化）</span><span class="x" onclick="closeModal('mReport')">✕</span></div>
+    <div class="modal-b">
+      <div style="font-size:11px;font-weight:800;color:var(--sub);margin-bottom:8px">セクション進捗</div>
+      <div class="chk done"><span class="bx">✓</span><span>§1 事業実施の概要</span></div>
+      <div class="chk done"><span class="bx">✓</span><span>§2 実施スケジュール</span></div>
+      <div class="chk"><span class="bx"></span><span>§3 経費明細（PM修正コメント2点 対応中）</span></div>
+      <div class="chk"><span class="bx"></span><span>§4 証憑一覧（チェックリストと自動連携）</span></div>
+      <div class="hint-t" style="margin-top:10px">完成後はPM確認 → お客様入力＋PM同席で提出 → 確定検査 の順に進みます。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mReport')">閉じる</span><span class="btn btn-primary" onclick="closeModal('mReport')">エディタを開く</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

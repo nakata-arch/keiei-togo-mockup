@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>支払処理｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="invoices" data-role="imai">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">経理</div><h1>支払処理（seikyu@ 受領請求書）</h1></div>
+    <div class="search">支払先・請求書番号で検索<span class="kbd">⌘K</span></div>
+  </div>
+  <div class="content">
+
+    <div class="toolbar">
+      <span class="chip">未処理 1</span>
+      <span class="chip active">承認待ち 2</span>
+      <span class="chip">承認済 1</span>
+      <span class="chip">支払済 12</span>
+      <span style="flex:1"></span>
+      <span class="badge b-good"><span class="d"></span>二重取込・二重支払 0件</span>
+      <span class="badge b-blue"><span class="d"></span>次回振込日 7/25</span>
+    </div>
+
+    <div class="md-wrap">
+      <!-- キュー -->
+      <div class="md-list">
+        <div class="md-item sel">
+          <div class="t">株式会社クリエイト</div>
+          <div class="s"><span class="tnum" style="font-weight:800;color:var(--ink)">82万円</span><span>期日 7/25</span><span class="badge b-red"><span class="d"></span>経営会議</span></div>
+        </div>
+        <div class="md-item">
+          <div class="t">Izumi事務所（秘書委託）</div>
+          <div class="s"><span class="tnum" style="font-weight:800;color:var(--ink)">18万円</span><span>期日 7/25</span><span class="badge b-warn"><span class="d"></span>北山承認</span></div>
+        </div>
+        <div class="md-item">
+          <div class="t">印刷会社K</div>
+          <div class="s"><span class="tnum" style="font-weight:800;color:var(--ink)">6.6万円</span><span>期日 8/10</span><span class="badge b-sub"><span class="d"></span>OCR確認</span></div>
+        </div>
+        <div class="md-item">
+          <div class="t">社労士 杉山事務所</div>
+          <div class="s"><span class="tnum" style="font-weight:800;color:var(--ink)">5.5万円</span><span>期日 7/25</span><span class="badge b-good"><span class="d"></span>承認済</span></div>
+        </div>
+      </div>
+
+      <!-- 詳細：ビューア＋OCRフォーム -->
+      <div style="display:grid;grid-template-columns:1fr 360px">
+        <div class="pdf-ph" style="border-radius:0;min-height:560px">📄 請求書PDF（seikyu@ 7/14 09:32 受信・添付1点）</div>
+        <div style="border-left:1px solid var(--line)">
+          <div style="padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px">
+            <span style="font-size:13px;font-weight:800">OCR抽出（確認・補正）</span>
+            <span class="badge b-warn" style="margin-left:auto"><span class="d"></span>下書き</span>
+          </div>
+          <div style="padding:14px 18px">
+            <label class="field"><span class="fl">支払先</span><input class="inp" value="株式会社クリエイト" /></label>
+            <div class="inp-row">
+              <label class="field"><span class="fl">金額（税込）</span><input class="inp tnum" value="820,000" style="font-weight:800" /></label>
+              <label class="field"><span class="fl">支払期日</span><input class="inp" type="date" value="2026-07-25" /></label>
+            </div>
+            <label class="field"><span class="fl">請求書番号（重複判定キー）</span><input class="inp tnum" value="CR-2026-0712" /></label>
+            <label class="field"><span class="fl">案件紐付け</span><select class="inp"><option>IS-2026-0088（商材構築）</option><option>案件なし（全社）</option></select></label>
+            <label class="field"><span class="fl">配賦区分</span><select class="inp"><option>① 案件直課</option><option>② 配賦（案件関連）</option><option>③ 部門費</option><option>④ 販管費（全社共通）</option></select></label>
+            <div style="border-top:1px solid var(--line);margin:6px -18px 0;padding:13px 18px;background:var(--surface-2)">
+              <div style="font-size:11px;color:var(--sub);margin-bottom:9px">金額が<b>50万円以上</b>のため、承認は<b>経営層会議</b>です（一次承認者では承認できません）。</div>
+              <div style="display:flex;gap:8px">
+                <span class="btn btn-ghost btn-sm">差戻し</span>
+                <span class="btn btn-primary" style="margin-left:auto" onclick="openModal('mApprove')">経営層会議で承認</span>
+              </div>
+            </div>
+            <div style="padding-top:12px">
+              <div style="font-size:11px;font-weight:800;color:var(--sub);margin-bottom:6px">処理の流れ</div>
+              <div class="flow-mini" style="border:0;padding:0"><span class="st on">受領</span><span class="ar">→</span><span class="st on">OCR</span><span class="ar">→</span><span class="st on">確認</span><span class="ar">→</span><span class="st">承認</span><span class="ar">→</span><span class="st">CF計上</span><span class="ar">→</span><span class="st">消込</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 承認確認モーダル -->
+<div class="modal-bg" id="mApprove">
+  <div class="modal">
+    <div class="modal-h"><span class="t">経営層会議 承認の記録</span><span class="x" onclick="closeModal('mApprove')">✕</span></div>
+    <div class="modal-b">
+      <div style="font-size:13px;font-weight:800" class="tnum">株式会社クリエイト｜820,000円（期日 7/25）</div>
+      <div class="inp-row" style="margin-top:12px">
+        <label class="field"><span class="fl">承認日（会議日）</span><input class="inp" type="date" value="2026-07-17" /></label>
+        <label class="field"><span class="fl">承認者</span><input class="inp" value="経営層会議（北山・中田・黒田）" readonly /></label>
+      </div>
+      <label class="field"><span class="fl">備考</span><input class="inp" placeholder="会議での決定事項など" /></label>
+      <div class="hint-t">承認するとキャッシュフローの支払予定に計上され、7/25の振込リストに載ります。支払後は入金消込画面で出金明細と突合します。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mApprove')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mApprove')">承認を記録</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

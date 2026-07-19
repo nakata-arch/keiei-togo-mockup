@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>会社｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="companies">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">業務</div><h1>会社</h1></div>
+    <div class="search">会社名・担当・LINE IDで検索<span class="kbd">⌘K</span></div>
+    <span class="btn btn-primary btn-sm" onclick="openModal('mCompany')">＋ 新規会社</span>
+  </div>
+  <div class="content">
+
+    <div class="toolbar">
+      <span class="chip active">すべて 128</span>
+      <span class="chip">見込み 41</span>
+      <span class="chip">顧客 75</span>
+      <span class="chip">リピート顧客 12</span>
+      <span style="flex:1"></span>
+      <select class="inp" style="width:150px"><option>担当：すべて</option><option>幸田</option><option>北山</option><option>新谷</option></select>
+      <select class="inp" style="width:170px"><option>並び順：最終接点が新しい</option><option>受給目標達成率が低い</option><option>経過年数が長い</option></select>
+    </div>
+
+    <div class="card" style="overflow-x:auto">
+      <table>
+        <thead><tr><th>会社名</th><th>ステータス</th><th>経過年数</th><th>担当</th><th>案件系譜</th><th class="r">受給目標達成</th><th>最終接点</th><th>LINE</th><th></th></tr></thead>
+        <tbody>
+          <tr class="rowlink" onclick="location.href='company_detail.html'">
+            <td style="font-weight:800">アストロラボ株式会社</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">1年5ヶ月</td><td>幸田</td><td>レ→B→補</td><td class="r"><span class="badge b-warn"><span class="d"></span>52%</span></td><td class="tnum">7/16 LINE受信</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+          <tr class="rowlink" onclick="location.href='company_detail.html'">
+            <td style="font-weight:800">セルプスジャパン株式会社</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">2年1ヶ月</td><td>幸田</td><td>レ→B→補×2</td><td class="r"><span class="badge b-good"><span class="d"></span>104%</span></td><td class="tnum">7/15 面談</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+          <tr class="rowlink" onclick="location.href='company_detail.html'" style="background:#fffdf8">
+            <td style="font-weight:800">株式会社ティーガイア</td><td><span class="badge b-good"><span class="d"></span>顧客</span></td><td class="tnum">0年11ヶ月</td><td>北山</td><td>レ→B</td><td class="r"><span class="badge b-red"><span class="d"></span>0%・先行アラート</span></td><td class="tnum">6/22 メール</td><td><span class="badge b-sub"><span class="d"></span>未連携</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+          <tr class="rowlink" onclick="location.href='company_detail.html'">
+            <td style="font-weight:800">株式会社リサスティー</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">1年8ヶ月</td><td>幸田</td><td>レ→B→補×2</td><td class="r"><span class="badge b-warn"><span class="d"></span>83%</span></td><td class="tnum">7/14 LINE送信</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+          <tr class="rowlink" onclick="location.href='company_detail.html'">
+            <td style="font-weight:800">古山精機株式会社</td><td><span class="badge b-sub"><span class="d"></span>見込み</span></td><td class="tnum">—</td><td>新谷</td><td>（レポート提案中）</td><td class="r">—</td><td class="tnum">7/12 面談</td><td><span class="badge b-sub"><span class="d"></span>未連携</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+          <tr class="rowlink" onclick="location.href='company_detail.html'">
+            <td style="font-weight:800">株式会社コスコ</td><td><span class="badge b-sub"><span class="d"></span>見込み</span></td><td class="tnum">—</td><td>杉山</td><td>（ヒアリング済）</td><td class="r">—</td><td class="tnum">7/17 ヒアリング</td><td><span class="badge b-sub"><span class="d"></span>未連携</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+          <tr class="rowlink" onclick="location.href='company_detail.html'">
+            <td style="font-weight:800">菱洋エレクトロ株式会社</td><td><span class="badge b-good"><span class="d"></span>顧客</span></td><td class="tnum">1年2ヶ月</td><td>幸田</td><td>B→補</td><td class="r"><span class="badge b-good"><span class="d"></span>実施中</span></td><td class="tnum">7/9 メール</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+        </tbody>
+      </table>
+      <div class="pagen"><span>128社中 1–7</span><span class="pg on">1</span><span class="pg">2</span><span class="pg">3</span><span class="pg">…</span><span class="pg">19</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 新規会社モーダル -->
+<div class="modal-bg" id="mCompany">
+  <div class="modal">
+    <div class="modal-h"><span class="t">新規会社の登録</span><span class="x" onclick="closeModal('mCompany')">✕</span></div>
+    <div class="modal-b">
+      <label class="field"><span class="fl">会社名<span class="req">*</span></span><input class="inp" placeholder="例：株式会社◯◯" /></label>
+      <div class="inp-row">
+        <label class="field"><span class="fl">ステータス</span><select class="inp"><option>見込み</option><option>顧客</option><option>リピート顧客</option></select></label>
+        <label class="field"><span class="fl">紹介元</span><select class="inp"><option>紹介（CCコミュニティ）</option><option>紹介（既存顧客）</option><option>その他</option></select></label>
+      </div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">担当（TimeRexから自動設定）</span><input class="inp" value="幸田" readonly /></label>
+        <label class="field"><span class="fl">HubSpot会社ID</span><input class="inp" placeholder="自動採番" readonly /></label>
+      </div>
+      <div class="hint-t">ヒアリングフォーム入力で「見込み→顧客」、BPO契約で「顧客→リピート顧客」に自動遷移します。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mCompany')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mCompany')">登録</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

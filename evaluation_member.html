@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>評価・賞与（自分）｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="evaluation" data-role="shintani">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">経営管理</div><h1>評価・賞与（自分の分）</h1></div>
+    <span class="badge b-sub"><span class="d"></span>🔒 一般権限：自分のみ表示</span>
+    <div style="margin-left:auto"><select class="inp" style="width:180px"><option>2026年度 第1四半期</option><option>2025年度 第4四半期</option></select></div>
+  </div>
+  <div class="content">
+
+    <!-- 全社（点数のみ・一般に開く範囲） -->
+    <div class="cols-2">
+      <div class="card" style="padding:17px 18px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:12px;font-weight:800;color:var(--sub)">全社：粗利スコア</span><span class="badge b-good" style="margin-left:auto"><span class="d"></span>合格超え</span></div>
+        <div style="font-size:30px;font-weight:800;margin-top:6px" class="tnum">67<small style="font-size:13px;color:var(--faint)">点</small></div>
+        <div class="gauge"><i style="width:67%;background:var(--good)"></i><span class="mk" data-l="40 返済" style="left:40%"></span><span class="mk" data-l="60 合格" style="left:60%"></span></div>
+        <div style="height:16px"></div>
+      </div>
+      <div class="card" style="padding:17px 18px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:12px;font-weight:800;color:var(--sub)">全社：営業利益スコア</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>合格まであと少し</span></div>
+        <div style="font-size:30px;font-weight:800;margin-top:6px" class="tnum">57<small style="font-size:13px;color:var(--faint)">点</small></div>
+        <div class="gauge"><i style="width:57%;background:var(--gold)"></i><span class="mk" data-l="40 返済" style="left:40%"></span><span class="mk" data-l="60 合格" style="left:60%"></span></div>
+        <div style="height:16px"></div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--faint);margin-top:8px">🔒 金額の内訳（P&L詳細）・部門の原資・他の人の配分は、一般権限では表示されません（粗利・営業利益の点数まで）。</p>
+
+    <div class="cols" style="margin-top:16px">
+      <div>
+        <!-- 自分の成果 -->
+        <div class="card">
+          <div class="card-h"><span class="t">あなたの成果（営業部＝獲得・当四半期）</span><span class="sp"></span><span class="badge b-blue"><span class="d"></span>担当＝TimeRex参加者が正</span></div>
+          <div class="list-row"><div class="bd"><div class="nm">新規アポ（面談fee 発生時点＝アポ）</div></div><b class="tnum">16件</b></div>
+          <div class="list-row"><div class="bd"><div class="nm">レポート受注（発生時点＝フォーム入力）</div></div><b class="tnum">5件</b></div>
+          <div class="list-row"><div class="bd"><div class="nm">BPO契約（発生時点＝契約日）</div></div><b class="tnum">2件</b></div>
+          <div class="list-row"><div class="bd"><div class="nm">部門スコアへの貢献</div><div class="sub">営業部＝67点（合格超え）のうち、あなたの獲得が約28%</div></div><span class="badge b-good"><span class="d"></span>部内2位</span></div>
+        </div>
+
+        <!-- 自分の賞与 -->
+        <div class="sec"><h2>あなたの賞与（確定分）</h2></div>
+        <div class="card">
+          <div class="list-row"><div class="bd"><div class="nm">褒賞（部門長 配分・確定済）</div><div class="sub">2026年度 第1四半期・7月分明細に反映</div></div><b class="tnum" style="font-size:16px">8.1万円</b></div>
+          <div class="list-row"><div class="bd"><div class="nm">裁量（経営判断・未確定）</div></div><span class="badge b-sub"><span class="d"></span>四半期末に確定</span></div>
+          <div style="display:flex;gap:8px;padding:11px 17px;border-top:1px solid var(--line);background:var(--surface-2);border-radius:0 0 var(--r) var(--r)">
+            <span style="font-size:11px;color:var(--faint);align-self:center">🔒 他のメンバーの配分・部門原資の金額は表示されません。</span>
+            <a class="btn btn-ghost btn-sm" style="margin-left:auto" href="payslips.html">明細で確認</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <!-- スコアの仕組み（本人向け説明） -->
+        <div class="card" style="padding:15px 17px">
+          <div style="font-size:12px;font-weight:800;margin-bottom:8px">スコアの仕組み</div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">40点</span><span class="v">返済ライン（必達）</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">60点</span><span class="v">合格（超過分が賞与原資）</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">営業部の指標</span><span class="v">獲得（1指標のみ）</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">配分</span><span class="v">褒賞33／裁量33／留保34</span></div>
+        </div>
+        <div class="card" style="padding:15px 17px">
+          <div style="font-size:12px;font-weight:800;margin-bottom:6px">四半期の推移（自分）</div>
+          <div class="vchart" style="height:110px;padding:6px 0 0">
+            <div class="vbar"><span class="vv tnum">4.2万</span><i style="height:44%"></i><span class="vl">Q3</span></div>
+            <div class="vbar"><span class="vv tnum">6.8万</span><i style="height:66%"></i><span class="vl">Q4</span></div>
+            <div class="vbar"><span class="vv tnum">8.1万</span><i style="height:80%;background:var(--good)"></i><span class="vl">Q1</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

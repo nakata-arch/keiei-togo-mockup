@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>アストロラボ株式会社｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="companies">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="crumbs"><a href="companies.html">会社</a><span>›</span><span style="color:var(--ink)">アストロラボ株式会社</span></div>
+      <h1>アストロラボ株式会社</h1>
+    </div>
+    <span class="badge b-good"><span class="d"></span>リピート顧客</span>
+    <span class="badge b-blue"><span class="d"></span>LINE連携済</span>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <span class="btn btn-ghost btn-sm" onclick="openModal('mPortal')">★ ポータルURL</span>
+      <span class="btn btn-ghost btn-sm" onclick="openModal('mEdit')">編集</span>
+      <a class="btn btn-primary btn-sm" href="deals.html">＋ 案件を追加</a>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- 受給目標バー（常時表示） -->
+    <div class="goal-box" style="margin-bottom:16px">
+      <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <div class="gl">補助金 受給目標（BPO契約 240万円 × 2・2027/2まで）</div>
+          <div class="gv tnum">248万円 <small>／ 480万円（52%）</small></div>
+          <div class="gbar"><i style="width:52%"></i></div>
+        </div>
+        <div style="display:flex;gap:18px;font-size:11px;color:#94a3bd">
+          <div><div>顧客歴</div><div style="font-size:15px;font-weight:800;color:#fff" class="tnum">1年5ヶ月</div></div>
+          <div><div>リピート</div><div style="font-size:15px;font-weight:800;color:#fff" class="tnum">0年5ヶ月</div></div>
+          <div><div>累計入金</div><div style="font-size:15px;font-weight:800;color:#fff" class="tnum">270万円</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タブ -->
+    <div class="dtabs">
+      <span class="dtab on" data-g="c" data-t="t1" onclick="swTab('c','t1')">概要・案件<span class="n">4</span></span>
+      <span class="dtab" data-g="c" data-t="t2" onclick="swTab('c','t2')">接点（メール・LINE）<span class="n">18</span></span>
+      <span class="dtab" data-g="c" data-t="t3" onclick="swTab('c','t3')">文書<span class="n">12</span></span>
+      <span class="dtab" data-g="c" data-t="t4" onclick="swTab('c','t4')">請求・入金<span class="n">4</span></span>
+    </div>
+
+    <!-- t1 概要・案件 -->
+    <div class="dpane on" data-g="c" data-t="t1">
+      <div class="cols">
+        <div>
+          <div class="card lineage">
+            <div class="ln-node"><span class="lt" style="color:var(--blue)">診断レポート</span><div class="ln">IS-2026-0041</div><div class="ls">2026/01・5万円・新谷</div><div style="margin-top:8px"><span class="badge b-good"><span class="d"></span>完了</span></div></div>
+            <div class="ln-arrow">→</div>
+            <div class="ln-node"><span class="lt" style="color:var(--orange-d)">BPO顧問</span><div class="ln">IS-2026-0058</div><div class="ls">2026/02・240万円/年・幸田</div><div style="margin-top:8px"><span class="badge b-good"><span class="d"></span>契約中</span></div></div>
+            <div class="ln-arrow">→</div>
+            <a class="ln-node" href="deal_detail.html" style="display:block"><span class="lt" style="color:var(--good)">補助金：課題解決型</span><div class="ln">IS-2026-0074</div><div class="ls">申請フェーズ・248万円・幸田</div><div style="margin-top:8px"><span class="badge b-red"><span class="d"></span>停滞8日 →開く</span></div></a>
+            <div class="ln-arrow">→</div>
+            <div class="ln-node" style="border-style:dashed;opacity:.7;cursor:pointer" onclick="openModal('mPropose')"><span class="lt" style="color:var(--faint)">次の申請候補（未起票）</span><div class="ln">ものづくり補助金</div><div class="ls">設備更新の相談あり ＋起票する</div></div>
+          </div>
+          <div class="card" style="margin-top:14px">
+            <div class="card-h"><span class="t">直近の予定（カレンダー）</span></div>
+            <div class="list-row"><span class="badge b-blue"><span class="d"></span>7/22 14:00</span><div class="bd"><div class="nm">月次定例</div><div class="sub">参加：幸田・先方社長（取引ID記載済）</div></div></div>
+            <div class="list-row"><span class="badge b-sub"><span class="d"></span>7/29 10:00</span><div class="bd"><div class="nm">交付申請の同席（予定）</div></div></div>
+          </div>
+        </div>
+        <div class="card" style="padding:16px 18px">
+          <div style="font-size:12px;font-weight:800;margin-bottom:10px">基本情報</div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">HubSpot会社ID</span><span class="v tnum">12894011</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">代表者</span><span class="v">豊田 隆</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">業種</span><span class="v">機械器具製造</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">紹介元</span><span class="v">CCコミュニティ</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">担当</span><span class="v">幸田（TimeRex）</span></div>
+          <div class="kv" style="padding-left:0;padding-right:0"><span class="k">主要連絡手段</span><span class="v">LINE</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- t2 接点 -->
+    <div class="dpane" data-g="c" data-t="t2">
+      <div class="cols">
+        <div class="card">
+          <div class="card-h"><span class="t">タイムライン</span><span class="sp"></span><span class="seg"><span class="on">すべて</span><span>LINE</span><span>メール</span><span>面談</span></span></div>
+          <div class="tl-row"><span class="tt">7/16 9:02</span><span class="ch"><span class="badge b-good"><span class="d"></span>LINE受</span></span><div>「決算書は今週中に送ります」（先方・社長）</div></div>
+          <div class="tl-row"><span class="tt">7/15 12:30</span><span class="ch"><span class="badge b-blue"><span class="d"></span>閲覧</span></span><div>ポータルを閲覧（申請状況ページ）</div></div>
+          <div class="tl-row"><span class="tt">7/11 10:21</span><span class="ch"><span class="badge b-blue"><span class="d"></span>LINE送</span></span><div>必要書類の再案内（決算書・賃金台帳）— 幸田</div></div>
+          <div class="tl-row"><span class="tt">7/8 16:40</span><span class="ch"><span class="badge b-blue"><span class="d"></span>LINE送</span></span><div>交付決定前の発注に関する注意喚起（証跡保存済）</div></div>
+          <div class="tl-row"><span class="tt">7/2 14:00</span><span class="ch"><span class="badge b-sub"><span class="d"></span>面談</span></span><div>月次定例（議事録→文書に実体保存済）</div></div>
+        </div>
+        <div class="card" style="padding:16px 18px">
+          <div style="font-size:12px;font-weight:800;margin-bottom:10px">この画面から送信</div>
+          <div class="seg" style="margin-bottom:10px"><span class="on">LINE</span><span>メール</span></div>
+          <textarea class="inp" rows="5" placeholder="メッセージを入力…（案件 IS-2026-0074 に紐づけ）">豊田様　お世話になっております。賃金台帳のご準備状況はいかがでしょうか。7/23の定例までにご用意いただけると申請がスムーズです。</textarea>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+            <select class="inp" style="flex:1"><option>紐づけ：IS-2026-0074（補助金）</option><option>IS-2026-0058（BPO）</option><option>会社のみ</option></select>
+            <span class="btn btn-primary btn-sm">送信</span>
+          </div>
+          <div class="hint-t">送信はすべて接点タイムラインに証跡として記録されます。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- t3 文書 -->
+    <div class="dpane" data-g="c" data-t="t3">
+      <div class="card" style="overflow-x:auto">
+        <div class="card-h"><span class="t">customer／アストロラボ／</span><span class="sp"></span><span class="btn btn-ghost btn-sm">＋ アップロード</span></div>
+        <table>
+          <thead><tr><th>日付</th><th>案件</th><th>種別</th><th>文書</th><th class="r">金額</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="tnum">7/11</td><td class="tnum">IS-2026-0074</td><td><span class="badge b-blue"><span class="d"></span>補助金</span></td><td>見積依頼書（相見積1/3）</td><td class="r">—</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum">6/30</td><td class="tnum">IS-2026-0074</td><td><span class="badge b-warn"><span class="d"></span>発行請求</span></td><td>着手金 請求書（board）</td><td class="r tnum">30万円</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum">2/14</td><td class="tnum">IS-2026-0058</td><td><span class="badge b-good"><span class="d"></span>契約書</span></td><td>BPO顧問契約書（GreatSign締結）</td><td class="r tnum">240万円</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum">1/20</td><td class="tnum">IS-2026-0041</td><td><span class="badge b-sub"><span class="d"></span>成果物</span></td><td>診断レポート（納品版）</td><td class="r tnum">5万円</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- t4 請求・入金 -->
+    <div class="dpane" data-g="c" data-t="t4">
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>種別</th><th>案件</th><th class="r">金額</th><th>締め</th><th>請求</th><th>入金</th></tr></thead>
+          <tbody>
+            <tr><td>レポート</td><td class="tnum">IS-2026-0041</td><td class="r tnum">5万円</td><td class="tnum">2026/01</td><td><span class="badge b-good"><span class="d"></span>発行済</span></td><td><span class="badge b-good"><span class="d"></span>入金済</span></td></tr>
+            <tr><td>BPO顧問料（レポート代5万円 割引適用）</td><td class="tnum">IS-2026-0058</td><td class="r tnum">235万円</td><td class="tnum">2026/02</td><td><span class="badge b-good"><span class="d"></span>発行済</span></td><td><span class="badge b-good"><span class="d"></span>入金済 7/16</span></td></tr>
+            <tr><td>補助金 着手金</td><td class="tnum">IS-2026-0074</td><td class="r tnum">30万円</td><td class="tnum">2026/06</td><td><span class="badge b-good"><span class="d"></span>発行済</span></td><td><span class="badge b-warn"><span class="d"></span>期日 7/31</span></td></tr>
+            <tr><td>成果報酬（採択時 15%）</td><td class="tnum">IS-2026-0074</td><td class="r tnum" style="color:var(--faint)">（37.2万円）</td><td>採択月</td><td><span class="badge b-sub"><span class="d"></span>採択待ち</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ポータルURLモーダル -->
+<div class="modal-bg" id="mPortal">
+  <div class="modal">
+    <div class="modal-h"><span class="t">顧客ポータルURL｜アストロラボ</span><span class="x" onclick="closeModal('mPortal')">✕</span></div>
+    <div class="modal-b">
+      <label class="field"><span class="fl">発行済みURL（URL＝鍵・ログイン不要）</span>
+        <div style="display:flex;gap:8px"><input class="inp tnum" style="font-family:Consolas,monospace" value="https://portal.initialstate.jp/c/Xk2f9aQtR8" readonly /><span class="btn btn-ghost btn-sm" style="white-space:nowrap">コピー</span></div>
+      </label>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <span class="btn btn-primary btn-sm">LINEで送る</span><span class="btn btn-ghost btn-sm">メールで送る</span><span class="btn btn-ghost btn-sm" style="color:var(--red)">失効して再発行</span>
+      </div>
+      <div style="font-size:11px;font-weight:800;color:var(--sub);margin-bottom:6px">閲覧ログ（関心シグナル）</div>
+      <div style="font-size:12px;color:var(--sub);line-height:2">7/16 21:04 ／ 7/15 12:30 ／ 7/12 8:11 — 計3回</div>
+      <div class="hint-t">表示されるのは申請状況・お願い事項・次回予定のみ。金額の内訳・確度・社内メモは表示されません。<a href="portal.html">顧客が見る画面をプレビュー →</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- 会社編集モーダル -->
+<div class="modal-bg" id="mEdit">
+  <div class="modal">
+    <div class="modal-h"><span class="t">会社情報の編集</span><span class="x" onclick="closeModal('mEdit')">✕</span></div>
+    <div class="modal-b">
+      <label class="field"><span class="fl">会社名<span class="req">*</span></span><input class="inp" value="アストロラボ株式会社" /></label>
+      <div class="inp-row">
+        <label class="field"><span class="fl">代表者</span><input class="inp" value="豊田 隆" /></label>
+        <label class="field"><span class="fl">業種</span><input class="inp" value="機械器具製造" /></label>
+      </div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">ステータス（自動遷移）</span><input class="inp" value="リピート顧客" readonly /></label>
+        <label class="field"><span class="fl">主要連絡手段</span><select class="inp"><option>LINE</option><option>メール</option></select></label>
+      </div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mEdit')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mEdit')">保存</span></div>
+  </div>
+</div>
+
+<!-- 追加提案 起票モーダル -->
+<div class="modal-bg" id="mPropose">
+  <div class="modal">
+    <div class="modal-h"><span class="t">次の申請候補を起票</span><span class="x" onclick="closeModal('mPropose')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">補助金</span><select class="inp"><option>ものづくり補助金</option><option>省力化投資補助金</option><option>新事業進出補助金</option></select></label>
+        <label class="field"><span class="fl">想定申請額（円）</span><input class="inp tnum" value="7,500,000" /></label>
+      </div>
+      <label class="field"><span class="fl">親案件（系譜リンク）</span><input class="inp" value="IS-2026-0058（BPO顧問）" readonly /></label>
+      <div class="hint-t">起票すると案件番号を自動採番し、補助金パイプラインに追加されます。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mPropose')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mPropose')">起票する</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

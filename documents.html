@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>文書｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="documents">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">管理部</div><h1>文書（電子帳簿保存法の検索・監査用）</h1></div>
+    <div class="search">日付・金額・取引先で検索（電子帳簿保存法）<span class="kbd">⌘K</span></div>
+    <span class="btn btn-ghost btn-sm">Google Driveで開く ↗</span>
+    <span class="btn btn-primary btn-sm" onclick="openModal('mUp')">＋ アップロード</span>
+  </div>
+  <div class="content">
+
+    <div class="md-wrap" style="grid-template-columns:280px 1fr">
+      <!-- フォルダツリー -->
+      <div class="md-list">
+        <div class="tree">
+          <div class="tn">📁 customer／</div>
+          <div class="tn lv1 sel">📂 アストロラボ</div>
+          <div class="tn lv2">└ IS-2026-0041（レポート）</div>
+          <div class="tn lv2" style="font-weight:800;color:var(--blue)">└ IS-2026-0074（補助金）●</div>
+          <div class="tn lv2">└ IS-2026-0058（BPO）</div>
+          <div class="tn lv1">📂 セルプスジャパン</div>
+          <div class="tn lv1">📂 リサスティー</div>
+          <div class="tn lv1">📂 菱洋エレクトロ</div>
+          <div class="tn">📁 全社・共通</div>
+          <div class="tn lv1">📂 支払月別（受領請求書）</div>
+          <div class="tn lv1">📂 人員名（明細・本人のみ）</div>
+        </div>
+      </div>
+
+      <!-- ファイル一覧 -->
+      <div>
+        <div style="display:flex;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap">
+          <span style="font-size:12.5px;font-weight:800">アストロラボ／IS-2026-0074／</span>
+          <span style="flex:1"></span>
+          <select class="inp" style="width:130px"><option>種別：すべて</option><option>契約書</option><option>請求書</option><option>証憑</option><option>議事録</option></select>
+          <select class="inp" style="width:140px"><option>期間：今年度</option><option>すべて</option></select>
+        </div>
+        <table>
+          <thead><tr><th>日付</th><th>種別</th><th>文書名</th><th class="r">金額</th><th>取引先</th><th>取込</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="tnum">7/11</td><td><span class="badge b-blue"><span class="d"></span>見積</span></td><td>見積依頼書_設備商社M.pdf</td><td class="r tnum">—</td><td>設備商社M</td><td>メール自動</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum">6/30</td><td><span class="badge b-warn"><span class="d"></span>発行請求</span></td><td>着手金請求書_IS-2026-0074.pdf</td><td class="r tnum">30万円</td><td>アストロラボ</td><td>board自動</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum">6/20</td><td><span class="badge b-sub"><span class="d"></span>計画</span></td><td>事業計画書_v2.docx</td><td class="r tnum">—</td><td>—</td><td>手動（幸田）</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum">6/2</td><td><span class="badge b-good"><span class="d"></span>契約</span></td><td>補助金支援契約書（締結済）.pdf</td><td class="r tnum">30万円</td><td>アストロラボ</td><td>GreatSign自動</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum">5/28</td><td><span class="badge b-sub"><span class="d"></span>議事録</span></td><td>キックオフ議事録（Notta実体）.txt</td><td class="r tnum">—</td><td>—</td><td>Notta自動</td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+          </tbody>
+        </table>
+        <div style="display:flex;gap:14px;align-items:center;padding:11px 16px;border-top:1px solid var(--line);background:var(--surface-2)">
+          <span style="font-size:11.5px;color:var(--sub)">証憑チェックリスト（申請フェーズ）：<b style="color:var(--red)">相見積 残2社が不足</b></span>
+          <a class="btn btn-ghost btn-sm" style="margin-left:auto" href="deal_detail.html">案件を開く</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-grid c3" style="margin-top:16px">
+      <div class="kpi card"><div class="lbl">電帳法：受領請求書（必須）</div><div class="val tnum">100<small>%</small></div><div class="bar"><i style="width:100%;background:var(--good)"></i></div></div>
+      <div class="kpi card"><div class="lbl">電帳法：board発行請求書（必須）</div><div class="val tnum">100<small>%</small></div><div class="bar"><i style="width:100%;background:var(--good)"></i></div></div>
+      <div class="kpi card"><div class="lbl">契約書・明細（同基準）</div><div class="val tnum">96<small>%</small></div><div class="meta"><span>旧案件の遡及取込 残4%</span></div><div class="bar"><i style="width:96%;background:var(--gold)"></i></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- アップロードモーダル -->
+<div class="modal-bg" id="mUp">
+  <div class="modal">
+    <div class="modal-h"><span class="t">文書のアップロード</span><span class="x" onclick="closeModal('mUp')">✕</span></div>
+    <div class="modal-b">
+      <div style="border:2px dashed var(--line);border-radius:12px;padding:26px;text-align:center;color:var(--faint);font-size:12.5px;margin-bottom:14px">ここにファイルをドロップ（または クリックして選択）</div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">紐付け先<span class="req">*</span></span><select class="inp"><option>アストロラボ／IS-2026-0074</option><option>会社のみ</option><option>全社・共通</option></select></label>
+        <label class="field"><span class="fl">種別</span><select class="inp"><option>証憑（発注・支払）</option><option>契約書</option><option>報告書</option><option>その他</option></select></label>
+      </div>
+      <div class="hint-t">保存時に案件番号を必ず付与します（付与できない場合は「全社・共通」）。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mUp')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mUp')">アップロード</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+</body>
+</html>

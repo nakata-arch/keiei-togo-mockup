@@ -1,0 +1,181 @@
+/* v4 システム画面用の追加UI部品（フォーム・モーダル・ツリー・ステッパー） */
+
+/* ---- form ---- */
+.field{display:block;margin-bottom:12px}
+.field .fl{display:block;font-size:11px;font-weight:800;color:var(--sub);margin-bottom:5px}
+.inp,select.inp,textarea.inp{width:100%;border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13px;font-family:var(--font);background:var(--surface);color:var(--ink);outline:none}
+.inp:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,145,76,.15)}
+.inp[readonly]{background:var(--surface-2);color:var(--sub)}
+.inp-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.req{color:var(--red);margin-left:2px}
+.hint-t{font-size:10.5px;color:var(--faint);margin-top:4px}
+
+/* ---- modal ---- */
+.modal-bg{position:fixed;inset:0;background:rgba(16,25,42,.45);z-index:60;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border-radius:14px;box-shadow:var(--sh-md);width:100%;max-width:520px;max-height:88vh;overflow-y:auto}
+.modal-h{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.modal-h .t{font-size:14.5px;font-weight:800}
+.modal-h .x{margin-left:auto;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:var(--faint);cursor:pointer;font-size:15px}
+.modal-h .x:hover{background:var(--line-2);color:var(--ink)}
+.modal-b{padding:18px 20px}
+.modal-f{display:flex;justify-content:flex-end;gap:8px;padding:14px 20px;border-top:1px solid var(--line);background:var(--surface-2);border-radius:0 0 14px 14px}
+
+/* ---- stepper（フェーズ操作） ---- */
+.stepper{display:flex;align-items:center;gap:0;padding:14px 18px}
+.step{display:flex;align-items:center;gap:8px}
+.step .sn{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:900;background:var(--line-2);color:var(--faint);border:2px solid var(--line)}
+.step.done .sn{background:var(--good);border-color:var(--good);color:#fff}
+.step.now .sn{background:var(--surface);border-color:var(--orange);color:var(--orange-d)}
+.step .st{font-size:11.5px;font-weight:800;color:var(--faint)}
+.step.done .st{color:var(--good)}
+.step.now .st{color:var(--ink)}
+.step-line{flex:1;height:2px;background:var(--line);margin:0 10px;min-width:22px}
+.step-line.done{background:var(--good)}
+
+/* ---- master-detail（キュー選択） ---- */
+.md-wrap{display:grid;grid-template-columns:330px 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface);box-shadow:var(--sh-sm)}
+.md-list{border-right:1px solid var(--line);max-height:640px;overflow-y:auto;background:var(--surface-2)}
+.md-item{padding:12px 15px;border-bottom:1px solid var(--line-2);cursor:pointer}
+.md-item:hover{background:var(--surface)}
+.md-item.sel{background:var(--surface);box-shadow:inset 3px 0 0 var(--orange)}
+.md-item .t{font-size:12.5px;font-weight:800}
+.md-item .s{font-size:11px;color:var(--faint);margin-top:2px;display:flex;gap:8px;align-items:center}
+
+/* ---- tree（文書） ---- */
+.tree{font-size:12.5px;line-height:2.1;padding:12px 16px}
+.tree .tn{cursor:pointer;display:flex;align-items:center;gap:7px;border-radius:7px;padding:1px 8px}
+.tree .tn:hover{background:var(--line-2)}
+.tree .tn.sel{background:var(--blue-bg);color:var(--blue);font-weight:800}
+.tree .lv1{padding-left:22px}.tree .lv2{padding-left:44px}
+
+/* ---- toggle switch ---- */
+.tgl{position:relative;width:34px;height:19px;border-radius:var(--r-full);background:var(--line);display:inline-block;cursor:pointer;vertical-align:middle;transition:.15s}
+.tgl.on{background:var(--good)}
+.tgl::after{content:"";position:absolute;top:2.5px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:.15s}
+.tgl.on::after{left:17px}
+
+/* ---- tabs（詳細画面のタブ） ---- */
+.dtabs{display:flex;gap:2px;border-bottom:1px solid var(--line);padding:0 4px;margin-bottom:16px}
+.dtab{padding:10px 15px;font-size:12.5px;font-weight:700;color:var(--faint);border-bottom:2px solid transparent;cursor:pointer;border-radius:8px 8px 0 0}
+.dtab:hover{color:var(--sub);background:var(--line-2)}
+.dtab.on{color:var(--ink);border-bottom-color:var(--orange)}
+.dtab .n{font-size:10px;background:var(--line-2);border-radius:var(--r-full);padding:0 6px;margin-left:4px;color:var(--faint)}
+.dpane{display:none}.dpane.on{display:block}
+
+/* ---- selectable radio row（消込候補） ---- */
+.cand{display:flex;align-items:center;gap:11px;padding:11px 15px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;cursor:pointer;background:var(--surface)}
+.cand:hover{border-color:var(--faint)}
+.cand.sel{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,145,76,.12)}
+.cand .rd{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);flex-shrink:0}
+.cand.sel .rd{border-color:var(--orange);background:radial-gradient(circle at center,var(--orange) 0 5px,transparent 5.5px)}
+
+/* ---- login ---- */
+.login-wrap{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,var(--navy) 0%,#101c31 60%,#1a2a45 100%)}
+.login-card{width:380px;background:var(--surface);border-radius:16px;box-shadow:var(--sh-md);padding:34px 32px}
+
+/* ---- misc ---- */
+.crumbs{font-size:11.5px;color:var(--faint);font-weight:700;display:flex;gap:6px;align-items:center}
+.crumbs a{color:var(--faint)}
+.crumbs a:hover{color:var(--blue)}
+.pagen{display:flex;gap:5px;align-items:center;justify-content:flex-end;padding:11px 15px;font-size:12px;color:var(--sub)}
+.pagen .pg{width:27px;height:27px;border-radius:7px;display:grid;place-items:center;border:1px solid var(--line);cursor:pointer}
+.pagen .pg.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.rowlink{cursor:pointer}
+.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface)}
+.seg span{padding:7px 14px;font-size:12px;font-weight:700;color:var(--sub);cursor:pointer}
+.seg span.on{background:var(--navy);color:#fff}
+
+/* ---- v4.1 ナビ改善：見出し廃止・SVGアイコン・アカウントメニュー ---- */
+.nav-sep{height:1px;background:rgba(255,255,255,.07);margin:9px 12px}
+.nav-item svg{width:17px;height:17px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.nav-item.active svg{opacity:1}
+.side-user{cursor:pointer;user-select:none}
+.side-user:hover{background:rgba(255,255,255,.09)}
+.side-user .chev{margin-left:auto;color:#7686a0;font-size:10px;transition:.15s}
+.side-user.open .chev{transform:rotate(180deg)}
+.userpop{position:absolute;left:12px;right:12px;bottom:66px;background:#1c2d4a;border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 12px 34px rgba(0,0,0,.5);padding:6px;display:none;z-index:80}
+.userpop.open{display:block}
+.up-label{font-size:9.5px;font-weight:800;letter-spacing:.08em;color:#5f6f85;padding:6px 10px 3px}
+.up-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;font-size:12px;color:#cdd6e2;cursor:pointer}
+.up-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.up-item .av{width:26px;height:26px;font-size:11px;border-radius:8px}
+.up-item .nm{font-weight:700;line-height:1.25;font-size:12px}
+.up-item .rl{font-size:10px;color:#7686a0}
+.up-item .cur{margin-left:auto;color:var(--gold);font-weight:900}
+.up-sep{height:1px;background:rgba(255,255,255,.1);margin:5px 8px}
+
+/* ---- v4.2 Bento Grid＋ウォーターフォール＋トレンド ---- */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.b3{grid-column:span 3}.b4{grid-column:span 4}.b6{grid-column:span 6}.b8{grid-column:span 8}.b12{grid-column:span 12}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-sm);padding:18px 20px;min-width:0}
+.tile .tl{font-size:11.5px;color:var(--sub);font-weight:700;display:flex;align-items:center;gap:8px}
+.tile .tl .lk{margin-left:auto;font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;white-space:nowrap}
+.tile .hero{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-top:10px}
+.tile .hero small{font-size:15px;font-weight:700;color:var(--sub)}
+.tile .mid{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1;margin-top:9px}
+.tile .mid small{font-size:12px;font-weight:700;color:var(--sub)}
+/* 3期ミニバー（先月・当月・次月） */
+.tri{display:flex;gap:14px;align-items:flex-end;margin-top:14px;height:74px}
+.tri .tcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%}
+.tri .tcol i{width:100%;max-width:56px;border-radius:6px 6px 0 0;background:var(--line)}
+.tri .tcol.cur i{background:var(--orange)}
+.tri .tcol.ok i{background:var(--good)}
+.tri .tv{font-size:12px;font-weight:800}
+.tri .tk{font-size:10px;color:var(--faint);font-weight:700}
+.thresh{position:relative;border-top:2px dashed var(--navy-3);margin-top:-40px;pointer-events:none}
+.thresh span{position:absolute;right:0;top:-16px;font-size:9.5px;font-weight:800;color:var(--navy-3);background:var(--surface);padding:0 4px}
+/* ウォーターフォール */
+.wf{display:flex;align-items:flex-end;gap:10px;height:190px;padding:10px 6px 0}
+.wf .wcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}
+.wf .wcol i{width:100%;max-width:64px;border-radius:6px;display:block}
+.wf .wv{font-size:11.5px;font-weight:800}
+.wf .wk{font-size:10px;color:var(--faint);font-weight:700;text-align:center;line-height:1.3}
+/* 内訳（集計ドリルダウン） */
+.drill td{font-size:12px;padding:8px 14px}
+.drill thead th{padding:8px 14px}
+/* フロー（評価の流れ） */
+.flowv{display:flex;flex-direction:column;gap:0}
+.flowv .fstep{background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--sh-sm);padding:15px 18px}
+.flowv .farrow{text-align:center;color:var(--faint);font-size:14px;padding:5px 0;font-weight:800}
+
+/* ---- v4.3 細部の質感（検索パレット・トースト・スクロールバー） ---- */
+::selection{background:rgba(255,145,76,.28)}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#c9d2de;border-radius:5px;border:2px solid var(--canvas)}
+::-webkit-scrollbar-thumb:hover{background:#aeb9c8}
+::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-color:transparent}
+.btn{transition:transform .12s ease,background .15s ease,border-color .15s ease}
+.btn:active{transform:scale(.97)}
+.nav-item{transition:background .13s ease,color .13s ease}
+.search{cursor:pointer}
+.search:hover{border-color:var(--faint)}
+
+.cmdk-bg{position:fixed;inset:0;background:rgba(16,25,42,.5);z-index:90;display:none;align-items:flex-start;justify-content:center;padding:11vh 20px 20px;backdrop-filter:blur(2px)}
+.cmdk-bg.open{display:flex}
+.cmdk{width:100%;max-width:580px;background:var(--surface);border-radius:14px;box-shadow:0 24px 70px rgba(10,18,32,.42);overflow:hidden;animation:ckin .16s ease}
+@keyframes ckin{from{opacity:0;transform:translateY(-8px) scale(.99)}to{opacity:1;transform:none}}
+.cmdk input{width:100%;border:0;outline:none;padding:16px 18px;font-size:14.5px;font-family:var(--font);border-bottom:1px solid var(--line);color:var(--ink)}
+.cmdk-list{max-height:46vh;overflow-y:auto;padding:6px}
+.cmdk-g{font-size:10px;font-weight:800;letter-spacing:.07em;color:var(--faint);padding:9px 12px 3px}
+.cmdk-it{display:flex;align-items:baseline;gap:10px;padding:9px 12px;border-radius:9px;font-size:13px;cursor:pointer}
+.cmdk-it b{font-weight:700}
+.cmdk-it:hover,.cmdk-it.sel{background:var(--blue-bg)}
+.cmdk-it .tag{margin-left:auto;font-size:10px;color:var(--faint);opacity:0}
+.cmdk-it.sel .tag{opacity:1}
+.cmdk-empty{padding:24px;text-align:center;color:var(--faint);font-size:12.5px}
+
+.toastc{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:120;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.toast{background:var(--navy);color:#fff;font-size:12.5px;font-weight:700;border-radius:10px;padding:11px 20px;box-shadow:0 10px 30px rgba(10,18,32,.35);animation:tin .2s ease;transition:.25s;max-width:88vw}
+.toast.out{opacity:0;transform:translateY(8px)}
+@keyframes tin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ログイン：アカウント選択（カンプ用） */
+.acct{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;cursor:pointer;margin-bottom:8px;background:var(--surface);transition:border-color .13s,box-shadow .13s}
+.acct:hover{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,145,76,.13)}
+.acct .av{width:34px;height:34px;border-radius:10px;background:var(--navy-3);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px}
+.acct .nm{font-size:13.5px;font-weight:800;line-height:1.25}
+.acct .rl{font-size:11px;color:var(--faint)}
+.acct .go{margin-left:auto;color:var(--faint);font-weight:800}

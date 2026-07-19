@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>評価・賞与｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body data-page="evaluation" data-role="kouda">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">経営管理</div><h1>評価・賞与</h1></div>
+    <span class="sample">数値はサンプル</span>
+    <div style="margin-left:auto"><select class="inp" style="width:180px"><option>2026年度 第1四半期</option><option>2025年度 第4四半期</option></select></div>
+  </div>
+  <div class="content">
+
+    <p style="font-size:12px;color:var(--sub);margin-bottom:14px;max-width:720px">賞与は上から下へ一本の流れで決まります：<b>全社スコア → 60点超過分が原資 → 3分割 → 部門へ人数比 → 個人へ部門長配分</b>。しきい値は<a href="rules.html">ルール</a>参照。</p>
+
+    <div class="flowv" style="max-width:980px">
+
+      <!-- STEP1 全社スコア -->
+      <div class="fstep">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px"><span class="badge b-navy">STEP 1</span><b style="font-size:13.5px">全社スコア（原資の判定）</b><span style="margin-left:auto;font-size:11px;color:var(--faint)">40点＝返済ライン／60点＝合格</span></div>
+        <div class="cols-2">
+          <div>
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:12px;font-weight:700;color:var(--sub)">粗利</span><b class="tnum" style="font-size:26px">67点</b><span class="tnum" style="font-size:11.5px;color:var(--faint)">（1,038万円/月）</span><span class="badge b-good" style="margin-left:auto"><span class="d"></span>合格超え</span></div>
+            <div class="gauge"><i style="width:67%;background:var(--good)"></i><span class="mk" data-l="40" style="left:40%"></span><span class="mk" data-l="60＝991万" style="left:60%"></span></div>
+            <div style="height:18px"></div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:12px;font-weight:700;color:var(--sub)">営業利益</span><b class="tnum" style="font-size:26px">57点</b><span class="tnum" style="font-size:11.5px;color:var(--faint)">（418万円/月）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>合格まで▲23万</span></div>
+            <div class="gauge"><i style="width:57%;background:var(--gold)"></i><span class="mk" data-l="40" style="left:40%"></span><span class="mk" data-l="60＝441万" style="left:60%"></span></div>
+            <div style="height:18px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- STEP2 原資と3分割 -->
+      <div class="fstep">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px"><span class="badge b-navy">STEP 2</span><b style="font-size:13.5px">60点超過分 → 原資 → 3分割</b><span style="margin-left:auto;font-size:11px;color:var(--faint)">60点未満は配分なし</span></div>
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:12px;color:var(--sub)">当四半期の超過分</span><b class="tnum" style="font-size:24px">184万円</b></div>
+        <div class="split" style="max-width:640px">
+          <div style="flex:33;background:var(--orange)">褒賞 33%＝61万</div>
+          <div style="flex:33;background:var(--blue)">裁量 33%＝61万</div>
+          <div style="flex:34;background:var(--navy-3)">留保 34%＝62万</div>
+        </div>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- STEP3 部門配分 -->
+      <div class="fstep" style="padding:0">
+        <div style="display:flex;align-items:center;gap:9px;padding:15px 18px 10px"><span class="badge b-navy">STEP 3</span><b style="font-size:13.5px">褒賞 61万円を部門へ（人数比）＋部門スコア</b></div>
+        <table>
+          <thead><tr><th>部門</th><th>スコア（1指標のみ）</th><th class="r">点</th><th class="r">人数</th><th class="r">人数比</th><th class="r">褒賞配分</th><th>個人配分</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700">営業部</td><td style="color:var(--sub)">獲得（レポ7・BPO2）</td><td class="r tnum" style="font-weight:800;color:var(--good)">67</td><td class="r tnum">4</td><td class="r tnum">44%</td><td class="r tnum" style="font-weight:800">27万円</td><td><span class="badge b-good"><span class="d"></span>確定済</span></td></tr>
+            <tr style="background:#fff8f2"><td style="font-weight:700">コンサル部</td><td style="color:var(--sub)">採択金額（520万／目標560万）</td><td class="r tnum" style="font-weight:800;color:var(--orange-d)">58</td><td class="r tnum">3</td><td class="r tnum">33%</td><td class="r tnum" style="font-weight:800">20万円</td><td><span class="badge b-warn"><span class="d"></span>入力中 ↓</span></td></tr>
+            <tr><td style="font-weight:700">管理部</td><td style="color:var(--sub)">時間削減（残業ゼロ）</td><td class="r tnum" style="font-weight:800">60</td><td class="r tnum">2</td><td class="r tnum">22%</td><td class="r tnum" style="font-weight:800">14万円</td><td><span class="badge b-sub"><span class="d"></span>未着手</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- STEP4 個人配分（部門長入力） -->
+      <div class="fstep" style="padding:0">
+        <div style="display:flex;align-items:center;gap:9px;padding:15px 18px 10px"><span class="badge b-navy">STEP 4</span><b style="font-size:13.5px">コンサル部 20万円を個人へ（部門長：あなたが入力）</b><span class="badge b-warn" style="margin-left:auto;margin-right:18px"><span class="d"></span>合計100%必須</span></div>
+        <table>
+          <thead><tr><th>担当</th><th class="r" style="width:130px">個人%</th><th class="r">褒賞額</th><th class="r">反映先</th></tr></thead>
+          <tbody>
+            <tr><td>幸田（自分）</td><td class="r"><input class="inp tnum pct" value="45" style="width:90px;text-align:right" oninput="calcPct()" /></td><td class="r tnum" id="a1">9.0万円</td><td class="r" style="font-size:11px;color:var(--faint)">7月分 明細</td></tr>
+            <tr><td>黒田</td><td class="r"><input class="inp tnum pct" value="35" style="width:90px;text-align:right" oninput="calcPct()" /></td><td class="r tnum" id="a2">7.0万円</td><td class="r" style="font-size:11px;color:var(--faint)">7月分 明細</td></tr>
+            <tr><td>丸田</td><td class="r"><input class="inp tnum pct" value="20" style="width:90px;text-align:right" oninput="calcPct()" /></td><td class="r tnum" id="a3">4.0万円</td><td class="r" style="font-size:11px;color:var(--faint)">7月分 明細</td></tr>
+          </tbody>
+          <tfoot><tr><td>合計</td><td class="r tnum" id="pctSum" style="color:var(--good)">100%</td><td class="r tnum">20万円</td><td></td></tr></tfoot>
+        </table>
+        <div style="display:flex;gap:8px;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2);border-radius:0 0 13px 13px">
+          <span style="font-size:11px;color:var(--faint);align-self:center">確定後の変更は管理者承認が必要です。</span>
+          <span class="btn btn-ghost btn-sm" style="margin-left:auto">下書き保存</span>
+          <span class="btn btn-primary btn-sm" id="fixBtn" onclick="openModal('mFix')">配分を確定</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div class="modal-bg" id="mFix">
+  <div class="modal">
+    <div class="modal-h"><span class="t">個人配分の確定｜コンサル部</span><span class="x" onclick="closeModal('mFix')">✕</span></div>
+    <div class="modal-b">
+      <div style="font-size:12.5px;color:var(--sub)">幸田 45%（9.0万）／黒田 35%（7.0万）／丸田 20%（4.0万）で確定し、各人の7月分明細に反映します。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mFix')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mFix')">確定</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=43"></script>
+<script>
+function calcPct(){
+  var ps=[].slice.call(document.querySelectorAll('.pct')).map(function(i){return parseFloat(i.value)||0});
+  var sum=ps.reduce(function(a,b){return a+b},0);
+  var el=document.getElementById('pctSum');
+  el.textContent=sum+'%';
+  el.style.color = sum===100 ? 'var(--good)' : 'var(--red)';
+  document.getElementById('fixBtn').style.opacity = sum===100 ? 1 : .45;
+  ['a1','a2','a3'].forEach(function(id,ix){ document.getElementById(id).textContent=(20*ps[ix]/100).toFixed(1)+'万円'; });
+}
+</script>
+</body>
+</html>

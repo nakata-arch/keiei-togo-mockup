@@ -225,7 +225,7 @@
   MAIN.forEach(function (b) { b.items.forEach(function (it) { if (it.sets.indexOf(S) !== -1) CMDK.push({ g: "画面", n: it.label, f: it.file }); }); });
   if (S === "admin") ADMIN.forEach(function (a) { CMDK.push({ g: "設定", n: a.label, f: a.file }); });
   [["アストロラボ株式会社", "リピート顧客・BPO契約中"], ["セルプスジャパン株式会社", "リピート顧客"], ["株式会社ティーガイア", "顧客・申請未着手"], ["株式会社リサスティー", "リピート顧客"], ["菱洋エレクトロ株式会社", "顧客・実施中"], ["古山精機株式会社", "見込み"]].forEach(function (c) { CMDK.push({ g: "会社", n: c[0], s: c[1], f: "company_detail.html" }); });
-  [["IS-2026-0074", "アストロラボ｜課題解決型（申請・停滞8日）"], ["IS-2026-0081", "セルプスジャパン｜新事業進出（申請）"], ["IS-2026-0055", "リサスティー｜経営力強化（交付決定）"], ["IS-2026-0032", "菱洋エレクトロ｜省力化投資（実施）"]].forEach(function (d) { CMDK.push({ g: "案件", n: d[0], s: d[1], f: "company_detail.html" }); });
+  [["IS-2026-0074", "アストロラボ｜課題解決型（申請・停滞8日）"], ["IS-2026-0081", "セルプスジャパン｜新事業進出（申請）"], ["IS-2026-0055", "リサスティー｜経営力強化（交付決定）"], ["IS-2026-0032", "菱洋エレクトロ｜省力化投資（実施）"]].forEach(function (d) { CMDK.push({ g: "案件", n: d[0], s: d[1], f: "deal_detail.html" }); });   /* E-04 案件詳細（screens.yaml v0.2） */
 
   var ckBg = null, ckInp = null, ckList = null, ckSel = 0, ckHits = [];
   function ckRender(q) {

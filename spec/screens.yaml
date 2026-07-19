@@ -1,0 +1,206 @@
+# screens.yaml — 経営統合システム 画面インベントリ（正本）
+# ルール:
+#  - ここに載っていない画面は存在しない。孤立画面（どこからも to: されない画面）はドリフトとして検知する。
+#  - to: には正常系だけでなく「失敗・差戻し・キャンセル」の行き先を必ず書く。
+#  - 進捗列: kanpu(カンプ) / mapping(対応表) / impl(実装) / accepted(検収) を "-" → "v" で更新（Gate 1で更新）。
+#  - nav: main=主サイドバー / admin=設定モードのサイドバー / none=ナビ非表示（外部・詳細画面）
+# 未確定の前提は assumption-ledger.md の A-xx を参照。
+
+meta:
+  project: 経営統合システム（Initial State）
+  version: v0.2
+  date: 2026-07-19
+  changelog_v0.2: Z-01解決＝案件詳細(E-04)を新設。E-02案件カード・E-03案件クリックの遷移先をE-04へ。
+                  A-07=不要（ルールは使用箇所にインライン）／A-08=バンドル外維持で確定。
+  gate1_v0.2: 2026-07-20 差分適用（D-1 E-04新設・遷移張替／D-2 spec移設／D-3 A-07確認）。
+              進捗列を更新（全画面 kanpu=v。E-04も新設・カンプ到達可）。
+  note: 旧ナビからの変更＝「業務」カテゴリ廃止 / 経理を「経理処理」「経営管理」に分離(A-01) /
+        会社・案件を「営業」配下へ / 文書・ルール・予算設計・顧客ポータル管理を設定(admin)へ移設 /
+        ロゴは Initial State のみ（Bizplan 削除）
+
+nav_structure:
+  main:
+    - ホーム: [H-01]
+    - 営業（獲得）: [E-01, E-02, E-03, E-04]   # E-02会社詳細・E-04案件詳細は詳細画面（トップメニュー項目ではなくパンくずで到達）
+    - 経理処理: [K-01, K-02]
+    - 経営管理: [M-01, M-02, M-03]
+    - 人事: [J-01, J-02, J-03]            # 配置は A-02（仮）
+    - 設定: adminモードを開く（ページ遷移ではない。CLAUDE.md §2-1）
+  admin:                                   # 設定モードのサイドバー
+    - [ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07]
+  external:
+    - [P-01]                               # 顧客ポータル（LIFF）。社内ナビには出さない
+
+screens:
+
+  # ---- ホーム ----
+  - id: H-01
+    name: ホーム
+    nav: main
+    role: 全ロール（表示内容はロール別）
+    alerts: バッジ数は本画面内カードと1対1（CLAUDE.md §2-2 / Q9）。
+            内訳=承認待ち・入金漏れ・支払処理・入金消込。バッジクリックで該当カードへ。
+    to:
+      承認カード: K-01
+      入金漏れカード: K-02
+      本日の予定: E-02   # 該当会社の詳細へ
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}   # 既存モックを改修
+
+  # ---- 営業（獲得）----
+  - id: E-01
+    name: 会社一覧（顧客管理）
+    nav: main
+    to:
+      行クリック: E-02
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: E-02
+    name: 会社詳細
+    nav: main
+    note: 文書・議事録・契約は本画面内の文脈で参照（CLAUDE.md §2-3）。
+          # Gate1(v0.1): bento整列崩れ(Q3)は共通12colへ載せ替え是正済み。ポータル発行UIはST-04へ集約。
+          # Gate1(v0.2): 案件カードの遷移先をE-04へ張替済み（旧=deals）。
+    to:
+      案件カード: E-04
+      ポータルプレビュー: ST-04
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: E-03
+    name: 案件（案件管理）
+    nav: main
+    tabs: [ボード, テーブル, レポート, BP, 補助金]   # 全タブ有効が Gate 1 通過条件（CLAUDE.md §2-4）
+          # Gate1(v0.1): 5タブすべて有効化済み（旧=レポート/BP/補助金が死んでいた）。
+          # Gate1(v0.2): 案件クリックの遷移先をE-04へ張替済み。ステータスはA-03未確定のため表示のみ・「（仮）」明記。
+    state_ref: domain/anken-status.state.mmd          # 12段階（A-03 未確定）
+    to:
+      案件クリック: E-04
+      ステータス更新失敗: E-03   # 失敗時は同画面にエラー表示・楽観更新禁止
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+
+  - id: E-04
+    name: 案件詳細
+    nav: main   # 詳細画面（パンくずで到達。トップメニューには出さない）
+    role: 営業・経営・管理（顧客は不可）
+    note: |
+      1案件を回す作業画面。主キー=HubSpot Deal ID。会社詳細(E-02)がハブ、本画面が作業単位。
+      顧客ポータル(P-01)の社内側の双子＝ここが案件別「依頼中／次回予定」の元データ。
+      # Gate1(v0.2): 新設 deal_detail.html。E-02案件カード・E-03案件クリック・⌘Kの案件からE-04へ到達。
+      #   ステータスはA-03未確定のためステッパー表示のみ・遷移ロジック未実装・「（仮）」明記。
+      #   請求内訳=board表示のみ／契約=GreatSign／議事録=Notta。Q1〜Q9自己監査済み（conformance参照）。
+    contains:
+      - 案件サマリー（会社・ソリューション・金額・担当＝TimeRex基準）
+      - ステータス（domain/anken-status.state.mmd 参照。A-03未確定のため表示のみ・遷移ロジック未実装）
+      - タスク（いまお願いしていること）
+      - 請求内訳（board連携。第1フェーズは表示のみ）
+      - 契約（GreatSign状態）／議事録（Notta リンク）
+    state_ref: domain/anken-status.state.mmd
+    to:
+      会社リンク: E-02
+      ポータルプレビュー: ST-04   # この案件のポータルをプレビュー
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}   # v0.2新設・カンプ到達可
+
+  # ---- 経理処理 ----
+  - id: K-01
+    name: 支払処理
+    nav: main
+    write: true                     # → screens/K-01/acceptance.feature 必須
+    note: # Gate1(v0.2 D-3/A-07): 50万円しきい値は本画面にインライン表示（単体ルール画面は作らない）。
+    to:
+      承認: K-01
+      差戻し: K-01                  # 差戻し理由の入力を必須とする
+      経営会議承認へ回付: H-01     # 50万円以上（ルールの正は ST-02 で管理）
+      承認API失敗: K-01
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: K-02
+    name: 入金消込
+    nav: main
+    write: true
+    to:
+      消込完了: K-02
+      消込失敗_金額不一致: K-02    # 差額を明示し催促フローへ
+      催促依頼: H-01               # 担当者のホームにアラートとして出す
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+
+  # ---- 経営管理 ----
+  - id: M-01
+    name: 経営サマリー
+    nav: main
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: M-02
+    name: 予算・実績（閲覧）
+    nav: main
+    note: 閲覧のみ。編集は ST-01（A-01 仮決め）
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: M-03
+    name: キャッシュフロー
+    nav: main
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+
+  # ---- 人事 ----（配置 A-02 仮）
+  - id: J-01
+    name: 勤怠
+    nav: main
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: J-02
+    name: 給与・報酬明細
+    nav: main
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: J-03
+    name: 評価・賞与
+    nav: main
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+
+  # ---- 設定（adminモード）----
+  - id: ST-01
+    name: 予算設計（編集）
+    nav: admin
+    write: true
+    to: {保存: ST-01, 保存失敗: ST-01, 破棄: M-02}
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: ST-02
+    name: ルール編集
+    nav: admin
+    write: true
+    to: {保存: ST-02, 保存失敗: ST-02}
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: ST-03
+    name: 文書テンプレート
+    nav: admin
+    write: true
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: ST-04
+    name: 顧客ポータル管理
+    nav: admin
+    write: true
+    note: 会社・案件ごとにプレビュー必須。配信は LINE LIFF（A-04）。
+    to:
+      プレビュー: P-01            # プレビューモードで開く
+      発行: ST-04
+      発行失敗: ST-04
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: ST-05
+    name: 権限・ユーザー
+    nav: admin
+    write: true
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: ST-06
+    name: マスタ（会社・勘定科目等）
+    nav: admin
+    write: true
+    note: 正本は外部（HubSpot/freee）。ここは表示名・紐づけの管理のみ（CLAUDE.md §1-1）
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+  - id: ST-07
+    name: 連携設定（freee / HubSpot / board / GreatSign / LINE LIFF）
+    nav: admin
+    write: true
+    to: {接続テスト成功: ST-07, 接続テスト失敗: ST-07}
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+
+  # ---- 外部（顧客向け）----
+  - id: P-01
+    name: 顧客ポータル（LIFF）
+    nav: none
+    role: 顧客（LINE経由・体感ログイン不要）
+    note: 契約案件ごとに「いまお願いしていること」「次回予定」を表示（A-05）。
+          起動パラメータで会社・案件を特定（A-04）。
+    to:
+      閲覧のみ: P-01              # 書き込みなし（第1フェーズ）
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}

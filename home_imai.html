@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ホーム（経理）｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
 </head>
 <body data-page="home" data-role="imai">
 <div class="app">
@@ -16,77 +16,57 @@
   </div>
   <div class="content">
 
-    <!-- 今日の処理キュー -->
-    <div class="kpi-grid">
-      <a class="kpi card" href="invoices.html" style="display:block"><div class="lbl">支払処理（確認・承認回付）</div><div class="val tnum" style="color:var(--orange-d)">4<small>件</small></div>
-        <div class="meta"><span>うちOCR確認 1・承認待ち 2</span></div><div class="bar"><i style="width:44%;background:var(--orange)"></i></a>
-      <a class="kpi card" href="reconcile.html" style="display:block"><div class="lbl">入金消込（未消込）</div><div class="val tnum" style="color:var(--orange-d)">3<small>件</small></div>
-        <div class="meta"><span>自動候補あり 2・差異 2</span></div><div class="bar"><i style="width:38%;background:var(--orange)"></i></a>
-      <div class="kpi card"><div class="lbl">請求発行（締め→翌月請求）</div><div class="val tnum">3<small>件・47万円</small></div>
-        <div class="meta"><span>今月末 発行予定（下記）</span></div><div class="bar"><i style="width:30%;background:var(--navy-3)"></i></div></div>
-      <div class="kpi card"><div class="lbl">次の記帳日</div><div class="val">7/31<small>（月末）</small></div>
-        <div class="meta"><span>入金消込＋出金記帳をまとめて実施</span></div><div class="bar"><i style="width:64%;background:var(--good)"></i></div></div>
-    </div>
+    <div class="bento">
+      <!-- KPI行 -->
+      <a class="tile b3" href="invoices.html" style="display:block"><div class="tl">支払処理</div><div class="mid tnum" style="color:var(--orange-d)">4<small>件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">OCR確認 1・承認待ち 2</div></a>
+      <a class="tile b3" href="reconcile.html" style="display:block"><div class="tl">入金消込（未消込）</div><div class="mid tnum" style="color:var(--orange-d)">3<small>件</small></div><div style="font-size:11px;color:var(--red);margin-top:6px;font-weight:700">差異 2件</div></a>
+      <div class="tile b3"><div class="tl">今月末の請求発行</div><div class="mid tnum">3<small>件・47万円</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">締め → 翌月請求</div></div>
+      <div class="tile b3"><div class="tl">次の記帳日</div><div class="mid tnum">7/31<small>（月末）</small></div><div style="font-size:11px;color:var(--good);margin-top:6px;font-weight:700">15日記帳は完了</div></div>
 
-    <div class="cols" style="margin-top:18px">
-      <div>
-        <!-- 今日やること -->
-        <div class="card">
-          <div class="card-h"><span class="t">今日の処理</span></div>
-          <div style="padding:4px 17px 10px">
-            <div class="chk"><span class="bx"></span><span>印刷会社K 6.6万円のOCR確認・補正（<a href="invoices.html">支払処理</a>）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>未処理</span></div>
-            <div class="chk"><span class="bx"></span><span>ユアーズ静岡 5万円の消込確定（自動候補あり・<a href="reconcile.html">入金消込</a>）</span></div>
-            <div class="chk"><span class="bx"></span><span>ティーガイア 3万円「予定なし入金」の調査</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>差異</span></div>
-            <div class="chk"><span class="bx"></span><span>47マーケ 差額2万円 → 営業（北山さん）へ催促依頼</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>差異</span></div>
-            <div class="chk done"><span class="bx">✓</span><span>アストロラボ 235万円の消込（7/16 着金）</span></div>
-          </div>
-        </div>
-
-        <!-- 請求発行予定（締め→翌月請求） -->
-        <div class="sec"><h2>今月末に発行する請求（締め → 翌月請求）</h2></div>
-        <div class="card" style="overflow-x:auto">
-          <table>
-            <thead><tr><th>種別</th><th>会社・案件</th><th class="r">金額</th><th>締め起点</th><th></th></tr></thead>
-            <tbody>
-              <tr><td>レポート</td><td>ユアーズ静岡（IS-2026-0092）</td><td class="r tnum">5万円</td><td>7月 納品</td><td class="r"><span class="btn btn-ghost btn-sm">boardで発行</span></td></tr>
-              <tr><td>レポート</td><td>古山精機（IS-2026-0095）</td><td class="r tnum">5万円</td><td>7月 納品予定</td><td class="r"><span class="badge b-sub"><span class="d"></span>納品待ち</span></td></tr>
-              <tr><td>成果報酬（PMから請求連携）</td><td>47マーケ（IS-2026-0048）</td><td class="r tnum">18万円</td><td>7月 採択</td><td class="r"><span class="btn btn-primary btn-sm" onclick="openModal('mBill')">発行準備</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- 月次締めチェックリスト -->
-        <div class="sec"><h2>月次締めチェックリスト（7月）</h2></div>
-        <div class="card" style="padding:4px 17px 10px">
-          <div class="chk done"><span class="bx">✓</span><span>15日記帳（入金消込・出金記帳）</span></div>
-          <div class="chk"><span class="bx"></span><span>月末記帳（31日）</span></div>
-          <div class="chk"><span class="bx"></span><span>契約締めの突合（岩下さん・末日）</span></div>
-          <div class="chk"><span class="bx"></span><span>月次数字の確定 → 経営サマリーへ自動反映</span></div>
+      <!-- 今日の処理（主役） -->
+      <div class="tile b8" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">今日の処理</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">クリックで完了</span></div>
+        <div style="padding:4px 17px 12px">
+          <div class="chk"><span class="bx"></span><span>印刷会社K 6.6万円のOCR確認・補正（<a href="invoices.html">支払処理</a>）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>未処理</span></div>
+          <div class="chk"><span class="bx"></span><span>ユアーズ静岡 5万円の消込確定（自動候補あり・<a href="reconcile.html">入金消込</a>）</span></div>
+          <div class="chk"><span class="bx"></span><span>ティーガイア 3万円「予定なし入金」の調査</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>差異</span></div>
+          <div class="chk"><span class="bx"></span><span>47マーケ 差額2万円 → 営業（北山さん）へ催促依頼</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>差異</span></div>
+          <div class="chk done"><span class="bx">✓</span><span>アストロラボ 235万円の消込（7/16 着金）</span></div>
         </div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <!-- 振込予定 -->
-        <div class="card">
-          <div class="card-h"><span class="t">7/25 振込予定（承認済のみ）</span></div>
-          <div class="list-row"><span class="badge b-good"><span class="d"></span>承認済</span><div class="bd"><div class="nm tnum">社労士 杉山事務所 5.5万円</div></div></div>
-          <div class="list-row"><span class="badge b-warn"><span class="d"></span>承認待ち</span><div class="bd"><div class="nm tnum">Izumi事務所 18万円（北山さん）</div></div></div>
-          <div class="list-row"><span class="badge b-red"><span class="d"></span>会議待ち</span><div class="bd"><div class="nm tnum">クリエイト 82万円（経営会議・本日）</div></div></div>
-          <div style="padding:9px 17px;border-top:1px solid var(--line);background:var(--surface-2);font-size:11px;color:var(--sub);border-radius:0 0 var(--r) var(--r)">未承認は振込リスト・支払予定に載りません。</div>
-        </div>
-        <!-- 月末の固定出金 -->
-        <div class="card">
-          <div class="card-h"><span class="t">月末の固定出金</span></div>
-          <div class="list-row"><div class="bd"><div class="nm tnum">借入返済 330万円</div><div class="sub">IS 211.2万＋秋葉原 118.8万</div></div><span class="badge b-navy">固定</span></div>
-          <div class="list-row"><div class="bd"><div class="nm tnum">給与・出向負担金 105万円</div></div><span class="badge b-good"><span class="d"></span>計上済</span></div>
-        </div>
-        <!-- 是正アラート -->
-        <div class="card" style="border-color:#f3c7c2">
-          <div class="card-h"><span class="t" style="color:var(--red)">⚠ 要是正</span></div>
-          <div class="list-row"><div class="bd"><div class="nm">出向契約が未締結（あなた・岩下さん）</div><div class="sub">出向負担金 46万円/月 の支払根拠。法務是正の最優先事項</div></div></div>
-        </div>
+      <!-- 7/25振込予定 -->
+      <div class="tile b4" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">7/25 振込予定</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">承認済のみ</span></div>
+        <div class="list-row"><span class="badge b-good"><span class="d"></span>承認済</span><div class="bd"><div class="nm tnum">社労士 杉山事務所 5.5万円</div></div></div>
+        <div class="list-row"><span class="badge b-warn"><span class="d"></span>承認待ち</span><div class="bd"><div class="nm tnum">Izumi事務所 18万円</div><div class="sub">北山さんの一次承認</div></div></div>
+        <div class="list-row"><span class="badge b-red"><span class="d"></span>会議待ち</span><div class="bd"><div class="nm tnum">クリエイト 82万円</div><div class="sub">本日の経営層会議</div></div></div>
+        <div style="padding:9px 17px;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint)">未承認は振込リストに載りません。</div>
+      </div>
+
+      <!-- 請求発行予定 -->
+      <div class="tile b8" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">今月末に発行する請求（締め → 翌月請求）</span><span class="sp"></span><a class="badge b-blue" href="rules.html"><span class="d"></span>請求ルール</a></div>
+        <table>
+          <thead><tr><th>種別</th><th>会社・案件</th><th class="r">金額</th><th>締め起点</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>レポート</td><td class="tnum">ユアーズ静岡（IS-2026-0092）</td><td class="r tnum">5万円</td><td>7月 納品</td><td class="r"><span class="btn btn-ghost btn-sm">boardで発行</span></td></tr>
+            <tr><td>レポート</td><td class="tnum">古山精機（IS-2026-0095）</td><td class="r tnum">5万円</td><td>7月 納品予定</td><td class="r"><span class="badge b-sub"><span class="d"></span>納品待ち</span></td></tr>
+            <tr><td>成果報酬</td><td class="tnum">47マーケ（IS-2026-0048）</td><td class="r tnum">18万円</td><td>7月 採択（PM連携済）</td><td class="r"><span class="btn btn-primary btn-sm" onclick="openModal('mBill')">発行準備</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 月末固定・是正 -->
+      <div class="tile b4" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">月末の固定出金・締め</span></div>
+        <div class="list-row"><div class="bd"><div class="nm tnum">借入返済 330万円</div><div class="sub">IS 211.2万＋秋葉原 118.8万</div></div><span class="badge b-navy">固定</span></div>
+        <div class="list-row"><div class="bd"><div class="nm tnum">給与・出向負担金 105万円</div></div><span class="badge b-good"><span class="d"></span>計上済</span></div>
+        <div class="list-row"><div class="bd"><div class="nm">月末記帳・契約締め（岩下さん）</div><div class="sub">7/31 → 経営サマリーに自動反映</div></div><span class="badge b-sub"><span class="d"></span>予定</span></div>
+        <div class="list-row" style="background:#fff8f7"><div class="bd"><div class="nm" style="color:var(--red)">出向契約 未締結（要是正）</div><div class="sub tnum">負担金 46万円/月 の支払根拠</div></div></div>
       </div>
     </div>
+
   </div>
 </div>
 </div>
@@ -102,10 +82,10 @@
       <div class="kv" style="padding-left:0;padding-right:0"><span class="k">締め・請求</span><span class="v">7月採択 → 8月請求</span></div>
       <div class="hint-t">boardで請求書を作成し、発行後に入金予定（キャッシュフロー）へ反映します。</div>
     </div>
-    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mBill')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mBill')">boardで発行する</span></div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mBill')">キャンセル</span><span class="btn btn-primary">boardで発行する</span></div>
   </div>
 </div>
 
-<script src="assets/app.js?v=43"></script>
+<script src="assets/app.js?v=44"></script>
 </body>
 </html>

@@ -179,3 +179,16 @@
 .acct .nm{font-size:13.5px;font-weight:800;line-height:1.25}
 .acct .rl{font-size:11px;color:var(--faint)}
 .acct .go{margin-left:auto;color:var(--faint);font-weight:800}
+
+/* ---- v5 ナビのグループトグル ---- */
+.nav-gh{display:flex;align-items:center;gap:6px;padding:9px 12px 4px;font-size:10px;font-weight:800;letter-spacing:.1em;color:#5f6f85;cursor:pointer;user-select:none}
+.nav-gh:hover{color:#8fa0b8}
+.nav-gh .gc{margin-left:auto;font-size:9px;transition:.15s}
+.nav-g.closed .gc{transform:rotate(-90deg)}
+.nav-g.closed .nav-gb{display:none}
+
+/* ---- v5 顧客ポータル（実ページ） ---- */
+.cp-wrap{max-width:600px;margin:0 auto;padding:0 16px 60px}
+.cp-head{background:linear-gradient(135deg,var(--navy),var(--navy-3));color:#fff;border-radius:0 0 18px 18px;padding:20px 20px 18px;margin:0 -16px 18px}
+.cp-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-sm);padding:15px 17px;margin-bottom:12px}
+.cp-sec{font-size:11.5px;font-weight:800;color:var(--sub);margin:18px 0 8px}

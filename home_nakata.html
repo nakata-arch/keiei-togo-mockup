@@ -2,26 +2,26 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ホーム（北山）｜経営統合システム</title>
+<title>ホーム（中田）｜経営統合システム</title>
 <link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
 </head>
-<body data-page="home" data-role="kitayama">
+<body data-page="home" data-role="nakata">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、北山さん</h1></div>
+    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、中田さん</h1></div>
     <div class="search">会社・案件番号・文書を検索<span class="kbd">⌘K</span></div>
     <a class="btn btn-primary btn-sm" href="exec.html">経営サマリー</a>
   </div>
   <div class="content">
 
     <div class="bento">
-      <!-- 経営KPI行（中田ホームと同一構造） -->
+      <!-- 経営KPI行（北山ホームと同一構造） -->
       <a class="tile b3" href="budget.html" style="display:block"><div class="tl">営業利益（当月）</div><div class="mid tnum" style="color:var(--orange-d)">418<small>万円</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">合格 441万 まであと23万</div></a>
       <a class="tile b3" href="cashflow.html" style="display:block"><div class="tl">資金</div><div class="mid"><span class="badge b-warn" style="font-size:13px;padding:4px 12px"><span class="d"></span>イエロー</span></div><div style="font-size:11px;color:var(--faint);margin-top:6px" class="tnum">残高 2,140万 ・ あと6ヶ月</div></a>
-      <div class="tile b3"><div class="tl">あなたの承認待ち</div><div class="mid tnum" style="color:var(--orange-d)">2<small>件・100万円</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">経営会議 1・一次承認 1</div></div>
-      <a class="tile b3" href="reconcile.html" style="display:block"><div class="tl">入金漏れ（期日超過）</div><div class="mid tnum" style="color:var(--red)">2<small>件・35万円</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">あなた宛の催促依頼 1件</div></a>
+      <div class="tile b3"><div class="tl">あなたの承認待ち</div><div class="mid tnum" style="color:var(--orange-d)">2<small>件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">経営会議 1・明細承認 1</div></div>
+      <a class="tile b3" href="reconcile.html" style="display:block"><div class="tl">入金漏れ（期日超過）</div><div class="mid tnum" style="color:var(--red)">2<small>件・35万円</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">担当営業へ催促依頼済み</div></a>
 
       <!-- 承認キュー（経営共通の主業務） -->
       <div class="tile b8" style="padding:0">
@@ -32,10 +32,9 @@
           <span class="btn btn-primary btn-sm" onclick="openModal('mMeet')">会議で承認</span>
         </div>
         <div class="list-row">
-          <span class="badge b-warn"><span class="d"></span>一次承認</span>
-          <div class="bd"><div class="nm tnum">業務委託 18万円｜Izumi事務所（秘書・7月分）</div><div class="sub">50万円未満 → あなたの承認で確定します</div></div>
-          <span class="btn btn-primary btn-sm" onclick="openModal('mOk')">承認</span>
-          <span class="btn btn-ghost btn-sm">差戻し</span>
+          <span class="badge b-warn"><span class="d"></span>明細</span>
+          <div class="bd"><div class="nm tnum">7月分 報酬明細の承認（中田・法人 55万円）</div><div class="sub">承認すると保存・配布に進みます</div></div>
+          <a class="btn btn-primary btn-sm" href="payslips.html">明細へ</a>
         </div>
       </div>
 
@@ -47,31 +46,31 @@
         <div class="list-row"><span class="av" style="background:var(--good)">管</span><div class="bd"><div class="nm">管理＝時間削減</div></div><b class="tnum">60点</b></div>
       </div>
 
-      <!-- 担当領域：営業（中田との差分はここだけ） -->
+      <!-- 担当領域：管理部統括・CAIO（北山との差分はここだけ） -->
       <div class="tile b8" style="padding:0">
-        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">営業（あなたの担当領域）</span></div>
-        <div class="list-row">
-          <span class="badge b-navy">13:00</span>
-          <div class="bd"><div class="nm">ティーガイア｜BPO契約のクロージング面談</div><div class="sub tnum">締結なら当月BPO 3件目・営業利益が合格ライン到達見込み（＋レポート代5万円割引を適用）</div></div>
-          <a class="btn btn-ghost btn-sm" href="company_detail.html">会社</a>
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">管理・システム（あなたの担当領域）</span></div>
+        <div class="list-row" style="background:#fff8f7">
+          <span class="badge b-red"><span class="d"></span>是正</span>
+          <div class="bd"><div class="nm">出向契約が未締結（岩下さん・今井さん ⇔ 秋葉原クリエイティブ）</div><div class="sub tnum">負担金 46万円/月 の支払根拠。法務是正の最優先事項</div></div>
+          <a class="btn btn-ghost btn-sm" href="settings.html">設定へ</a>
         </div>
         <div class="list-row">
-          <span class="badge b-sub"><span class="d"></span>15:30</span>
-          <div class="bd"><div class="nm">新規ヒアリング（紹介：既存顧客）</div><div class="sub">古山精機さまからのご紹介・TimeRex予約</div></div>
+          <span class="badge b-warn"><span class="d"></span>整備</span>
+          <div class="bd"><div class="nm">LINE公式のID自動取得が未整備</div><div class="sub">顧客ポータル・接点記録の連携基盤（積み残しリスト）</div></div>
         </div>
-        <div class="list-row" style="background:#fffdf8">
-          <span class="badge b-warn"><span class="d"></span>依頼</span>
-          <div class="bd"><div class="nm tnum">入金催促：deex 33万円（期日6/30）・47マーケ 差額2万円</div><div class="sub">経理から催促依頼。メールで催促し証跡を残します</div></div>
-          <span class="btn btn-ghost btn-sm">催促メール</span>
+        <div class="list-row">
+          <span class="badge b-good"><span class="d"></span>正常</span>
+          <div class="bd"><div class="nm">外部連携 8系統のうち 6系統が接続中</div><div class="sub">HubSpot・freee・board・TimeRex・Gmail・カレンダー ／ 要検証：GreatSign・LINE</div></div>
+          <a class="btn btn-ghost btn-sm" href="settings.html">連携状態</a>
         </div>
       </div>
 
-      <!-- 受給目標アラート（追加提案の種） -->
+      <!-- 予定・通知 -->
       <div class="tile b4" style="padding:0">
-        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">追加提案の種</span><span class="sp"></span><a class="badge b-blue" href="companies.html"><span class="d"></span>会社</a></div>
-        <div class="list-row"><span class="badge b-red"><span class="d"></span>未着手</span><div class="bd"><div class="nm">ティーガイア｜契約6ヶ月 申請ゼロ</div><div class="sub">本日13:00の面談で投資テーマを再ヒアリング</div></div></div>
-        <div class="list-row"><span class="badge b-warn"><span class="d"></span>残2ヶ月</span><div class="bd"><div class="nm">リサスティー｜受給目標 83%</div></div></div>
-        <div class="list-row"><span class="badge b-blue"><span class="d"></span>閲覧</span><div class="bd"><div class="nm">アストロラボがポータル閲覧 3回</div><div class="sub">関心が高い今が提案の好機</div></div></div>
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">今日の予定・通知</span></div>
+        <div class="list-row"><span class="badge b-navy">14:00</span><div class="bd"><div class="nm">経営層会議（承認1件あり）</div></div></div>
+        <div class="list-row"><span class="badge b-blue"><span class="d"></span>閲覧</span><div class="bd"><div class="nm">アストロラボがポータルを閲覧（3回目）</div><div class="sub">7/16 21:04</div></div></div>
+        <div class="list-row"><span class="badge b-good"><span class="d"></span>入金</span><div class="bd"><div class="nm tnum">アストロラボ 235万円 消込済</div></div></div>
       </div>
     </div>
 
@@ -92,18 +91,6 @@
       <div class="hint-t">承認するとキャッシュフローの支払予定に計上され、7/25の振込リストに載ります。</div>
     </div>
     <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mMeet')">キャンセル</span><span class="btn btn-primary">承認を記録</span></div>
-  </div>
-</div>
-
-<!-- 一次承認モーダル -->
-<div class="modal-bg" id="mOk">
-  <div class="modal">
-    <div class="modal-h"><span class="t">一次承認</span><span class="x" onclick="closeModal('mOk')">✕</span></div>
-    <div class="modal-b">
-      <div style="font-size:13px" class="tnum"><b>Izumi事務所｜180,000円</b>（業務委託・7月分・期日 7/25）を承認します。</div>
-      <div class="hint-t" style="margin-top:8px">承認後は支払予定へ計上 → 振込（今井さん）→ 出金消込の順に進みます。</div>
-    </div>
-    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mOk')">キャンセル</span><span class="btn btn-primary">承認</span></div>
   </div>
 </div>
 

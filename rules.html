@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ルール｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
 </head>
 <body data-page="rules" data-role="kouda">
 <div class="app">
@@ -15,7 +15,17 @@
   </div>
   <div class="content">
 
-    <p style="font-size:12.5px;color:var(--sub);margin-bottom:18px;max-width:760px">システム全体で使われる判定・しきい値の正本です。各画面ではルールの説明を繰り返さず、このページを共通認識とします。変更は管理者のみ（設定）。</p>
+    <p style="font-size:12.5px;color:var(--sub);margin-bottom:14px;max-width:760px">システム全体で使われる判定・しきい値の正本です。各画面ではルールの説明を繰り返さず、このページを共通認識とします。</p>
+
+    <!-- ルール → 予算 → 各画面 の流れ -->
+    <div class="card" style="display:flex;align-items:center;gap:10px;padding:13px 18px;margin-bottom:18px;flex-wrap:wrap;border-left:4px solid var(--orange)">
+      <span style="font-size:11px;font-weight:800;color:var(--orange-d)">ルールの流れ</span>
+      <span class="badge b-navy">① ここで前提を確定（編集＝管理者）</span><span style="color:var(--faint);font-weight:800">→</span>
+      <a class="badge b-blue" href="budget_design.html"><span class="d"></span>② 予算設計で逆算（60点の根拠）</a><span style="color:var(--faint);font-weight:800">→</span>
+      <a class="badge b-blue" href="budget.html"><span class="d"></span>③ 予算・実績</a><span style="color:var(--faint);font-weight:800">→</span>
+      <a class="badge b-blue" href="evaluation.html"><span class="d"></span>④ 評価・賞与の基準に反映</a>
+      <span class="btn btn-primary btn-sm" style="margin-left:auto" onclick="openModal('mEditRule')">ルールを編集（管理者）</span>
+    </div>
 
     <div class="bento">
       <!-- 資金の4段階 -->
@@ -105,6 +115,29 @@
   </div>
 </div>
 </div>
-<script src="assets/app.js?v=43"></script>
+<!-- ルール編集モーダル（管理者） -->
+<div class="modal-bg" id="mEditRule">
+  <div class="modal">
+    <div class="modal-h"><span class="t">ルールの編集（管理者のみ）</span><span class="x" onclick="closeModal('mEditRule')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">停滞アラート（営業日）</span><input class="inp tnum" value="7" /></label>
+        <label class="field"><span class="fl">承認しきい値（経営層会議）</span><input class="inp tnum" value="500,000円" /></label>
+      </div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">受給目標の倍率</span><input class="inp tnum" value="BPO契約金額 × 2" /></label>
+        <label class="field"><span class="fl">成果報酬率</span><input class="inp tnum" value="15%" /></label>
+      </div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">借入返済（月）</span><input class="inp tnum" value="3,300,000円" /></label>
+        <label class="field"><span class="fl">実効税率</span><input class="inp tnum" value="31.5%" /></label>
+      </div>
+      <div class="hint-t">保存すると<b>予算設計 → 予算・実績 → 評価・賞与</b>の順に再計算・反映されます。変更履歴は記録され、四半期の見直しで棚卸しします。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mEditRule')">キャンセル</span><span class="btn btn-primary">保存して再計算</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=44"></script>
 </body>
 </html>

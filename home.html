@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ホーム｜経営統合システム</title>
-<!-- build v4.3 -->
-<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
 </head>
 <body data-page="home" data-role="kouda">
 <div class="app">
@@ -13,77 +12,57 @@
   <div class="topbar">
     <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、幸田さん</h1></div>
     <div class="search">会社・案件番号・文書を検索<span class="kbd">⌘K</span></div>
-    <span class="btn btn-primary btn-sm" onclick="openModal('mNew')">＋ 新規</span>
+    <span class="btn btn-primary btn-sm" onclick="openModal('mTask')">＋ タスク追加</span>
   </div>
   <div class="content">
 
-    <div class="kpi-grid">
-      <div class="kpi card"><div class="lbl">今日のタスク</div><div class="val tnum">5<small>件（うち期限超過1）</small></div></div>
-      <div class="kpi card"><div class="lbl">担当案件</div><div class="val tnum">12<small>件</small></div><div class="meta"><span class="delta down">停滞 2件</span></div></div>
-      <div class="kpi card"><div class="lbl">あなた宛の承認・確認</div><div class="val tnum">2<small>件</small></div></div>
-      <div class="kpi card"><div class="lbl">今日の予定</div><div class="val tnum">3<small>件</small></div><div class="meta"><span>次：10:00 セルプスJ 定例</span></div></div>
-    </div>
+    <div class="bento">
+      <!-- KPI行 -->
+      <div class="tile b3"><div class="tl">今日のタスク</div><div class="mid tnum">5<small>件</small></div><div style="font-size:11px;color:var(--red);margin-top:6px;font-weight:700">うち期限超過 1件</div></div>
+      <a class="tile b3" href="deals.html" style="display:block"><div class="tl">担当案件</div><div class="mid tnum">12<small>件</small></div><div style="font-size:11px;color:var(--red);margin-top:6px;font-weight:700">停滞 2件</div></a>
+      <div class="tile b3"><div class="tl">あなた宛の承認・確認</div><div class="mid tnum" style="color:var(--orange-d)">2<small>件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">採択入力 1・配分入力 1</div></div>
+      <div class="tile b3"><div class="tl">今日の予定</div><div class="mid tnum">3<small>件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">次：10:00 セルプスJ 定例</div></div>
 
-    <div class="cols" style="margin-top:18px">
-      <div>
-        <!-- 今日のタスク（操作できる） -->
-        <div class="card">
-          <div class="card-h"><span class="t">今日のタスク</span><span class="sp"></span><span class="btn btn-ghost btn-sm" onclick="openModal('mTask')">＋ タスク追加</span></div>
-          <div style="padding:4px 17px 10px">
-            <div class="chk"><span class="bx"></span><span><b>アストロラボ</b>｜相見積の受領確認（<a href="deal_detail.html">IS-2026-0074</a>）</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>期限超過</span></div>
-            <div class="chk"><span class="bx"></span><span><b>リサスティー</b>｜交付申請の入力リマインドをLINEで送る（IS-2026-0055）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>今日</span></div>
-            <div class="chk"><span class="bx"></span><span><b>セルプスジャパン</b>｜10:00 定例の議題準備（IS-2026-0081）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>9:30まで</span></div>
-            <div class="chk"><span class="bx"></span><span><b>菱洋エレクトロ</b>｜支払証憑2点の受領→文書へ保存（IS-2026-0032）</span></div>
-            <div class="chk done"><span class="bx">✓</span><span>週次の申請状況を部内共有</span></div>
-          </div>
-        </div>
-
-        <!-- 担当案件のアラート -->
-        <div class="sec"><h2>担当案件のアラート</h2></div>
-        <div class="card">
-          <div class="list-row"><span class="badge b-red"><span class="d"></span>停滞8日</span><div class="bd"><div class="nm">アストロラボ｜課題解決型（東京都）— 書類待ち</div><div class="sub">IS-2026-0074・申請フェーズ</div></div><a class="btn btn-ghost btn-sm" href="deal_detail.html">開く</a></div>
-          <div class="list-row"><span class="badge b-red"><span class="d"></span>停滞9日</span><div class="bd"><div class="nm">リサスティー｜経営力強化 — 交付申請の入力待ち</div><div class="sub">IS-2026-0055・交付決定フェーズ</div></div><a class="btn btn-ghost btn-sm" href="deals.html">開く</a></div>
-          <div class="list-row"><span class="badge b-warn"><span class="d"></span>〆切31日</span><div class="bd"><div class="nm">セルプスジャパン｜新事業進出 — 公募〆切 8/29</div><div class="sub">IS-2026-0081・申請フェーズ</div></div><a class="btn btn-ghost btn-sm" href="deals.html">開く</a></div>
+      <!-- 今日のタスク（主役） -->
+      <div class="tile b8" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">今日のタスク</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">クリックで完了</span></div>
+        <div style="padding:4px 17px 12px">
+          <div class="chk"><span class="bx"></span><span><b>アストロラボ</b>｜相見積の受領確認（<a href="deal_detail.html">IS-2026-0074</a>）</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>期限超過</span></div>
+          <div class="chk"><span class="bx"></span><span><b>リサスティー</b>｜交付申請の入力リマインドをLINEで送る（IS-2026-0055）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>今日</span></div>
+          <div class="chk"><span class="bx"></span><span><b>セルプスジャパン</b>｜10:00 定例の議題準備（IS-2026-0081）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>9:30まで</span></div>
+          <div class="chk"><span class="bx"></span><span><b>菱洋エレクトロ</b>｜支払証憑2点の受領 → 文書へ保存（IS-2026-0032）</span></div>
+          <div class="chk done"><span class="bx">✓</span><span>週次の申請状況を部内共有</span></div>
         </div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <!-- あなた宛 -->
-        <div class="card">
-          <div class="card-h"><span class="t">あなた宛の承認・確認</span></div>
-          <div class="list-row"><span class="badge b-warn"><span class="d"></span>確認</span><div class="bd"><div class="nm">採択金額の確定入力：47マーケ 120万円</div><div class="sub">入力すると請求連携・受給目標へ反映</div></div><span class="btn btn-primary btn-sm" onclick="openModal('mAdopt')">入力</span></div>
-          <div class="list-row"><span class="badge b-blue"><span class="d"></span>配分</span><div class="bd"><div class="nm">賞与の個人配分%（コンサル部）が未入力</div></div><a class="btn btn-ghost btn-sm" href="evaluation.html">開く</a></div>
-        </div>
-        <!-- 予定 -->
-        <div class="card">
-          <div class="card-h"><span class="t">今日の予定（カレンダー）</span></div>
-          <div class="list-row"><span class="badge b-navy">10:00</span><div class="bd"><div class="nm">セルプスジャパン 定例</div><div class="sub">取引ID記載済・参加：幸田</div></div></div>
-          <div class="list-row"><span class="badge b-sub"><span class="d"></span>14:00</span><div class="bd"><div class="nm">新規ヒアリング（紹介：CC）</div><div class="sub">TimeRex予約・担当自動記録</div></div></div>
-          <div class="list-row"><span class="badge b-sub"><span class="d"></span>16:30</span><div class="bd"><div class="nm">部内 申請レビュー</div></div></div>
-        </div>
-        <!-- 通知 -->
-        <div class="card">
-          <div class="card-h"><span class="t">通知</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">既読にする</span></div>
-          <div class="list-row"><span class="badge b-good"><span class="d"></span>入金</span><div class="bd"><div class="nm tnum">アストロラボ 235万円 着金・消込済</div><div class="sub">7/16 freee連携</div></div></div>
-          <div class="list-row"><span class="badge b-blue"><span class="d"></span>閲覧</span><div class="bd"><div class="nm">アストロラボがポータルを閲覧（3回目）</div><div class="sub">7/16 21:04 — 関心シグナル</div></div></div>
-        </div>
+      <!-- あなた宛 -->
+      <div class="tile b4" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">あなた宛の承認・確認</span></div>
+        <div class="list-row"><span class="badge b-warn"><span class="d"></span>確認</span><div class="bd"><div class="nm tnum">採択金額の確定入力：47マーケ 120万円</div><div class="sub">入力すると請求連携・受給目標へ反映</div></div><span class="btn btn-primary btn-sm" onclick="openModal('mAdopt')">入力</span></div>
+        <div class="list-row"><span class="badge b-blue"><span class="d"></span>配分</span><div class="bd"><div class="nm">賞与の個人配分%（コンサル部）が未入力</div></div><a class="btn btn-ghost btn-sm" href="evaluation.html">開く</a></div>
+      </div>
+
+      <!-- 担当案件のアラート -->
+      <div class="tile b8" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">担当案件のアラート</span><span class="sp"></span><a class="badge b-blue" href="deals.html"><span class="d"></span>案件一覧</a></div>
+        <div class="list-row" style="background:#fff8f7"><span class="badge b-red"><span class="d"></span>停滞8日</span><div class="bd"><div class="nm">アストロラボ｜課題解決型（東京都）— 顧客の書類待ち</div><div class="sub tnum">IS-2026-0074・申請フェーズ・先方回答「決算書は今週中」（7/16）</div></div><a class="btn btn-ghost btn-sm" href="deal_detail.html">開く</a></div>
+        <div class="list-row" style="background:#fff8f7"><span class="badge b-red"><span class="d"></span>停滞9日</span><div class="bd"><div class="nm">リサスティー｜経営力強化 — 交付申請の入力待ち</div><div class="sub tnum">IS-2026-0055・交付決定フェーズ</div></div><a class="btn btn-ghost btn-sm" href="deals.html">開く</a></div>
+        <div class="list-row"><span class="badge b-warn"><span class="d"></span>〆切31日</span><div class="bd"><div class="nm">セルプスジャパン｜新事業進出 — 公募〆切 8/29</div><div class="sub tnum">IS-2026-0081・申請フェーズ</div></div><a class="btn btn-ghost btn-sm" href="deals.html">開く</a></div>
+      </div>
+
+      <!-- 予定・通知 -->
+      <div class="tile b4" style="padding:0">
+        <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">今日の予定・通知</span></div>
+        <div class="list-row"><span class="badge b-navy">10:00</span><div class="bd"><div class="nm">セルプスジャパン 定例</div><div class="sub">取引ID記載済・参加：幸田</div></div></div>
+        <div class="list-row"><span class="badge b-sub"><span class="d"></span>14:00</span><div class="bd"><div class="nm">新規ヒアリング（紹介：CC）</div></div></div>
+        <div class="list-row"><span class="badge b-sub"><span class="d"></span>16:30</span><div class="bd"><div class="nm">部内 申請レビュー</div></div></div>
+        <div class="list-row"><span class="badge b-good"><span class="d"></span>入金</span><div class="bd"><div class="nm tnum">アストロラボ 235万円 消込済</div><div class="sub">7/16 freee連携</div></div></div>
+        <div class="list-row"><span class="badge b-blue"><span class="d"></span>閲覧</span><div class="bd"><div class="nm">アストロラボがポータルを閲覧（3回目）</div><div class="sub">関心シグナル — 追加提案の好機</div></div></div>
       </div>
     </div>
-  </div>
-</div>
-</div>
 
-<!-- 新規作成モーダル -->
-<div class="modal-bg" id="mNew">
-  <div class="modal">
-    <div class="modal-h"><span class="t">新規作成</span><span class="x" onclick="closeModal('mNew')">✕</span></div>
-    <div class="modal-b" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <a class="btn btn-ghost" href="deals.html" style="justify-content:center">📋 案件</a>
-      <a class="btn btn-ghost" href="companies.html" style="justify-content:center">🏢 会社</a>
-      <span class="btn btn-ghost" style="justify-content:center" onclick="closeModal('mNew');openModal('mTask')">✅ タスク</span>
-      <a class="btn btn-ghost" href="documents.html" style="justify-content:center">📁 文書アップロード</a>
-    </div>
   </div>
+</div>
 </div>
 
 <!-- タスク追加モーダル -->
@@ -98,7 +77,7 @@
       </div>
       <label class="field"><span class="fl">担当</span><select class="inp"><option>幸田（自分）</option><option>アシスタント 新垣</option><option>アシスタント 國分</option></select></label>
     </div>
-    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mTask')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mTask')">追加</span></div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mTask')">キャンセル</span><span class="btn btn-primary">追加</span></div>
   </div>
 </div>
 
@@ -112,12 +91,12 @@
         <label class="field"><span class="fl">採択発表日<span class="req">*</span></span><input class="inp" type="date" value="2026-07-15" /></label>
       </div>
       <label class="field"><span class="fl">採択金額（円）<span class="req">*</span></span><input class="inp tnum" value="1,200,000" style="font-weight:800;font-size:16px" /></label>
-      <div class="hint-t">確定すると：成果報酬 18万円（15%）を経理へ請求連携／受給目標の分子へ加算／キャッシュフローの入金予定（採択率→100%）を更新</div>
+      <div class="hint-t">確定すると：成果報酬 18万円（15%）を経理へ請求連携／受給目標の分子へ加算／キャッシュフローの入金予定を更新。</div>
     </div>
-    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mAdopt')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mAdopt')">確定して連携</span></div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mAdopt')">キャンセル</span><span class="btn btn-primary">確定して連携</span></div>
   </div>
 </div>
 
-<script src="assets/app.js?v=43"></script>
+<script src="assets/app.js?v=44"></script>
 </body>
 </html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>予算設計｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<style>
+.fx{font-family:Consolas,monospace;font-size:12.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:10px 14px;margin-top:10px;color:var(--ink);overflow-x:auto;white-space:nowrap}
+.fx b{color:var(--orange-d)}
+.src-b{font-size:10px;font-weight:800;color:var(--blue);background:var(--blue-bg);border-radius:var(--r-full);padding:1px 8px;white-space:nowrap}
+</style>
+</head>
+<body data-page="budget_design" data-role="kitayama">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">経営</div><h1>予算設計（逆算エンジン）</h1></div>
+    <span class="sample">数値はサンプル</span>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <select class="inp" style="width:180px"><option>2026年度（5月〜4月）</option><option>2027年度（下書き）</option></select>
+      <span class="btn btn-primary btn-sm" onclick="openModal('mFix')">再計算して確定</span>
+    </div>
+  </div>
+  <div class="content">
+
+    <p style="font-size:12.5px;color:var(--sub);margin-bottom:16px;max-width:800px">
+      予算は「売上目標を先に決める」のではなく、<b>借入返済から逆算</b>して決めています。ここで確定した数字が
+      <a href="budget.html">予算・実績</a>の予算列、<a href="evaluation.html">評価・賞与</a>の60点基準、部門目標のすべての出所です。
+      計算エンジンは管理会計Excel（逆算エンジン）と同一で、Excel側を正とします。
+    </p>
+
+    <div class="flowv" style="max-width:940px">
+
+      <!-- STEP0 前提 -->
+      <div class="fstep">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px"><span class="badge b-navy">STEP 0</span><b style="font-size:13.5px">前提の入力（ここだけが手入力）</b><span class="src-b" style="margin-left:auto">出所：借入契約・決算・就業規則</span></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <label class="field" style="margin:0"><span class="fl">借入返済（月）</span><input class="inp tnum" value="3,300,000" /><span class="hint-t">IS 211.2万＋秋葉原 118.8万</span></label>
+          <label class="field" style="margin:0"><span class="fl">実効税率</span><input class="inp tnum" value="31.5%" /></label>
+          <label class="field" style="margin:0"><span class="fl">減価償却（年）</span><input class="inp tnum" value="3,330,000" /></label>
+          <label class="field" style="margin:0"><span class="fl">販管費（月・全社固定）</span><input class="inp tnum" value="5,500,000" /></label>
+        </div>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- STEP1 必要営業利益 -->
+      <div class="fstep">
+        <div style="display:flex;align-items:center;gap:9px"><span class="badge b-navy">STEP 1</span><b style="font-size:13.5px">返済から必要営業利益を逆算 ＝ 60点（合格ライン）</b></div>
+        <div class="fx">必要営業利益（年） ＝（年間返済 3,960万 − 減価償却 333万）÷（1 − 税率 31.5%）＝ <b>5,296万円/年</b></div>
+        <div style="display:flex;align-items:baseline;gap:14px;margin-top:12px;flex-wrap:wrap">
+          <span class="tnum" style="font-size:30px;font-weight:800">441<small style="font-size:13px;color:var(--sub)">万円/月</small></span>
+          <span class="badge b-warn"><span class="d"></span>これが評価・賞与の「営業利益 60点」</span>
+          <span style="font-size:11px;color:var(--faint)">40点＝返済ぎりぎりのライン（安全余裕ゼロ・必達）</span>
+        </div>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- STEP2 必要粗利 -->
+      <div class="fstep">
+        <div style="display:flex;align-items:center;gap:9px"><span class="badge b-navy">STEP 2</span><b style="font-size:13.5px">販管費を足して必要粗利（限界利益）</b></div>
+        <div class="fx">必要粗利（月） ＝ 営業利益 441万 ＋ 販管費 550万 ＝ <b>991万円/月</b></div>
+        <div style="display:flex;align-items:baseline;gap:14px;margin-top:12px">
+          <span class="tnum" style="font-size:30px;font-weight:800">991<small style="font-size:13px;color:var(--sub)">万円/月</small></span>
+          <span class="badge b-warn"><span class="d"></span>これが「粗利 60点」・人時生産性の分子</span>
+        </div>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- STEP3 必要売上 -->
+      <div class="fstep">
+        <div style="display:flex;align-items:center;gap:9px"><span class="badge b-navy">STEP 3</span><b style="font-size:13.5px">粗利率で割り戻して必要売上</b><span class="src-b" style="margin-left:auto">粗利率の出所：直近実績（freee）</span></div>
+        <div class="fx">必要売上（月） ＝ 粗利 991万 ÷ 粗利率 52%（紹介料・営業経費・現場人件費 控除後）≒ <b>2,000万円/月（年 2.4億円）</b></div>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- STEP4 部門按分 -->
+      <div class="fstep" style="padding-bottom:8px">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px"><span class="badge b-navy">STEP 4</span><b style="font-size:13.5px">部門へ按分（売上〜粗利まで）</b><span class="src-b" style="margin-left:auto">判定：solution区分</span></div>
+        <table style="font-size:12.5px">
+          <thead><tr><th>部門</th><th class="r">月次 売上目標</th><th>根拠</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700">営業部（レポート・BPO・商材構築）</td><td class="r tnum" style="font-weight:800">1,100万円</td><td style="color:var(--sub)">BPO 2件/月 ＋ レポート 10件/月 ＋ 商材構築 進行分</td></tr>
+            <tr><td style="font-weight:700">コンサル部（補助金助成金）</td><td class="r tnum" style="font-weight:800">900万円</td><td style="color:var(--sub)">1社モデル 102万円（着手金30万＋成果報酬72万）× 約8.8社</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- STEP5 月次按分 -->
+      <div class="fstep">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px"><span class="badge b-navy">STEP 5</span><b style="font-size:13.5px">月次へ按分（実態カーブ）</b></div>
+        <div style="font-size:12.5px;color:var(--sub);line-height:1.9">
+          固定販管費のみ均等割。売上・件数・人件費（杉山 7月合流など）は実態カーブを維持して配分。
+          結果は<a href="budget.html">予算・実績</a>の「月次予算」列に反映されます。
+        </div>
+      </div>
+      <div class="farrow">▼</div>
+
+      <!-- 反映先 -->
+      <div class="fstep" style="border-color:var(--orange);background:#fff8f2">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px"><span class="badge" style="background:var(--orange);color:#fff">反映先</span><b style="font-size:13.5px">確定すると、この数字が全画面の基準になります</b></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <a class="card" href="budget.html" style="padding:12px 14px;display:block"><div style="font-size:12px;font-weight:800">予算・実績</div><div style="font-size:11px;color:var(--sub);margin-top:3px">月次予算列・部門別目標</div></a>
+          <a class="card" href="evaluation.html" style="padding:12px 14px;display:block"><div style="font-size:12px;font-weight:800">評価・賞与</div><div style="font-size:11px;color:var(--sub);margin-top:3px">60点基準（営利441万・粗利991万）</div></a>
+          <a class="card" href="cashflow.html" style="padding:12px 14px;display:block"><div style="font-size:12px;font-weight:800">キャッシュフロー</div><div style="font-size:11px;color:var(--sub);margin-top:3px">固定支払（返済330万/月）</div></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- 確定モーダル -->
+<div class="modal-bg" id="mFix">
+  <div class="modal">
+    <div class="modal-h"><span class="t">予算の再計算・確定</span><span class="x" onclick="closeModal('mFix')">✕</span></div>
+    <div class="modal-b">
+      <div style="font-size:12.5px;color:var(--sub);line-height:2">前提（返済 330万/月・税率 31.5%・減価償却 333万/年・販管費 550万/月）から再計算します：<br>
+      営業利益 60点＝<b class="tnum">441万円/月</b> ／ 粗利 60点＝<b class="tnum">991万円/月</b> ／ 必要売上＝<b class="tnum">2,000万円/月</b></div>
+      <div class="hint-t" style="margin-top:10px">確定すると予算・実績／評価・賞与／部門目標に反映されます（四半期ごとに見直し）。変更履歴は記録されます。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mFix')">キャンセル</span><span class="btn btn-primary">確定して反映</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=44"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ログイン｜経営統合システム</title>
+<link rel="stylesheet" href="assets/style.css?v=43" /><link rel="stylesheet" href="assets/ui.css?v=43" />
+</head>
+<body>
+<div class="login-wrap">
+  <div>
+    <div style="text-align:center;margin-bottom:22px">
+      <span style="display:inline-grid;place-items:center;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--orange),var(--gold));color:var(--navy);font-weight:900;font-size:18px">IS</span>
+      <div style="color:#fff;font-weight:800;font-size:19px;margin-top:12px">経営統合システム</div>
+      <div style="color:#7686a0;font-size:11.5px;margin-top:3px">Initial State / Bizplan</div>
+    </div>
+    <div class="login-card" style="width:400px">
+      <div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:10px">ログインするメンバーを選択<span style="font-weight:600;color:var(--faint)">（カンプ用・実装ではメール＋パスワード）</span></div>
+      <div class="acct" data-u="nakata" data-h="exec.html"><span class="av">中</span><span><span class="nm">中田 雄斗</span><br><span class="rl">CAIO・管理者/経営</span></span><span class="go">›</span></div>
+      <div class="acct" data-u="kitayama" data-h="home_kitayama.html"><span class="av">北</span><span><span class="nm">北山</span><br><span class="rl">代表・経営（営業）</span></span><span class="go">›</span></div>
+      <div class="acct" data-u="imai" data-h="home_imai.html"><span class="av">今</span><span><span class="nm">今井</span><br><span class="rl">管理部（経理）</span></span><span class="go">›</span></div>
+      <div class="acct" data-u="kouda" data-h="home.html"><span class="av">幸</span><span><span class="nm">幸田 尚大</span><br><span class="rl">コンサル部長（PM）</span></span><span class="go">›</span></div>
+      <div class="acct" data-u="shintani" data-h="home_shintani.html"><span class="av">新</span><span><span class="nm">新谷 剛士</span><br><span class="rl">営業部</span></span><span class="go">›</span></div>
+      <div class="acct" data-u="arakaki" data-h="home_arakaki.html"><span class="av">垣</span><span><span class="nm">新垣</span><br><span class="rl">アシスタント</span></span><span class="go">›</span></div>
+      <div style="text-align:center;margin-top:14px;font-size:10.5px;color:var(--faint)">ロールにより表示メニュー・数値の可視範囲が変わります（権限管理）</div>
+    </div>
+  </div>
+</div>
+<script>
+document.querySelectorAll(".acct").forEach(function (a) {
+  a.addEventListener("click", function () {
+    try { localStorage.setItem("kv4_role", a.getAttribute("data-u")); } catch (e) {}
+    location.href = a.getAttribute("data-h");
+  });
+});
+</script>
+</body>
+</html>

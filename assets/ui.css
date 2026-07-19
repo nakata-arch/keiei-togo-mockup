@@ -192,3 +192,8 @@
 .cp-head{background:linear-gradient(135deg,var(--navy),var(--navy-3));color:#fff;border-radius:0 0 18px 18px;padding:20px 20px 18px;margin:0 -16px 18px}
 .cp-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-sm);padding:15px 17px;margin-bottom:12px}
 .cp-sec{font-size:11.5px;font-weight:800;color:var(--sub);margin:18px 0 8px}
+
+/* ---- バッジ→カードのハイライト（CLAUDE.md §2-2） ---- */
+.pulse{animation:pulseHl 2.2s ease}
+@keyframes pulseHl{0%,60%{box-shadow:0 0 0 3px rgba(255,145,76,.55)}100%{box-shadow:none}}
+.nav-item .count{cursor:pointer}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>マスタ｜経営統合システム</title>
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
+</head>
+<body data-page="st06" data-role="nakata">
+<!-- ST-06 マスタ（write:true）。正本は外部（HubSpot/freee）＝ここは表示名・紐づけの管理のみ（CLAUDE.md §1-1）。独自マスタは持たない -->
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">設定</div><h1>マスタ（表示名・紐づけ）</h1></div><span class="sample">値はサンプル</span>
+    <span class="badge b-navy">正本は外部：会社＝HubSpot／勘定科目＝freee</span>
+  </div>
+  <div class="content">
+
+    <div class="dtabs">
+      <span class="dtab on" data-g="m" data-t="co" onclick="swTab('m','co')">会社（HubSpotミラー）</span>
+      <span class="dtab" data-g="m" data-t="ac" onclick="swTab('m','ac')">勘定科目（freeeミラー）</span>
+    </div>
+
+    <!-- 会社 -->
+    <div class="dpane on" data-g="m" data-t="co">
+      <div class="card" style="overflow-x:auto">
+        <div class="card-h"><span class="t">会社の表示名・紐づけ</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">最終同期 7/20 06:00（表示用キャッシュ・書き戻しなし）</span></div>
+        <table>
+          <thead><tr><th>HubSpot 会社ID（正本）</th><th>正式名（HubSpot）</th><th>表示名（本システム）</th><th>board 顧客の紐づけ</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="tnum">12894011</td><td>アストロラボ株式会社</td><td><input class="inp" value="アストロラボ" style="width:180px" /></td><td><span class="badge b-good"><span class="d"></span>紐づけ済</span></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="toast('✓ 保存しました（モックのためデータは変わりません）')">保存</span></td></tr>
+            <tr><td class="tnum">12894388</td><td>セルプスジャパン株式会社</td><td><input class="inp" value="セルプスジャパン" style="width:180px" /></td><td><span class="badge b-good"><span class="d"></span>紐づけ済</span></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="toast('✓ 保存しました（モックのためデータは変わりません）')">保存</span></td></tr>
+            <tr style="background:var(--row-warn)"><td class="tnum">12901277</td><td>株式会社ワタナベ工業</td><td><input class="inp" value="ワタナベ工業" style="width:180px" /></td><td><span class="badge b-warn"><span class="d"></span>board未紐づけ</span></td><td class="r"><span class="btn btn-primary btn-sm" onclick="openModal('mLink')">紐づけ</span></td></tr>
+          </tbody>
+        </table>
+        <div style="padding:10px 17px;border-top:1px solid var(--line);font-size:11px;color:var(--sub)">会社の追加・削除は HubSpot 側で行います（本システムからは書き込みません）。</div>
+      </div>
+    </div>
+
+    <!-- 勘定科目 -->
+    <div class="dpane" data-g="m" data-t="ac">
+      <div class="card" style="overflow-x:auto">
+        <div class="card-h"><span class="t">勘定科目の表示名・区分の紐づけ</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">P&L 5階層への割当（予算・実績で使用）</span></div>
+        <table>
+          <thead><tr><th>freee 科目（正本）</th><th>表示名</th><th>P&L 階層への割当</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>売上高</td><td><input class="inp" value="総売上高" style="width:160px" /></td><td><select class="inp" style="width:200px"><option>総売上高</option></select></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="toast('✓ 保存しました（モックのためデータは変わりません）')">保存</span></td></tr>
+            <tr><td>支払手数料（紹介）</td><td><input class="inp" value="営業紹介料" style="width:160px" /></td><td><select class="inp" style="width:200px"><option>営業紹介料（控除）</option></select></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="toast('✓ 保存しました（モックのためデータは変わりません）')">保存</span></td></tr>
+            <tr><td>外注費</td><td><input class="inp" value="現場人件費" style="width:160px" /></td><td><select class="inp" style="width:200px"><option>現場人件費</option><option>営業経費</option></select></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="toast('✓ 保存しました（モックのためデータは変わりません）')">保存</span></td></tr>
+            <tr><td>地代家賃</td><td><input class="inp" value="販管費（家賃）" style="width:160px" /></td><td><select class="inp" style="width:200px"><option>販管費</option></select></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="toast('✓ 保存しました（モックのためデータは変わりません）')">保存</span></td></tr>
+          </tbody>
+        </table>
+        <div style="padding:10px 17px;border-top:1px solid var(--line);font-size:11px;color:var(--sub)">科目の追加・変更は freee 側で行います。保存に失敗した場合は変更前の値に戻し、エラーを表示します（楽観更新なし）。</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- board紐づけ（保存／保存失敗の分岐） -->
+<div class="modal-bg" id="mLink">
+  <div class="modal">
+    <div class="modal-h"><span class="t">board 顧客の紐づけ｜ワタナベ工業</span><span class="x" onclick="closeModal('mLink')">✕</span></div>
+    <div class="modal-b">
+      <label class="field"><span class="fl">board 顧客（候補）</span><select class="inp"><option>ﾜﾀﾅﾍﾞｺｳｷﾞｮｳ(ｶ（一致度 高）</option><option>（手動検索…）</option></select></label>
+      <div class="hint-t">紐づけに失敗した場合は未紐づけのまま残し、エラー内容を表示します。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mLink')">キャンセル</span><span class="btn btn-primary">紐づけを保存</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=45"></script>
+</body>
+</html>

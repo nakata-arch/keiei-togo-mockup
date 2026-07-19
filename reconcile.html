@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>入金消込｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="reconcile" data-role="imai">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">経理</div><h1>入金消込（freee明細 × 予定の突合）</h1></div>
+    <div><div class="crumb">経理</div><h1>入金消込（freee明細 × 予定の突合）</h1></div><span class="sample">値はサンプル</span>
     <div class="search">相手先・金額で検索<span class="kbd">⌘K</span></div>
     <span class="badge b-blue"><span class="d"></span>最終取得 7/17 06:00（日次）</span>
   </div>
@@ -24,8 +24,8 @@
       <span class="seg"><span class="on">入金</span><span>出金</span></span>
     </div>
 
-    <!-- 未消込明細 -->
-    <div class="card" style="overflow-x:auto;margin-bottom:16px">
+    <!-- 未消込明細。バッジ3＝未消込3行と1対1（§2-2） -->
+    <div class="card" style="overflow-x:auto;margin-bottom:16px" id="alerts">
       <div class="card-h"><span class="t">未消込の明細（freee入金）</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">行を選ぶと下に突合候補が出ます</span></div>
       <table>
         <thead><tr><th></th><th>着金日</th><th>明細（摘要）</th><th class="r">金額</th><th>自動候補</th><th>状態</th></tr></thead>
@@ -89,6 +89,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

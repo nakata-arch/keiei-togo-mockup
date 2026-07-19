@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>会社｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="companies">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">業務</div><h1>会社</h1></div>
+    <div><div class="crumb">業務</div><h1>会社</h1></div><span class="sample">値はサンプル</span>
     <div class="search">会社名・担当・LINE IDで検索<span class="kbd">⌘K</span></div>
     <span class="btn btn-primary btn-sm" onclick="openModal('mCompany')">＋ 新規会社</span>
   </div>
@@ -34,7 +34,7 @@
             <td style="font-weight:800">アストロラボ株式会社</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">1年5ヶ月</td><td>幸田</td><td>レ→B→補</td><td class="r"><span class="badge b-warn"><span class="d"></span>52%</span></td><td class="tnum">7/16 LINE受信</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
           <tr class="rowlink" onclick="location.href='company_detail.html'">
             <td style="font-weight:800">セルプスジャパン株式会社</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">2年1ヶ月</td><td>幸田</td><td>レ→B→補×2</td><td class="r"><span class="badge b-good"><span class="d"></span>104%</span></td><td class="tnum">7/15 面談</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-          <tr class="rowlink" onclick="location.href='company_detail.html'" style="background:#fffdf8">
+          <tr class="rowlink" onclick="location.href='company_detail.html'" style="background:var(--row-warn)">
             <td style="font-weight:800">株式会社ティーガイア</td><td><span class="badge b-good"><span class="d"></span>顧客</span></td><td class="tnum">0年11ヶ月</td><td>北山</td><td>レ→B</td><td class="r"><span class="badge b-red"><span class="d"></span>0%・先行アラート</span></td><td class="tnum">6/22 メール</td><td><span class="badge b-sub"><span class="d"></span>未連携</span></td><td class="r" style="color:var(--faint)">›</td></tr>
           <tr class="rowlink" onclick="location.href='company_detail.html'">
             <td style="font-weight:800">株式会社リサスティー</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">1年8ヶ月</td><td>幸田</td><td>レ→B→補×2</td><td class="r"><span class="badge b-warn"><span class="d"></span>83%</span></td><td class="tnum">7/14 LINE送信</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
@@ -72,6 +72,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

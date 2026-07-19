@@ -1,21 +1,7 @@
 /* =========================================================================
-   経営統合システム カンプ v3 共通スタイル
-   正：要件定義書 v1.0（14モジュール）／業務設計書 v1.2／引き継ぎ書 v1.0
-   デザイン言語：Calm Operational Clarity（ブランド実色・8pxグリッド）
+   経営統合システム 共通スタイル
+   デザイントークンの正本は assets/tokens.css（CLAUDE.md §3）。本ファイルは参照のみ。
    ========================================================================= */
-:root{
-  --navy:#14233D; --navy-2:#1E3557; --navy-3:#28405f;
-  --orange:#FF914C; --orange-d:#E8731F; --gold:#FDBF43;
-  --blue:#1A75BC; --blue-bg:#EAF2FA; --cream:#FFF3D6;
-  --red:#D43A2F; --red-bg:#FCEBEA; --good:#1E8E5A; --good-bg:#E8F5EE;
-  --ink:#151d2b; --sub:#4a5666; --faint:#8492a4; --purple:#5B5B8A;
-  --canvas:#F6F8FB; --surface:#ffffff; --surface-2:#FBFCFE;
-  --line:#E7EBF1; --line-2:#EEF1F6;
-  --sh-sm:0 1px 2px rgba(20,35,61,.04),0 1px 3px rgba(20,35,61,.06);
-  --sh-md:0 2px 4px rgba(20,35,61,.04),0 6px 16px rgba(20,35,61,.07);
-  --r-sm:8px; --r:11px; --r-lg:16px; --r-full:999px;
-  --font:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-font-smoothing:antialiased}
 body{font-family:var(--font);background:var(--canvas);color:var(--ink);line-height:1.6;font-size:14px}

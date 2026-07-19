@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>アストロラボ株式会社｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="companies">
 <div class="app">
@@ -14,10 +14,11 @@
       <div class="crumbs"><a href="companies.html">会社</a><span>›</span><span style="color:var(--ink)">アストロラボ株式会社</span></div>
       <h1>アストロラボ株式会社</h1>
     </div>
+    <span class="sample">値はサンプル</span>
     <span class="badge b-good"><span class="d"></span>リピート顧客</span>
     <span class="badge b-blue"><span class="d"></span>LINE連携済</span>
     <div style="margin-left:auto;display:flex;gap:8px">
-      <span class="btn btn-ghost btn-sm" onclick="openModal('mPortal')">★ ポータルURL</span>
+      <a class="btn btn-ghost btn-sm" href="portal.html">★ ポータル（設定へ）</a><!-- E-02 to: ポータルプレビュー→ST-04 -->
       <span class="btn btn-ghost btn-sm" onclick="openModal('mEdit')">編集</span>
       <a class="btn btn-primary btn-sm" href="deals.html">＋ 案件を追加</a>
     </div>
@@ -32,10 +33,10 @@
           <div class="gv tnum">248万円 <small>／ 480万円（52%）</small></div>
           <div class="gbar"><i style="width:52%"></i></div>
         </div>
-        <div style="display:flex;gap:18px;font-size:11px;color:#94a3bd">
-          <div><div>顧客歴</div><div style="font-size:15px;font-weight:800;color:#fff" class="tnum">1年5ヶ月</div></div>
-          <div><div>リピート</div><div style="font-size:15px;font-weight:800;color:#fff" class="tnum">0年5ヶ月</div></div>
-          <div><div>累計入金</div><div style="font-size:15px;font-weight:800;color:#fff" class="tnum">270万円</div></div>
+        <div style="display:flex;gap:18px;font-size:11px;color:var(--navy-sub)">
+          <div><div>顧客歴</div><div style="font-size:15px;font-weight:800;color:var(--surface)" class="tnum">1年5ヶ月</div></div>
+          <div><div>リピート</div><div style="font-size:15px;font-weight:800;color:var(--surface)" class="tnum">0年5ヶ月</div></div>
+          <div><div>累計入金</div><div style="font-size:15px;font-weight:800;color:var(--surface)" class="tnum">270万円</div></div>
         </div>
       </div>
     </div>
@@ -48,26 +49,24 @@
       <span class="dtab" data-g="c" data-t="t4" onclick="swTab('c','t4')">請求・入金<span class="n">4</span></span>
     </div>
 
-    <!-- t1 概要・案件 -->
+    <!-- t1 概要・案件（共通グリッド＝bento 12col に整列・Q3是正）。案件カード→E-03（screens.yaml E-02 to:） -->
     <div class="dpane on" data-g="c" data-t="t1">
-      <div class="cols">
-        <div>
-          <div class="card lineage">
+      <div class="bento">
+          <div class="card lineage b12">
             <div class="ln-node"><span class="lt" style="color:var(--blue)">診断レポート</span><div class="ln">IS-2026-0041</div><div class="ls">2026/01・5万円・新谷</div><div style="margin-top:8px"><span class="badge b-good"><span class="d"></span>完了</span></div></div>
             <div class="ln-arrow">→</div>
             <div class="ln-node"><span class="lt" style="color:var(--orange-d)">BPO顧問</span><div class="ln">IS-2026-0058</div><div class="ls">2026/02・240万円/年・幸田</div><div style="margin-top:8px"><span class="badge b-good"><span class="d"></span>契約中</span></div></div>
             <div class="ln-arrow">→</div>
-            <a class="ln-node" href="deal_detail.html" style="display:block"><span class="lt" style="color:var(--good)">補助金：課題解決型</span><div class="ln">IS-2026-0074</div><div class="ls">申請フェーズ・248万円・幸田</div><div style="margin-top:8px"><span class="badge b-red"><span class="d"></span>停滞8日 →開く</span></div></a>
+            <a class="ln-node" href="deals.html" style="display:block"><span class="lt" style="color:var(--good)">補助金：課題解決型</span><div class="ln">IS-2026-0074</div><div class="ls">申請準備（仮・A-03）・248万円・幸田</div><div style="margin-top:8px"><span class="badge b-red"><span class="d"></span>停滞8日 →案件へ</span></div></a>
             <div class="ln-arrow">→</div>
             <div class="ln-node" style="border-style:dashed;opacity:.7;cursor:pointer" onclick="openModal('mPropose')"><span class="lt" style="color:var(--faint)">次の申請候補（未起票）</span><div class="ln">ものづくり補助金</div><div class="ls">設備更新の相談あり ＋起票する</div></div>
           </div>
-          <div class="card" style="margin-top:14px">
+          <div class="card b8" style="padding:0">
             <div class="card-h"><span class="t">直近の予定（カレンダー）</span></div>
             <div class="list-row"><span class="badge b-blue"><span class="d"></span>7/22 14:00</span><div class="bd"><div class="nm">月次定例</div><div class="sub">参加：幸田・先方社長（取引ID記載済）</div></div></div>
             <div class="list-row"><span class="badge b-sub"><span class="d"></span>7/29 10:00</span><div class="bd"><div class="nm">交付申請の同席（予定）</div></div></div>
           </div>
-        </div>
-        <div class="card" style="padding:16px 18px">
+        <div class="card b4" style="padding:16px 18px">
           <div style="font-size:12px;font-weight:800;margin-bottom:10px">基本情報</div>
           <div class="kv" style="padding-left:0;padding-right:0"><span class="k">HubSpot会社ID</span><span class="v tnum">12894011</span></div>
           <div class="kv" style="padding-left:0;padding-right:0"><span class="k">代表者</span><span class="v">豊田 隆</span></div>
@@ -138,23 +137,7 @@
 </div>
 </div>
 
-<!-- ポータルURLモーダル -->
-<div class="modal-bg" id="mPortal">
-  <div class="modal">
-    <div class="modal-h"><span class="t">顧客ポータルURL｜アストロラボ</span><span class="x" onclick="closeModal('mPortal')">✕</span></div>
-    <div class="modal-b">
-      <label class="field"><span class="fl">発行済みURL（URL＝鍵・ログイン不要）</span>
-        <div style="display:flex;gap:8px"><input class="inp tnum" style="font-family:Consolas,monospace" value="https://portal.initialstate.jp/c/Xk2f9aQtR8" readonly /><span class="btn btn-ghost btn-sm" style="white-space:nowrap">コピー</span></div>
-      </label>
-      <div style="display:flex;gap:8px;margin-bottom:12px">
-        <span class="btn btn-primary btn-sm">LINEで送る</span><span class="btn btn-ghost btn-sm">メールで送る</span><span class="btn btn-ghost btn-sm" style="color:var(--red)">失効して再発行</span>
-      </div>
-      <div style="font-size:11px;font-weight:800;color:var(--sub);margin-bottom:6px">閲覧ログ（関心シグナル）</div>
-      <div style="font-size:12px;color:var(--sub);line-height:2">7/16 21:04 ／ 7/15 12:30 ／ 7/12 8:11 — 計3回</div>
-      <div class="hint-t">表示されるのは申請状況・お願い事項・次回予定のみ。金額の内訳・確度・社内メモは表示されません。<a href="portal_customer.html">顧客が見る画面をプレビュー →</a></div>
-    </div>
-  </div>
-</div>
+<!-- ポータルURLの発行・失効・閲覧ログは ST-04（顧客ポータル管理）に集約（screens.yaml） -->
 
 <!-- 会社編集モーダル -->
 <div class="modal-bg" id="mEdit">
@@ -191,6 +174,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

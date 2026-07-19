@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>連携設定｜経営統合システム</title>
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
+</head>
+<body data-page="st07" data-role="nakata">
+<!-- ST-07 連携設定（write:true）。to: 接続テスト成功→ST-07／接続テスト失敗→ST-07（画面内でエラー表示） -->
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">設定</div><h1>連携設定</h1></div><span class="sample">値はサンプル</span>
+    <span class="badge b-navy">本システムはハブ（ミラー＋リモコン）・独自マスタなし</span>
+  </div>
+  <div class="content">
+
+    <div class="card" style="overflow-x:auto">
+      <table>
+        <thead><tr><th>連携先</th><th>役割（正本）</th><th>識別情報</th><th>状態</th><th></th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700">freee 会計</td><td>会計の正本（P&L・入出金・残高）</td><td class="tnum">会社ID 2517817</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="testOk(this)">接続テスト</span></td></tr>
+          <tr><td style="font-weight:700">HubSpot</td><td>顧客・案件の正本（主キー＝Deal ID）</td><td class="tnum">ポータル 45826066</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="testOk(this)">接続テスト</span></td></tr>
+          <tr><td style="font-weight:700">board</td><td>請求案件の正本</td><td class="tnum">api.the-board.jp/v1</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="testOk(this)">接続テスト</span></td></tr>
+          <tr><td style="font-weight:700">GreatSign</td><td>契約の正本</td><td>Zapier経由</td><td><span class="badge b-warn"><span class="d"></span>要検証（取引ID変数）</span></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="testFail(this)">接続テスト</span></td></tr>
+          <tr><td style="font-weight:700">TimeRex</td><td>担当帰属の正本</td><td>プレミアム</td><td><span class="badge b-good"><span class="d"></span>接続中</span></td><td class="r"><span class="btn btn-ghost btn-sm" onclick="testOk(this)">接続テスト</span></td></tr>
+          <tr style="background:var(--row-warn)"><td style="font-weight:700">LINE LIFF</td><td>顧客ポータル配信（A-04：起動パラメータ設計 未確定）</td><td>未設定</td><td><span class="badge b-red"><span class="d"></span>未接続</span></td><td class="r"><span class="btn btn-primary btn-sm" onclick="openModal('mLiff')">設定</span></td></tr>
+        </tbody>
+      </table>
+      <div id="testResult" style="display:none;padding:11px 17px;border-top:1px solid var(--line);font-size:12px"></div>
+      <div style="padding:10px 17px;border-top:1px solid var(--line);font-size:11px;color:var(--sub)">外部正本が正。ローカルは表示用キャッシュのみで書き戻しません（CLAUDE.md §1-1）。資格情報は環境変数で管理し画面に表示しません。</div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- LIFF設定（A-04 仮：パラメータ設計は中田確認待ちのため保存不可の下書き） -->
+<div class="modal-bg" id="mLiff">
+  <div class="modal">
+    <div class="modal-h"><span class="t">LINE LIFF の設定（下書き）</span><span class="x" onclick="closeModal('mLiff')">✕</span></div>
+    <div class="modal-b">
+      <label class="field"><span class="fl">LIFF ID</span><input class="inp" placeholder="liff-xxxxxxxx" /></label>
+      <label class="field"><span class="fl">起動パラメータ方式（A-04・未確定）</span>
+        <select class="inp" disabled><option>発行トークン経由（仮）</option><option>Deal ID 直渡し</option></select>
+      </label>
+      <div class="hint-t" style="color:var(--orange-d)">A-04：起動パラメータ設計（Deal ID直渡しか発行トークン経由か）は中田さんの確認待ちのため、この設定は保存できません（assumption-ledger.md 参照）。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mLiff')">閉じる</span><span class="btn btn-ghost" style="opacity:.5;cursor:not-allowed">保存（A-04確定後に有効化）</span></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=45"></script>
+<script>
+/* 接続テスト：成功／失敗どちらも同画面に結果表示（screens.yaml ST-07 to:） */
+function show(msg, ok){
+  var r = document.getElementById("testResult");
+  r.style.display = "block";
+  r.style.color = ok ? "var(--good)" : "var(--red)";
+  r.textContent = msg;
+}
+function testOk(b){ show("✓ 接続テスト成功（応答 182ms・モック）", true); }
+function testFail(b){ show("✕ 接続テスト失敗：ディスパッチ変数に取引IDが含まれていません。Zapier側の設定を確認してください（モック）", false); }
+</script>
+</body>
+</html>

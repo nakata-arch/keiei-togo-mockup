@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ホーム（中田）｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="home" data-role="nakata">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、中田さん</h1></div>
+    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、中田さん</h1></div><span class="sample">値はサンプル</span>
     <div class="search">会社・案件番号・文書を検索<span class="kbd">⌘K</span></div>
     <a class="btn btn-primary btn-sm" href="exec.html">経営サマリー</a>
   </div>
@@ -23,10 +23,10 @@
       <div class="tile b3"><div class="tl">あなたの承認待ち</div><div class="mid tnum" style="color:var(--orange-d)">2<small>件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">経営会議 1・明細承認 1</div></div>
       <a class="tile b3" href="reconcile.html" style="display:block"><div class="tl">入金漏れ（期日超過）</div><div class="mid tnum" style="color:var(--red)">2<small>件・35万円</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">担当営業へ催促依頼済み</div></a>
 
-      <!-- 承認キュー（経営共通の主業務） -->
-      <div class="tile b8" style="padding:0">
+      <!-- 承認キュー。バッジ2＝キュー2行と1対1（§2-2） -->
+      <div class="tile b8" style="padding:0" id="alerts">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">あなたの承認キュー</span><span class="sp"></span><a class="badge b-blue" href="invoices.html"><span class="d"></span>支払処理</a></div>
-        <div class="list-row" style="background:#fff8f7">
+        <div class="list-row" style="background:var(--row-red)">
           <span class="badge b-red"><span class="d"></span>経営会議</span>
           <div class="bd"><div class="nm tnum">外注費 82万円｜クリエイト（商材構築 IS-2026-0088）</div><div class="sub">振込予定日 7/25。経営層会議での承認が必要です</div></div>
           <span class="btn btn-primary btn-sm" onclick="openModal('mMeet')">会議で承認</span>
@@ -49,7 +49,7 @@
       <!-- 担当領域：管理部統括・CAIO（北山との差分はここだけ） -->
       <div class="tile b8" style="padding:0">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">管理・システム（あなたの担当領域）</span></div>
-        <div class="list-row" style="background:#fff8f7">
+        <div class="list-row" style="background:var(--row-red)">
           <span class="badge b-red"><span class="d"></span>是正</span>
           <div class="bd"><div class="nm">出向契約が未締結（岩下さん・今井さん ⇔ 秋葉原クリエイティブ）</div><div class="sub tnum">負担金 46万円/月 の支払根拠。法務是正の最優先事項</div></div>
           <a class="btn btn-ghost btn-sm" href="settings.html">設定へ</a>
@@ -94,6 +94,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

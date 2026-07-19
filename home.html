@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ホーム｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="home" data-role="kouda">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、幸田さん</h1></div>
+    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、幸田さん</h1></div><span class="sample">値はサンプル</span>
     <div class="search">会社・案件番号・文書を検索<span class="kbd">⌘K</span></div>
     <span class="btn btn-primary btn-sm" onclick="openModal('mTask')">＋ タスク追加</span>
   </div>
@@ -23,11 +23,11 @@
       <div class="tile b3"><div class="tl">あなた宛の承認・確認</div><div class="mid tnum" style="color:var(--orange-d)">2<small>件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">採択入力 1・配分入力 1</div></div>
       <div class="tile b3"><div class="tl">今日の予定</div><div class="mid tnum">3<small>件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">次：10:00 セルプスJ 定例</div></div>
 
-      <!-- 今日のタスク（主役） -->
-      <div class="tile b8" style="padding:0">
+      <!-- 今日のタスク（主役）。バッジ4＝未完了4行と1対1（§2-2） -->
+      <div class="tile b8" style="padding:0" id="alerts">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">今日のタスク</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">クリックで完了</span></div>
         <div style="padding:4px 17px 12px">
-          <div class="chk"><span class="bx"></span><span><b>アストロラボ</b>｜相見積の受領確認（<a href="deal_detail.html">IS-2026-0074</a>）</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>期限超過</span></div>
+          <div class="chk"><span class="bx"></span><span><b>アストロラボ</b>｜相見積の受領確認（<a href="company_detail.html">IS-2026-0074</a>）</span><span class="badge b-red" style="margin-left:auto"><span class="d"></span>期限超過</span></div>
           <div class="chk"><span class="bx"></span><span><b>リサスティー</b>｜交付申請の入力リマインドをLINEで送る（IS-2026-0055）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>今日</span></div>
           <div class="chk"><span class="bx"></span><span><b>セルプスジャパン</b>｜10:00 定例の議題準備（IS-2026-0081）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>9:30まで</span></div>
           <div class="chk"><span class="bx"></span><span><b>菱洋エレクトロ</b>｜支払証憑2点の受領 → 文書へ保存（IS-2026-0032）</span></div>
@@ -45,8 +45,8 @@
       <!-- 担当案件のアラート -->
       <div class="tile b8" style="padding:0">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">担当案件のアラート</span><span class="sp"></span><a class="badge b-blue" href="deals.html"><span class="d"></span>案件一覧</a></div>
-        <div class="list-row" style="background:#fff8f7"><span class="badge b-red"><span class="d"></span>停滞8日</span><div class="bd"><div class="nm">アストロラボ｜課題解決型（東京都）— 顧客の書類待ち</div><div class="sub tnum">IS-2026-0074・申請フェーズ・先方回答「決算書は今週中」（7/16）</div></div><a class="btn btn-ghost btn-sm" href="deal_detail.html">開く</a></div>
-        <div class="list-row" style="background:#fff8f7"><span class="badge b-red"><span class="d"></span>停滞9日</span><div class="bd"><div class="nm">リサスティー｜経営力強化 — 交付申請の入力待ち</div><div class="sub tnum">IS-2026-0055・交付決定フェーズ</div></div><a class="btn btn-ghost btn-sm" href="deals.html">開く</a></div>
+        <div class="list-row" style="background:var(--row-red)"><span class="badge b-red"><span class="d"></span>停滞8日</span><div class="bd"><div class="nm">アストロラボ｜課題解決型（東京都）— 顧客の書類待ち</div><div class="sub tnum">IS-2026-0074・申請フェーズ・先方回答「決算書は今週中」（7/16）</div></div><a class="btn btn-ghost btn-sm" href="company_detail.html">開く</a></div>
+        <div class="list-row" style="background:var(--row-red)"><span class="badge b-red"><span class="d"></span>停滞9日</span><div class="bd"><div class="nm">リサスティー｜経営力強化 — 交付申請の入力待ち</div><div class="sub tnum">IS-2026-0055・交付決定フェーズ</div></div><a class="btn btn-ghost btn-sm" href="deals.html">開く</a></div>
         <div class="list-row"><span class="badge b-warn"><span class="d"></span>〆切31日</span><div class="bd"><div class="nm">セルプスジャパン｜新事業進出 — 公募〆切 8/29</div><div class="sub tnum">IS-2026-0081・申請フェーズ</div></div><a class="btn btn-ghost btn-sm" href="deals.html">開く</a></div>
       </div>
 
@@ -97,6 +97,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

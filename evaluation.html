@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>評価・賞与｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="evaluation" data-role="kouda">
 <div class="app">
@@ -57,7 +57,7 @@
           <thead><tr><th>部門</th><th>スコア（1指標のみ）</th><th class="r">点</th><th class="r">人数</th><th class="r">人数比</th><th class="r">褒賞配分</th><th>個人配分</th></tr></thead>
           <tbody>
             <tr><td style="font-weight:700">営業部</td><td style="color:var(--sub)">獲得（レポ7・BPO2）</td><td class="r tnum" style="font-weight:800;color:var(--good)">67</td><td class="r tnum">4</td><td class="r tnum">44%</td><td class="r tnum" style="font-weight:800">27万円</td><td><span class="badge b-good"><span class="d"></span>確定済</span></td></tr>
-            <tr style="background:#fff8f2"><td style="font-weight:700">コンサル部</td><td style="color:var(--sub)">採択金額（520万／目標560万）</td><td class="r tnum" style="font-weight:800;color:var(--orange-d)">58</td><td class="r tnum">3</td><td class="r tnum">33%</td><td class="r tnum" style="font-weight:800">20万円</td><td><span class="badge b-warn"><span class="d"></span>入力中 ↓</span></td></tr>
+            <tr style="background:var(--warm-bg)"><td style="font-weight:700">コンサル部</td><td style="color:var(--sub)">採択金額（520万／目標560万）</td><td class="r tnum" style="font-weight:800;color:var(--orange-d)">58</td><td class="r tnum">3</td><td class="r tnum">33%</td><td class="r tnum" style="font-weight:800">20万円</td><td><span class="badge b-warn"><span class="d"></span>入力中 ↓</span></td></tr>
             <tr><td style="font-weight:700">管理部</td><td style="color:var(--sub)">時間削減（残業ゼロ）</td><td class="r tnum" style="font-weight:800">60</td><td class="r tnum">2</td><td class="r tnum">22%</td><td class="r tnum" style="font-weight:800">14万円</td><td><span class="badge b-sub"><span class="d"></span>未着手</span></td></tr>
           </tbody>
         </table>
@@ -98,7 +98,7 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 <script>
 function calcPct(){
   var ps=[].slice.call(document.querySelectorAll('.pct')).map(function(i){return parseFloat(i.value)||0});

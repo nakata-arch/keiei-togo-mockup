@@ -1,17 +1,18 @@
-/* 経営統合システム カンプ v5 共通ナビ（ロール対応・グループトグル）
-   - グループ（経理／経営／人事）は見出しクリックで開閉。アクティブ項目を含むグループは常に開く
-   - 顧客ロール（customer）は社内ページを開けず、顧客ポータルへ誘導
-   - ログイン中ロールは localStorage("kv4_role") が正。data-role は初期表示のフォールバック */
+/* 経営統合システム 共通ナビ（構造の正＝screens.yaml v0.1）
+   - nav_structure.main: ホーム / 営業（獲得） / 経理処理 / 経営管理 / 人事(A-02仮) / 設定(=adminモード)
+   - 設定はページ遷移ではなくモード：サイドバーを ST-01〜07 に差し替える（CLAUDE.md §2-1）
+   - バッジはホーム内カードと1対1（CLAUDE.md §2-2 / Q9）。クリックで該当カードへスクロール
+   - ブランド表記は「Initial State」のみ（CLAUDE.md §0） */
 (function () {
 
-  /* ロール定義（⓪スタッフマスタ相当・カンプ用） */
+  /* ロール定義（ST-05 スタッフマスタ相当・モック用） */
   var USERS = {
-    nakata:   { name: "中田 雄斗", role: "CAIO・管理者/経営", av: "中", home: "home_nakata.html",   set: "admin" },
-    kitayama: { name: "北山",      role: "代表・経営（営業）", av: "北", home: "home_kitayama.html", set: "admin" },
-    imai:     { name: "今井",      role: "管理部（経理）",     av: "今", home: "home_imai.html",     set: "kanri" },
-    kouda:    { name: "幸田 尚大", role: "コンサル部長（PM）", av: "幸", home: "home.html",          set: "bucho" },
-    shintani: { name: "新谷 剛士", role: "営業部",             av: "新", home: "home_shintani.html", set: "ippan" },
-    arakaki:  { name: "新垣",      role: "アシスタント",       av: "垣", home: "home_arakaki.html",  set: "asst" },
+    nakata:   { name: "中田 雄斗", role: "CAIO・管理者/経営", av: "中", home: "home_nakata.html",   set: "admin", homeBadge: 2 },
+    kitayama: { name: "北山",      role: "代表・経営（営業）", av: "北", home: "home_kitayama.html", set: "admin", homeBadge: 2 },
+    imai:     { name: "今井",      role: "管理部（経理）",     av: "今", home: "home_imai.html",     set: "kanri", homeBadge: 4 },
+    kouda:    { name: "幸田 尚大", role: "コンサル部長（PM）", av: "幸", home: "home.html",          set: "bucho", homeBadge: 4 },
+    shintani: { name: "新谷 剛士", role: "営業部",             av: "新", home: "home_shintani.html", set: "ippan", homeBadge: 2 },
+    arakaki:  { name: "新垣",      role: "アシスタント",       av: "垣", home: "home_arakaki.html",  set: "asst", homeBadge: 2 },
     customer: { name: "豊田 隆",   role: "アストロラボ株式会社 様", av: "豊", home: "portal_customer.html", set: "customer" }
   };
 
@@ -21,7 +22,7 @@
   var U = USERS[ROLE] || USERS.kouda;
   var S = U.set;
 
-  /* 顧客ロールが社内ページを開いたらポータルへ（カンプの整合性維持） */
+  /* 顧客ロールは社内画面を開けない（P-01のみ） */
   if (S === "customer" && !document.body.hasAttribute("data-customer-page")) {
     location.replace("portal_customer.html");
     return;
@@ -45,71 +46,91 @@
     folder:   svg('<path d="M3 6.2A1.8 1.8 0 0 1 4.8 4.4h4.3L11 7h8.2A1.8 1.8 0 0 1 21 8.8v9A1.8 1.8 0 0 1 19.2 19.6H4.8A1.8 1.8 0 0 1 3 17.8z"/>'),
     portal:   svg('<rect x="7" y="2.7" width="10" height="18.6" rx="2.4"/><path d="M12 6.2l1 2 2.2.3-1.6 1.6.4 2.2-2-1-2 1 .4-2.2L8.8 8.5l2.2-.3z"/>'),
     book:     svg('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21zM4 18.5V5.5M20 18.5H6.5M8.5 7.5h7M8.5 11h7"/>'),
+    users:    svg('<circle cx="9" cy="8.5" r="3.5"/><path d="M3.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5M16 4.6a3.5 3.5 0 0 1 0 7.8M17.5 14.7c2 .7 3 2.3 3 4.8"/>'),
+    master:   svg('<path d="M4 6.5C4 5 7.6 4 12 4s8 1 8 2.5S16.4 9 12 9 4 8 4 6.5zM4 6.5v11C4 19 7.6 20 12 20s8-1 8-2.5v-11M4 12c0 1.5 3.6 2.5 8 2.5s8-1 8-2.5"/>'),
+    plug:     svg('<path d="M9 7V3.5M15 7V3.5M7 7h10v4a5 5 0 0 1-10 0zM12 16v4.5"/>'),
     gear:     svg('<circle cx="12" cy="12" r="3.1"/><path d="M12 3v2.6M12 18.4V21M3 12h2.6M18.4 12H21M5.6 5.6l1.9 1.9M16.5 16.5l1.9 1.9M18.4 5.6l-1.9 1.9M7.5 16.5l-1.9 1.9"/>')
   };
 
-  /* メニュー：label=グループ名（toggle:trueで開閉可能）。sets＝⑨権限マトリクス準拠 */
   var ALL = ["admin", "kanri", "bucho", "ippan", "asst"];
-  var BLOCKS = [
-    { items: [ { id: "home", file: U.home, ic: IC.home, label: "ホーム", count: "5", alert: true, sets: ALL } ] },
-    { label: "業務", items: [
-      { id: "companies", file: "companies.html", ic: IC.company, label: "会社", sets: ["admin", "kanri", "bucho", "ippan"] },
-      { id: "deals",     file: "deals.html",     ic: IC.deals,   label: "案件", sets: ALL } ] },
-    { label: "経理", toggle: true, items: [
-      { id: "invoices",  file: "invoices.html",  ic: IC.invoice, label: "支払処理", count: "4", sets: ["admin", "kanri"] },
-      { id: "reconcile", file: "reconcile.html", ic: IC.recon,   label: "入金消込", count: "3", sets: ["admin", "kanri"] } ] },
-    { label: "経営", toggle: true, items: [
-      { id: "exec",          file: "exec.html",          ic: IC.exec,   label: "経営サマリー", sets: ["admin", "kanri", "bucho"] },
-      { id: "budget_design", file: "budget_design.html", ic: IC.design, label: "予算設計",     sets: ["admin", "kanri"] },
-      { id: "budget",        file: "budget.html",        ic: IC.budget, label: "予算・実績",   sets: ["admin", "kanri", "bucho"] },
-      { id: "cashflow",      file: "cashflow.html",      ic: IC.cash,   label: "キャッシュフロー", sets: ["admin", "kanri", "bucho"] },
-      { id: "evaluation",    file: (S === "ippan" || S === "asst") ? "evaluation_member.html" : "evaluation.html",
-        ic: IC.award, label: "評価・賞与", sets: ALL } ] },
-    { label: "人事", toggle: true, items: [
-      { id: "attendance", file: "attendance.html", ic: IC.clock,   label: "勤怠", sets: ["admin", "kanri", "ippan", "asst"] },
-      { id: "payslips",   file: "payslips.html",   ic: IC.payslip, label: "給与・報酬明細", sets: ALL } ] },
-    { items: [
-      { id: "documents", file: "documents.html", ic: IC.folder, label: "文書", sets: ["admin", "kanri"] },
-      { id: "portal",    file: "portal.html",    ic: IC.portal, label: "顧客ポータル管理", sets: ["admin", "kanri", "bucho"] },
-      { id: "rules",     file: "rules.html",     ic: IC.book,   label: "ルール", sets: ALL } ] }
+
+  /* ===== 主ナビ（screens.yaml nav_structure.main）===== */
+  var MAIN = [
+    { items: [ { id: "home", file: U.home, ic: IC.home, label: "ホーム",
+                 count: U.homeBadge, alert: true, anchor: "#alerts", sets: ALL } ] },
+    { label: "営業（獲得）", items: [
+      { id: "companies", file: "companies.html", ic: IC.company, label: "会社",  /* E-01（E-02はここから遷移） */
+        sets: ["admin", "kanri", "bucho", "ippan"] },
+      { id: "deals",     file: "deals.html",     ic: IC.deals,   label: "案件", sets: ALL } ] },   /* E-03 */
+    { label: "経理処理", items: [   /* A-01: 経理処理と経営管理の分離は仮 */
+      { id: "invoices",  file: "invoices.html",  ic: IC.invoice, label: "支払処理", count: 4, anchor: "#alerts", sets: ["admin", "kanri"] },   /* K-01 */
+      { id: "reconcile", file: "reconcile.html", ic: IC.recon,   label: "入金消込", count: 3, anchor: "#alerts", sets: ["admin", "kanri"] } ] }, /* K-02 */
+    { label: "経営管理", items: [
+      { id: "exec",     file: "exec.html",     ic: IC.exec,   label: "経営サマリー", sets: ["admin", "kanri", "bucho"] },   /* M-01 */
+      { id: "budget",   file: "budget.html",   ic: IC.budget, label: "予算・実績",   sets: ["admin", "kanri", "bucho"] },   /* M-02 閲覧のみ・編集はST-01(A-01仮) */
+      { id: "cashflow", file: "cashflow.html", ic: IC.cash,   label: "キャッシュフロー", sets: ["admin", "kanri", "bucho"] } ] }, /* M-03 */
+    { label: "人事", items: [   /* A-02: 評価・賞与の「人事」配置は仮 */
+      { id: "attendance", file: "attendance.html", ic: IC.clock,   label: "勤怠", sets: ["admin", "kanri", "ippan", "asst"] },  /* J-01 */
+      { id: "payslips",   file: "payslips.html",   ic: IC.payslip, label: "給与・報酬明細", sets: ALL },                        /* J-02 */
+      { id: "evaluation", file: (S === "ippan" || S === "asst") ? "evaluation_member.html" : "evaluation.html",
+        ic: IC.award, label: "評価・賞与", sets: ALL } ] }                                                                       /* J-03 */
   ];
-  var TAIL = { id: "settings", file: "settings.html", ic: IC.gear, label: "設定", sets: ["admin"] };
+
+  /* ===== 設定モードのナビ（screens.yaml nav_structure.admin：ST-01〜07）===== */
+  var ADMIN = [
+    { id: "budget_design", file: "budget_design.html",    ic: IC.design, label: "予算設計（編集）" }, /* ST-01 */
+    { id: "rules",         file: "rules.html",            ic: IC.book,   label: "ルール編集" },        /* ST-02 */
+    { id: "documents",     file: "documents.html",        ic: IC.folder, label: "文書テンプレート" },  /* ST-03 */
+    { id: "portal",        file: "portal.html",           ic: IC.portal, label: "顧客ポータル管理" },  /* ST-04 */
+    { id: "settings",      file: "settings.html",         ic: IC.users,  label: "権限・ユーザー" },    /* ST-05 */
+    { id: "st06",          file: "st06_master.html",      ic: IC.master, label: "マスタ" },            /* ST-06 */
+    { id: "st07",          file: "st07_integrations.html", ic: IC.plug,  label: "連携設定" }           /* ST-07 */
+  ];
+  var ADMIN_PAGES = ADMIN.map(function (a) { return a.id; });
 
   var active = document.body.getAttribute("data-page") || "home";
+  var isAdminPage = ADMIN_PAGES.indexOf(active) !== -1;
 
   function item(it) {
     return '<a class="nav-item' + (it.id === active ? " active" : "") + '" href="' + it.file + '">' + it.ic + it.label +
-           (it.count ? '<span class="count' + (it.alert ? " alert" : "") + '">' + it.count + "</span>" : "") + "</a>";
+           (it.count ? '<span class="count' + (it.alert ? " alert" : "") + '" data-go="' + it.file + (it.anchor || "") + '">' + it.count + "</span>" : "") + "</a>";
   }
 
   var el = document.getElementById("nav");
-  if (el) {
-    var h = '<div class="brand"><span class="dot">IS</span><span>経営統合システム<small>Initial State / Bizplan</small></span></div>';
+
+  function renderMain() {
+    var h = '<div class="brand"><span class="dot">IS</span><span>経営統合システム<small>Initial State</small></span></div>';
     var first = true;
-    BLOCKS.forEach(function (g, gi) {
+    MAIN.forEach(function (g) {
       var items = g.items.filter(function (it) { return it.sets.indexOf(S) !== -1; });
       if (!items.length) return;
-      var body = items.map(item).join("");
-      var hasActive = items.some(function (it) { return it.id === active; });
-      if (!first && !g.label) h += '<div class="nav-sep"></div>';
       if (g.label) {
-        if (g.toggle) {
-          h += '<div class="nav-g' + (hasActive ? "" : "") + '" data-g="' + gi + '">' +
-               '<div class="nav-gh">' + g.label + '<span class="gc">▾</span></div>' +
-               '<div class="nav-gb">' + body + "</div></div>";
-        } else {
-          h += '<div class="nav-gh" style="cursor:default">' + g.label + "</div>" + body;
-        }
+        h += '<div class="nav-g"><div class="nav-gh">' + g.label + '<span class="gc">▾</span></div><div class="nav-gb">' + items.map(item).join("") + "</div></div>";
       } else {
-        h += body;
+        if (!first) h += '<div class="nav-sep"></div>';
+        h += items.map(item).join("");
       }
       first = false;
     });
     h += '<div class="nav-spacer"></div>';
-    if (TAIL.sets.indexOf(S) !== -1) h += item(TAIL);
+    /* 設定＝モード切替（ページ遷移ではない・adminロールのみ表示 §2-1） */
+    if (S === "admin") h += '<a class="nav-item" id="openAdmin" href="#">' + IC.gear + "設定</a>";
+    return h;
+  }
 
-    /* アカウントメニュー */
-    h += '<div class="userpop" id="userPop"><div class="up-label">アカウントを切替</div>';
+  function renderAdmin() {
+    var h = '<div class="brand"><span class="dot">IS</span><span>経営統合システム<small>Initial State</small></span></div>';
+    h += '<a class="nav-item" id="closeAdmin" href="#" style="color:var(--gold)">' + IC.home + "← 設定を閉じる</a>";
+    h += '<div class="nav-sep"></div><div class="nav-gh" style="cursor:default">設定（管理者）</div>';
+    ADMIN.forEach(function (a) {
+      h += '<a class="nav-item' + (a.id === active ? " active" : "") + '" href="' + a.file + '">' + a.ic + a.label + "</a>";
+    });
+    h += '<div class="nav-spacer"></div>';
+    return h;
+  }
+
+  function userFooter() {
+    var h = '<div class="userpop" id="userPop"><div class="up-label">アカウントを切替</div>';
     Object.keys(USERS).forEach(function (k) {
       var u = USERS[k];
       if (k === "customer") h += '<div class="up-sep"></div><div class="up-label">顧客（ポータルのデモ）</div>';
@@ -119,13 +140,25 @@
     });
     h += '<div class="up-sep"></div><a class="up-item" href="login.html"><span class="av" style="background:rgba(255,255,255,.12)">⎋</span><span class="nm">ログアウト</span></a></div>';
     h += '<div class="side-user" id="userBtn"><div class="av">' + U.av + '</div><div><div class="nm">' + U.name + '</div><div class="rl">' + U.role + '</div></div><span class="chev">▾</span></div>';
-    el.innerHTML = h;
+    return h;
+  }
 
-    /* グループ開閉 */
+  function bindNav() {
     el.querySelectorAll(".nav-g .nav-gh").forEach(function (gh) {
       gh.addEventListener("click", function () { gh.parentElement.classList.toggle("closed"); });
     });
-
+    /* バッジクリック→該当カードへ（§2-2） */
+    el.querySelectorAll(".count[data-go]").forEach(function (c) {
+      c.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); location.href = c.getAttribute("data-go"); });
+    });
+    var oa = document.getElementById("openAdmin");
+    if (oa) oa.addEventListener("click", function (e) { e.preventDefault(); mode = "admin"; paint(); });
+    var ca = document.getElementById("closeAdmin");
+    if (ca) ca.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (isAdminPage) { location.href = U.home; }   /* admin画面上で閉じたらホームへ */
+      else { mode = "main"; paint(); }
+    });
     var btn = document.getElementById("userBtn"), pop = document.getElementById("userPop");
     btn.addEventListener("click", function (e) { e.stopPropagation(); pop.classList.toggle("open"); btn.classList.toggle("open"); });
     pop.querySelectorAll(".up-item[data-u]").forEach(function (row) {
@@ -137,7 +170,26 @@
     });
     var lo = pop.querySelector('a[href="login.html"]');
     if (lo) lo.addEventListener("click", function () { try { localStorage.removeItem("kv4_role"); } catch (e) {} });
-    document.addEventListener("click", function () { pop.classList.remove("open"); btn.classList.remove("open"); });
+  }
+
+  var mode = isAdminPage ? "admin" : "main";
+  function paint() {
+    el.innerHTML = (mode === "admin" ? renderAdmin() : renderMain()) + userFooter();
+    bindNav();
+  }
+  if (el) {
+    if (isAdminPage && S !== "admin") { location.replace(U.home); return; }  /* 権限外はST-xxに入れない */
+    paint();
+    document.addEventListener("click", function () {
+      var p = document.getElementById("userPop"), b = document.getElementById("userBtn");
+      if (p) p.classList.remove("open"); if (b) b.classList.remove("open");
+    });
+  }
+
+  /* バッジ遷移先のハイライト（#alerts） */
+  if (location.hash === "#alerts") {
+    var t = document.getElementById("alerts");
+    if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("pulse"); setTimeout(function () { t.classList.remove("pulse"); }, 2400); }
   }
 
   /* 共通UI挙動 */
@@ -147,14 +199,12 @@
     document.querySelectorAll('.dtab[data-g="' + group + '"]').forEach(function (t) { t.classList.toggle("on", t.dataset.t === id); });
     document.querySelectorAll('.dpane[data-g="' + group + '"]').forEach(function (p) { p.classList.toggle("on", p.dataset.t === id); });
   };
-
   window.toast = function (msg) {
     var c = document.getElementById("toastc");
     if (!c) { c = document.createElement("div"); c.id = "toastc"; c.className = "toastc"; document.body.appendChild(c); }
     var t = document.createElement("div"); t.className = "toast"; t.textContent = msg; c.appendChild(t);
     setTimeout(function () { t.classList.add("out"); setTimeout(function () { t.remove(); }, 260); }, 2400);
   };
-
   document.addEventListener("click", function (e) {
     var t = e.target;
     if (t.classList && t.classList.contains("modal-bg")) t.classList.remove("open");
@@ -166,17 +216,16 @@
     var ok = t.closest ? t.closest(".modal-f .btn-primary") : null;
     if (ok) {
       var m = ok.closest(".modal-bg"); if (m) m.classList.remove("open");
-      window.toast("✓ 「" + ok.textContent.trim() + "」を受け付けました（カンプのためデータは変わりません）");
+      window.toast("✓ 「" + ok.textContent.trim() + "」を受け付けました（モックのためデータは変わりません）");
     }
   });
 
   /* ===== ⌘K 検索パレット ===== */
   var CMDK = [];
-  BLOCKS.forEach(function (b) { b.items.forEach(function (it) { if (it.sets.indexOf(S) !== -1) CMDK.push({ g: "画面", n: it.label, f: it.file }); }); });
-  if (TAIL.sets.indexOf(S) !== -1) CMDK.push({ g: "画面", n: TAIL.label, f: TAIL.file });
+  MAIN.forEach(function (b) { b.items.forEach(function (it) { if (it.sets.indexOf(S) !== -1) CMDK.push({ g: "画面", n: it.label, f: it.file }); }); });
+  if (S === "admin") ADMIN.forEach(function (a) { CMDK.push({ g: "設定", n: a.label, f: a.file }); });
   [["アストロラボ株式会社", "リピート顧客・BPO契約中"], ["セルプスジャパン株式会社", "リピート顧客"], ["株式会社ティーガイア", "顧客・申請未着手"], ["株式会社リサスティー", "リピート顧客"], ["菱洋エレクトロ株式会社", "顧客・実施中"], ["古山精機株式会社", "見込み"]].forEach(function (c) { CMDK.push({ g: "会社", n: c[0], s: c[1], f: "company_detail.html" }); });
-  [["IS-2026-0074", "アストロラボ｜課題解決型（申請・停滞8日）"], ["IS-2026-0081", "セルプスジャパン｜新事業進出（申請）"], ["IS-2026-0055", "リサスティー｜経営力強化（交付決定）"], ["IS-2026-0032", "菱洋エレクトロ｜省力化投資（実施）"]].forEach(function (d) { CMDK.push({ g: "案件", n: d[0], s: d[1], f: "deal_detail.html" }); });
-  [["停滞の判定", "7営業日 動きなし"], ["受給目標", "BPO契約金額×2"], ["承認のしきい値", "50万円以上＝経営層会議"], ["締め→翌月請求", "レポート/BPO/着手金/成果報酬"], ["60点の根拠", "予算設計（逆算エンジン）"]].forEach(function (r) { CMDK.push({ g: "ルール", n: r[0], s: r[1], f: r[0] === "60点の根拠" ? "budget_design.html" : "rules.html" }); });
+  [["IS-2026-0074", "アストロラボ｜課題解決型（申請・停滞8日）"], ["IS-2026-0081", "セルプスジャパン｜新事業進出（申請）"], ["IS-2026-0055", "リサスティー｜経営力強化（交付決定）"], ["IS-2026-0032", "菱洋エレクトロ｜省力化投資（実施）"]].forEach(function (d) { CMDK.push({ g: "案件", n: d[0], s: d[1], f: "company_detail.html" }); });
 
   var ckBg = null, ckInp = null, ckList = null, ckSel = 0, ckHits = [];
   function ckRender(q) {
@@ -188,13 +237,13 @@
       if (x.g !== lastG) { h += '<div class="cmdk-g">' + x.g + "</div>"; lastG = x.g; }
       h += '<div class="cmdk-it' + (i === 0 ? " sel" : "") + '" data-i="' + i + '"><b>' + x.n + "</b>" + (x.s ? '<span style="color:var(--faint);font-size:11.5px">' + x.s + "</span>" : "") + '<span class="tag">↵</span></div>';
     });
-    ckList.innerHTML = ckHits.length ? h : '<div class="cmdk-empty">該当なし — 会社名・案件番号・ルール名で検索できます</div>';
+    ckList.innerHTML = ckHits.length ? h : '<div class="cmdk-empty">該当なし — 会社名・案件番号・画面名で検索できます</div>';
   }
   function ckGo() { if (ckHits[ckSel]) location.href = ckHits[ckSel].f; }
   window.openCmdk = function () {
     if (!ckBg) {
       ckBg = document.createElement("div"); ckBg.className = "cmdk-bg";
-      ckBg.innerHTML = '<div class="cmdk"><input placeholder="会社・案件番号（IS-2026-…）・画面・ルールを検索" /><div class="cmdk-list"></div></div>';
+      ckBg.innerHTML = '<div class="cmdk"><input placeholder="会社・案件番号（IS-2026-…）・画面を検索" /><div class="cmdk-list"></div></div>';
       document.body.appendChild(ckBg);
       ckInp = ckBg.querySelector("input"); ckList = ckBg.querySelector(".cmdk-list");
       ckInp.addEventListener("input", function () { ckRender(ckInp.value); });

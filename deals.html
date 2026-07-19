@@ -3,85 +3,132 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>案件｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
-<body data-page="deals">
+<body data-page="deals" data-role="kouda">
+<!-- E-03 案件管理。tabs: [ボード, テーブル, レポート, BP, 補助金]＝全タブ有効（CLAUDE.md §2-4）
+     ステータスの正＝domain/anken-status.state.mmd（A-03 未確定）。遷移ロジックは実装保留・表示のみ。
+     案件クリック → E-02 会社詳細（screens.yaml E-03 to:） -->
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">業務</div><h1>案件</h1></div>
+    <div><div class="crumb">営業（獲得）</div><h1>案件</h1></div>
+    <span class="sample">値はサンプル</span>
     <div class="search">案件番号・会社で検索<span class="kbd">⌘K</span></div>
     <span class="btn btn-primary btn-sm" onclick="openModal('mDeal')">＋ 新規案件</span>
   </div>
   <div class="content">
 
-    <div class="toolbar">
-      <span class="seg"><span id="segT" class="on" onclick="swView('t')">テーブル</span><span id="segK" onclick="swView('k')">補助金ボード</span></span>
-      <span class="chip active">進行中 24</span>
-      <span class="chip">レポート</span><span class="chip">BPO</span><span class="chip">補助金</span>
-      <span style="flex:1"></span>
-      <select class="inp" style="width:150px"><option>担当：すべて</option><option>幸田</option><option>北山</option></select>
-      <select class="inp" style="width:150px"><option>状態：すべて</option><option>停滞のみ</option><option>期限接近</option></select>
+    <div class="dtabs">
+      <span class="dtab on" data-g="e" data-t="board" onclick="swTab('e','board')">ボード</span>
+      <span class="dtab" data-g="e" data-t="table" onclick="swTab('e','table')">テーブル<span class="n">8</span></span>
+      <span class="dtab" data-g="e" data-t="report" onclick="swTab('e','report')">レポート<span class="n">2</span></span>
+      <span class="dtab" data-g="e" data-t="bp" onclick="swTab('e','bp')">BP<span class="n">2</span></span>
+      <span class="dtab" data-g="e" data-t="subsidy" onclick="swTab('e','subsidy')">補助金<span class="n">4</span></span>
     </div>
 
-    <!-- テーブルビュー -->
-    <div id="viewT">
-      <div class="card" style="overflow-x:auto">
-        <table>
-          <thead><tr><th>案件番号</th><th>会社</th><th>種別</th><th>ステージ／フェーズ</th><th class="r">金額</th><th>担当</th><th>状態</th><th>更新</th><th></th></tr></thead>
-          <tbody>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'" style="background:#fffdf8">
-              <td class="tnum" style="font-weight:800">IS-2026-0074</td><td>アストロラボ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>申請</td><td class="r tnum">248万円</td><td>幸田</td><td><span class="badge b-red"><span class="d"></span>停滞8日</span></td><td class="tnum">7/9</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'">
-              <td class="tnum" style="font-weight:800">IS-2026-0081</td><td>セルプスジャパン</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>申請</td><td class="r tnum">1,000万円</td><td>幸田</td><td><span class="badge b-warn"><span class="d"></span>〆切 8/29</span></td><td class="tnum">7/15</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'" style="background:#fffdf8">
-              <td class="tnum" style="font-weight:800">IS-2026-0055</td><td>リサスティー</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>交付決定</td><td class="r tnum">400万円</td><td>幸田</td><td><span class="badge b-red"><span class="d"></span>停滞9日</span></td><td class="tnum">7/8</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'">
-              <td class="tnum" style="font-weight:800">IS-2026-0048</td><td>47マーケティング</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>交付決定</td><td class="r tnum">120万円</td><td>黒田</td><td><span class="badge b-good"><span class="d"></span>順調</span></td><td class="tnum">7/15</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'">
-              <td class="tnum" style="font-weight:800">IS-2026-0032</td><td>菱洋エレクトロ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>実施</td><td class="r tnum">1,200万円</td><td>幸田</td><td><span class="badge b-warn"><span class="d"></span>証憑 不足2点</span></td><td class="tnum">7/11</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'">
-              <td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td><span class="badge b-warn"><span class="d"></span>BPO</span></td><td>契約中</td><td class="r tnum">240万円/年</td><td>幸田</td><td><span class="badge b-good"><span class="d"></span>順調</span></td><td class="tnum">7/16</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'">
-              <td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td>納品予定 7/18</td><td class="r tnum">5万円</td><td>新谷</td><td><span class="badge b-good"><span class="d"></span>作成完了</span></td><td class="tnum">7/16</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'">
-              <td class="tnum" style="font-weight:800">IS-2026-0095</td><td>古山精機</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td>作成中</td><td class="r tnum">5万円</td><td>北山</td><td><span class="badge b-sub"><span class="d"></span>納品 7/23</span></td><td class="tnum">7/14</td><td class="r" style="color:var(--faint)">›</td></tr>
-          </tbody>
-        </table>
-        <div class="pagen"><span>24件中 1–8</span><span class="pg on">1</span><span class="pg">2</span><span class="pg">3</span></div>
+    <!-- ボード（種別グルーピング。12段階ステータス列は A-03 確定後に置換＝仮） -->
+    <div class="dpane on" data-g="e" data-t="board">
+      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">列＝案件種別（仮）。ステータス12段階の列は A-03（正式名称）確定後に置き換えます。</p>
+      <div class="ph-board" style="grid-template-columns:repeat(3,1fr)">
+        <div class="ph-col">
+          <div class="ph-col-h"><span class="n" style="background:var(--blue)">レ</span><span class="t">レポート</span><span class="c">2</span></div>
+          <div class="ph-col-b">
+            <a class="scard" href="company_detail.html" style="display:block"><div class="sn">ユアーズ静岡｜診断レポート</div><div class="sc">IS-2026-0092・新谷</div><div class="sf"><span class="badge b-good"><span class="d"></span>納品 7/18</span><span class="amt tnum">5万円</span></div></a>
+            <a class="scard" href="company_detail.html" style="display:block"><div class="sn">古山精機｜診断レポート</div><div class="sc">IS-2026-0095・北山</div><div class="sf"><span class="badge b-sub"><span class="d"></span>作成中</span><span class="amt tnum">5万円</span></div></a>
+          </div>
+        </div>
+        <div class="ph-col">
+          <div class="ph-col-h"><span class="n" style="background:var(--orange-d)">B</span><span class="t">BP（顧問）</span><span class="c">2</span></div>
+          <div class="ph-col-b">
+            <a class="scard" href="company_detail.html" style="display:block"><div class="sn">アストロラボ｜BPO顧問</div><div class="sc">IS-2026-0058・幸田</div><div class="sf"><span class="badge b-good"><span class="d"></span>契約中</span><span class="amt tnum">240万円/年</span></div></a>
+            <a class="scard" href="company_detail.html" style="display:block"><div class="sn">ヤマモト食品｜BPO顧問</div><div class="sc">IS-2026-0067・新谷</div><div class="sf"><span class="badge b-good"><span class="d"></span>契約中</span><span class="amt tnum">240万円/年</span></div></a>
+          </div>
+        </div>
+        <div class="ph-col">
+          <div class="ph-col-h"><span class="n" style="background:var(--good)">補</span><span class="t">補助金</span><span class="c">4</span></div>
+          <div class="ph-col-b">
+            <a class="scard stale" href="company_detail.html" style="display:block"><div class="sn">アストロラボ｜課題解決型</div><div class="sc">IS-2026-0074・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>停滞8日</span><span class="amt tnum">248万円</span></div></a>
+            <a class="scard" href="company_detail.html" style="display:block"><div class="sn">セルプスJ｜新事業進出</div><div class="sc">IS-2026-0081・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>〆切 8/29</span><span class="amt tnum">1,000万円</span></div></a>
+            <a class="scard stale" href="company_detail.html" style="display:block"><div class="sn">リサスティー｜経営力強化</div><div class="sc">IS-2026-0055・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>停滞9日</span><span class="amt tnum">400万円</span></div></a>
+            <a class="scard" href="company_detail.html" style="display:block"><div class="sn">菱洋エレクトロ｜省力化投資</div><div class="sc">IS-2026-0032・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>証憑 不足2点</span><span class="amt tnum">1,200万円</span></div></a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 補助金ボードビュー -->
-    <div id="viewK" style="display:none">
+    <!-- テーブル（全件） -->
+    <div class="dpane" data-g="e" data-t="table">
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>案件番号</th><th>会社</th><th>種別</th><th>ステータス（A-03確定まで表示のみ）</th><th class="r">金額</th><th>担当</th><th>更新</th><th></th></tr></thead>
+          <tbody>
+            <tr class="rowlink" onclick="location.href='company_detail.html'" style="background:var(--row-warn)"><td class="tnum" style="font-weight:800">IS-2026-0074</td><td>アストロラボ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>申請準備<span style="color:var(--faint);font-size:10px">（仮）</span></td><td class="r tnum">248万円</td><td>幸田</td><td class="tnum">7/9</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0081</td><td>セルプスジャパン</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>申請準備<span style="color:var(--faint);font-size:10px">（仮）</span></td><td class="r tnum">1,000万円</td><td>幸田</td><td class="tnum">7/15</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'" style="background:var(--row-warn)"><td class="tnum" style="font-weight:800">IS-2026-0055</td><td>リサスティー</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>交付決定<span style="color:var(--faint);font-size:10px">（仮）</span></td><td class="r tnum">400万円</td><td>幸田</td><td class="tnum">7/8</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0032</td><td>菱洋エレクトロ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td>実施<span style="color:var(--faint);font-size:10px">（仮）</span></td><td class="r tnum">1,200万円</td><td>幸田</td><td class="tnum">7/11</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td><span class="badge b-warn"><span class="d"></span>BP</span></td><td>契約中<span style="color:var(--faint);font-size:10px">（仮）</span></td><td class="r tnum">240万円/年</td><td>幸田</td><td class="tnum">7/16</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-warn"><span class="d"></span>BP</span></td><td>契約中<span style="color:var(--faint);font-size:10px">（仮）</span></td><td class="r tnum">240万円/年</td><td>新谷</td><td class="tnum">7/10</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td>納品予定<span style="color:var(--faint);font-size:10px">（仮）</span></td><td class="r tnum">5万円</td><td>新谷</td><td class="tnum">7/16</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0095</td><td>古山精機</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td>作成中<span style="color:var(--faint);font-size:10px">（仮）</span></td><td class="r tnum">5万円</td><td>北山</td><td class="tnum">7/14</td><td class="r" style="color:var(--faint)">›</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- レポート -->
+    <div class="dpane" data-g="e" data-t="report">
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>案件番号</th><th>会社</th><th>ヒアリング日</th><th>納品予定（＋7営業日〜）</th><th class="r">金額</th><th>担当</th><th></th></tr></thead>
+          <tbody>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td class="tnum">7/7</td><td class="tnum" style="font-weight:700">7/18 10:00（確定）</td><td class="r tnum">5万円</td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0095</td><td>古山精機</td><td class="tnum">7/12</td><td class="tnum">7/23（調整中）</td><td class="r tnum">5万円</td><td>北山</td><td class="r" style="color:var(--faint)">›</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BP -->
+    <div class="dpane" data-g="e" data-t="bp">
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>案件番号</th><th>会社</th><th>契約日</th><th class="r">契約金額</th><th class="r">受給目標（×2）</th><th class="r">採択実績</th><th>達成</th><th></th></tr></thead>
+          <tbody>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td class="tnum">2026/02</td><td class="r tnum">240万円/年</td><td class="r tnum">480万円</td><td class="r tnum">248万円</td><td><span class="badge b-warn"><span class="d"></span>52%</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td class="tnum">2026/05</td><td class="r tnum">240万円/年</td><td class="r tnum">480万円</td><td class="r tnum">0円</td><td><span class="badge b-red"><span class="d"></span>0%・申請未着手</span></td><td class="r" style="color:var(--faint)">›</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 補助金（運用4フェーズ表示。12段階の正式ステータスは A-03 確定後に置換） -->
+    <div class="dpane" data-g="e" data-t="subsidy">
+      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">列＝運用フェーズ（仮）。正式な12段階ステータス（A-03）確定後、domain/anken-status.state.mmd を正として置き換えます。遷移操作は未実装（表示のみ）。</p>
       <div class="ph-board">
         <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--blue)">1</span><span class="t">申請</span><span class="c">5</span></div>
+          <div class="ph-col-h"><span class="n" style="background:var(--blue)">1</span><span class="t">申請</span><span class="c">2</span></div>
           <div class="ph-col-b">
-            <a class="scard stale" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜課題解決型</div><div class="sc">IS-2026-0074・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>停滞8日</span><span class="amt tnum">248万円</span></div></a>
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">セルプスJ｜新事業進出</div><div class="sc">IS-2026-0081・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>〆切 8/29</span><span class="amt tnum">1,000万円</span></div></a>
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">リサスティー｜ものづくり</div><div class="sc">IS-2026-0069・幸田</div><div class="sf"><span class="badge b-sub"><span class="d"></span>順調</span><span class="amt tnum">750万円</span></div></a>
+            <a class="scard stale" href="company_detail.html" style="display:block"><div class="sn">アストロラボ｜課題解決型</div><div class="sc">IS-2026-0074・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>停滞8日</span><span class="amt tnum">248万円</span></div></a>
+            <a class="scard" href="company_detail.html" style="display:block"><div class="sn">セルプスJ｜新事業進出</div><div class="sc">IS-2026-0081・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>〆切 8/29</span><span class="amt tnum">1,000万円</span></div></a>
           </div>
         </div>
         <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--orange-d)">2</span><span class="t">交付決定</span><span class="c">3</span></div>
+          <div class="ph-col-h"><span class="n" style="background:var(--orange-d)">2</span><span class="t">交付決定</span><span class="c">1</span></div>
           <div class="ph-col-b">
-            <a class="scard stale" href="deal_detail.html" style="display:block"><div class="sn">リサスティー｜経営力強化</div><div class="sc">IS-2026-0055・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>停滞9日</span><span class="amt tnum">400万円</span></div></a>
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">47マーケ｜人材開発支援</div><div class="sc">IS-2026-0048・黒田</div><div class="sf"><span class="badge b-good"><span class="d"></span>順調</span><span class="amt tnum">120万円</span></div></a>
+            <a class="scard stale" href="company_detail.html" style="display:block"><div class="sn">リサスティー｜経営力強化</div><div class="sc">IS-2026-0055・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>停滞9日</span><span class="amt tnum">400万円</span></div></a>
           </div>
         </div>
         <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--good)">3</span><span class="t">実施</span><span class="c">3</span></div>
+          <div class="ph-col-h"><span class="n" style="background:var(--good)">3</span><span class="t">実施</span><span class="c">1</span></div>
           <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">菱洋エレクトロ｜省力化投資</div><div class="sc">IS-2026-0032・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>証憑 不足2点</span><span class="amt tnum">1,200万円</span></div></a>
+            <a class="scard" href="company_detail.html" style="display:block"><div class="sn">菱洋エレクトロ｜省力化投資</div><div class="sc">IS-2026-0032・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>証憑 不足2点</span><span class="amt tnum">1,200万円</span></div></a>
           </div>
         </div>
         <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--navy)">4</span><span class="t">実績報告</span><span class="c">1</span></div>
-          <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">deex｜持続化</div><div class="sc">IS-2025-0126・幸田</div><div class="sf"><span class="badge b-blue"><span class="d"></span>確定検査待ち</span><span class="amt tnum">150万円</span></div></a>
-          </div>
+          <div class="ph-col-h"><span class="n" style="background:var(--navy)">4</span><span class="t">実績報告</span><span class="c">0</span></div>
+          <div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">該当なし</div></div>
         </div>
       </div>
     </div>
@@ -90,37 +137,25 @@
 </div>
 </div>
 
-<!-- 新規案件モーダル -->
+<!-- 新規案件（保存／保存失敗の分岐・楽観更新なし） -->
 <div class="modal-bg" id="mDeal">
   <div class="modal">
     <div class="modal-h"><span class="t">新規案件の登録</span><span class="x" onclick="closeModal('mDeal')">✕</span></div>
     <div class="modal-b">
       <div class="inp-row">
-        <label class="field"><span class="fl">会社<span class="req">*</span></span><select class="inp"><option>アストロラボ株式会社</option><option>株式会社ティーガイア</option><option>（新規会社を登録…）</option></select></label>
-        <label class="field"><span class="fl">案件種別<span class="req">*</span></span><select class="inp"><option>補助金</option><option>レポート</option><option>BPO顧問</option></select></label>
+        <label class="field"><span class="fl">会社<span class="req">*</span></span><select class="inp"><option>アストロラボ株式会社</option><option>株式会社ティーガイア</option></select></label>
+        <label class="field"><span class="fl">案件種別<span class="req">*</span></span><select class="inp"><option>補助金</option><option>レポート</option><option>BP（顧問）</option></select></label>
       </div>
       <div class="inp-row">
         <label class="field"><span class="fl">案件番号（自動採番）</span><input class="inp tnum" value="IS-2026-0102" readonly /></label>
         <label class="field"><span class="fl">金額（円）</span><input class="inp tnum" placeholder="2,480,000" /></label>
       </div>
-      <div class="inp-row">
-        <label class="field"><span class="fl">親案件（系譜）</span><select class="inp"><option>IS-2026-0058（BPO顧問）</option><option>なし</option></select></label>
-        <label class="field"><span class="fl">担当（TimeRex/カレンダー自動）</span><input class="inp" value="幸田" readonly /></label>
-      </div>
-      <div class="hint-t">登録すると案件番号が各ツール（board件名・カレンダー・フォルダ名）へ配布されます。</div>
+      <div class="hint-t">正本（HubSpot）への登録が失敗した場合は一覧に追加せず、エラーを表示します（楽観更新なし・CLAUDE.md §1-2）。</div>
     </div>
-    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mDeal')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mDeal')">登録</span></div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mDeal')">キャンセル</span><span class="btn btn-primary">登録</span></div>
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
-<script>
-function swView(v){
-  document.getElementById('viewT').style.display = v==='t'?'':'none';
-  document.getElementById('viewK').style.display = v==='k'?'':'none';
-  document.getElementById('segT').classList.toggle('on',v==='t');
-  document.getElementById('segK').classList.toggle('on',v==='k');
-}
-</script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

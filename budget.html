@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>予算・実績｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 <style>
 .pl-mx td,.pl-mx th{white-space:nowrap}
-.pl-mx td.cur,.pl-mx th.cur{background:#fff8f2;border-left:1px solid #ffe3c9;border-right:1px solid #ffe3c9}
+.pl-mx td.cur,.pl-mx th.cur{background:var(--warm-bg);border-left:1px solid var(--warn-line);border-right:1px solid var(--warn-line)}
 .pl-mx td.plan{color:var(--faint)}
 .vr{font-size:10.5px;font-weight:800;border-radius:var(--r-full);padding:1px 7px;margin-left:6px}
 .vr.up{background:var(--good-bg);color:var(--good)}
@@ -22,7 +22,7 @@
     <span class="sample">数値はサンプル</span>
     <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
       <select class="inp" style="width:180px"><option>2026年度（5月〜4月）</option><option>2025年度</option></select>
-      <span class="btn btn-ghost btn-sm" onclick="openModal('mBudget')">年間予算を編集</span>
+      <a class="btn btn-ghost btn-sm" href="budget_design.html">予算の編集は 設定 › 予算設計 へ</a><!-- M-02は閲覧のみ・編集=ST-01（A-01仮） -->
     </div>
   </div>
   <div class="content">
@@ -97,24 +97,7 @@
 </div>
 </div>
 
-<!-- 年間予算の編集 -->
-<div class="modal-bg" id="mBudget">
-  <div class="modal">
-    <div class="modal-h"><span class="t">年間予算の編集（2026年度）</span><span class="x" onclick="closeModal('mBudget')">✕</span></div>
-    <div class="modal-b">
-      <div class="inp-row">
-        <label class="field"><span class="fl">売上計画（年間・円）</span><input class="inp tnum" value="240,000,000" /></label>
-        <label class="field"><span class="fl">粗利計画（年間・円）</span><input class="inp tnum" value="119,000,000" /></label>
-      </div>
-      <div class="inp-row">
-        <label class="field"><span class="fl">営業利益計画（年間・円）</span><input class="inp tnum" value="52,960,000" /></label>
-        <label class="field"><span class="fl">月次按分</span><select class="inp"><option>実態カーブ（管理会計Excel）</option><option>均等割（固定費のみ）</option></select></label>
-      </div>
-      <div class="hint-t">保存すると60点基準（評価・賞与）と部門別目標に反映されます。数値ロジックの正＝管理会計Excel。</div>
-    </div>
-    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mBudget')">キャンセル</span><span class="btn btn-primary" onclick="closeModal('mBudget')">保存</span></div>
-  </div>
-</div>
+<!-- 予算の編集UIは ST-01 予算設計へ集約（M-02は閲覧のみ・A-01仮） -->
 
 <!-- 部門内訳 -->
 <div class="modal-bg" id="mDept">
@@ -135,6 +118,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

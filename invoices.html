@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>支払処理｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="invoices" data-role="imai">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">経理</div><h1>支払処理（seikyu@ 受領請求書）</h1></div>
+    <div><div class="crumb">経理</div><h1>支払処理（seikyu@ 受領請求書）</h1></div><span class="sample">値はサンプル</span>
     <div class="search">支払先・請求書番号で検索<span class="kbd">⌘K</span></div>
   </div>
   <div class="content">
@@ -25,7 +25,8 @@
       <span class="badge b-blue"><span class="d"></span>次回振込日 7/25</span>
     </div>
 
-    <div class="md-wrap">
+    <!-- バッジ4＝処理キュー4件と1対1（§2-2） -->
+    <div class="md-wrap" id="alerts">
       <!-- キュー -->
       <div class="md-list">
         <div class="md-item sel">
@@ -99,6 +100,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

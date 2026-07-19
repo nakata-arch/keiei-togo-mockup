@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ホーム（経理）｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="home" data-role="imai">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、今井さん</h1></div>
+    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、今井さん</h1></div><span class="sample">値はサンプル</span>
     <div class="search">支払先・相手先・請求書番号で検索<span class="kbd">⌘K</span></div>
     <span class="badge b-blue"><span class="d"></span>freee 最終取得 6:00</span>
   </div>
@@ -23,8 +23,8 @@
       <div class="tile b3"><div class="tl">今月末の請求発行</div><div class="mid tnum">3<small>件・47万円</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">締め → 翌月請求</div></div>
       <div class="tile b3"><div class="tl">次の記帳日</div><div class="mid tnum">7/31<small>（月末）</small></div><div style="font-size:11px;color:var(--good);margin-top:6px;font-weight:700">15日記帳は完了</div></div>
 
-      <!-- 今日の処理（主役） -->
-      <div class="tile b8" style="padding:0">
+      <!-- 今日の処理（主役）。バッジ4＝未完了4行と1対1（§2-2） -->
+      <div class="tile b8" style="padding:0" id="alerts">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">今日の処理</span><span class="sp"></span><span style="font-size:11px;color:var(--faint)">クリックで完了</span></div>
         <div style="padding:4px 17px 12px">
           <div class="chk"><span class="bx"></span><span>印刷会社K 6.6万円のOCR確認・補正（<a href="invoices.html">支払処理</a>）</span><span class="badge b-warn" style="margin-left:auto"><span class="d"></span>未処理</span></div>
@@ -63,7 +63,7 @@
         <div class="list-row"><div class="bd"><div class="nm tnum">借入返済 330万円</div><div class="sub">IS 211.2万＋秋葉原 118.8万</div></div><span class="badge b-navy">固定</span></div>
         <div class="list-row"><div class="bd"><div class="nm tnum">給与・出向負担金 105万円</div></div><span class="badge b-good"><span class="d"></span>計上済</span></div>
         <div class="list-row"><div class="bd"><div class="nm">月末記帳・契約締め（岩下さん）</div><div class="sub">7/31 → 経営サマリーに自動反映</div></div><span class="badge b-sub"><span class="d"></span>予定</span></div>
-        <div class="list-row" style="background:#fff8f7"><div class="bd"><div class="nm" style="color:var(--red)">出向契約 未締結（要是正）</div><div class="sub tnum">負担金 46万円/月 の支払根拠</div></div></div>
+        <div class="list-row" style="background:var(--row-red)"><div class="bd"><div class="nm" style="color:var(--red)">出向契約 未締結（要是正）</div><div class="sub tnum">負担金 46万円/月 の支払根拠</div></div></div>
       </div>
     </div>
 
@@ -86,6 +86,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

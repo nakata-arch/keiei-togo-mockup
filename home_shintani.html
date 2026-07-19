@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ホーム（営業）｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="home" data-role="shintani">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、新谷さん</h1></div>
+    <div><div class="crumb">2026年7月17日（金）</div><h1>おはようございます、新谷さん</h1></div><span class="sample">値はサンプル</span>
     <div class="search">会社・案件番号で検索<span class="kbd">⌘K</span></div>
   </div>
   <div class="content">
@@ -22,8 +22,8 @@
       <div class="tile b3"><div class="tl">レポート獲得（受注）</div><div class="mid tnum">2<small> / 目標3件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">受注＝フォーム入力時点</div></div>
       <div class="tile b3"><div class="tl">BPO化</div><div class="mid tnum">1<small>件</small></div><div style="font-size:11px;color:var(--faint);margin-top:6px">BPO化率 50%</div></div>
 
-      <!-- 今日の動き（主役） -->
-      <div class="tile b8" style="padding:0">
+      <!-- 今日の動き（主役）。バッジ2＝未完了タスク2行と1対1（§2-2） -->
+      <div class="tile b8" style="padding:0" id="alerts">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">今日の予定（TimeRex／カレンダー）</span></div>
         <div class="list-row">
           <span class="badge b-navy">11:00</span>
@@ -33,7 +33,7 @@
         <div class="list-row">
           <span class="badge b-sub"><span class="d"></span>15:00</span>
           <div class="bd"><div class="nm">ユアーズ静岡｜明日の納品打合せ 前確認</div><div class="sub tnum">IS-2026-0092・レポート作成完了・査定同梱</div></div>
-          <a class="btn btn-ghost btn-sm" href="deal_detail.html">案件</a>
+          <a class="btn btn-ghost btn-sm" href="company_detail.html">案件</a>
         </div>
         <div style="border-top:1px solid var(--line);padding:4px 17px 12px">
           <div style="font-size:11px;font-weight:800;color:var(--sub);padding:8px 0 2px">自分のタスク</div>
@@ -58,9 +58,9 @@
         <table>
           <thead><tr><th>案件番号</th><th>会社</th><th>種別</th><th>状態</th><th class="r">金額</th><th></th></tr></thead>
           <tbody>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-good"><span class="d"></span>納品 7/18</span></td><td class="r tnum">5万円</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0101</td><td>ワタナベ工業</td><td><span class="badge b-blue"><span class="d"></span>レポート（見込）</span></td><td><span class="badge b-sub"><span class="d"></span>本日ヒアリング</span></td><td class="r tnum">—</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-warn"><span class="d"></span>BPO</span></td><td><span class="badge b-good"><span class="d"></span>契約中</span></td><td class="r tnum">240万円/年</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-good"><span class="d"></span>納品 7/18</span></td><td class="r tnum">5万円</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0101</td><td>ワタナベ工業</td><td><span class="badge b-blue"><span class="d"></span>レポート（見込）</span></td><td><span class="badge b-sub"><span class="d"></span>本日ヒアリング</span></td><td class="r tnum">—</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='company_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-warn"><span class="d"></span>BPO</span></td><td><span class="badge b-good"><span class="d"></span>契約中</span></td><td class="r tnum">240万円/年</td><td class="r" style="color:var(--faint)">›</td></tr>
           </tbody>
         </table>
       </div>
@@ -89,6 +89,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

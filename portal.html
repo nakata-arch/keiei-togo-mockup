@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>顧客ポータル管理｜経営統合システム</title>
-<link rel="stylesheet" href="assets/style.css?v=44" /><link rel="stylesheet" href="assets/ui.css?v=44" />
+<link rel="stylesheet" href="assets/tokens.css?v=45" /><link rel="stylesheet" href="assets/style.css?v=45" /><link rel="stylesheet" href="assets/ui.css?v=45" />
 </head>
 <body data-page="portal">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">顧客向け</div><h1>顧客ポータル管理</h1></div>
+    <div><div class="crumb">顧客向け</div><h1>顧客ポータル管理</h1></div><span class="sample">値はサンプル</span>
     <span class="badge b-blue"><span class="d"></span>URL＝鍵・ログイン不要・失効即時</span>
     <span class="btn btn-primary btn-sm" style="margin-left:auto" onclick="openModal('mIssue')">＋ URLを発行</span>
   </div>
@@ -32,7 +32,7 @@
               <tr><td style="font-weight:800">アストロラボ</td><td class="tnum" style="font-family:Consolas,monospace;font-size:11px">…/c/Xk2f9aQ</td><td><span class="badge b-good"><span class="d"></span>LINE</span></td><td class="tnum">3回（7/16 21:04）</td><td><span class="badge b-good"><span class="d"></span>有効</span></td><td class="r"><span class="btn btn-ghost btn-sm">失効</span></td></tr>
               <tr><td style="font-weight:800">セルプスジャパン</td><td class="tnum" style="font-family:Consolas,monospace;font-size:11px">…/c/P8mR3vL</td><td><span class="badge b-good"><span class="d"></span>LINE</span></td><td class="tnum">8回（7/17 08:12）</td><td><span class="badge b-good"><span class="d"></span>有効</span></td><td class="r"><span class="btn btn-ghost btn-sm">失効</span></td></tr>
               <tr><td style="font-weight:800">リサスティー</td><td class="tnum" style="font-family:Consolas,monospace;font-size:11px">…/c/W4tE7nK</td><td><span class="badge b-blue"><span class="d"></span>メール</span></td><td class="tnum">1回（7/10）</td><td><span class="badge b-good"><span class="d"></span>有効</span></td><td class="r"><span class="btn btn-ghost btn-sm">失効</span></td></tr>
-              <tr style="background:#fffdf8"><td style="font-weight:800">ティーガイア</td><td class="tnum" style="color:var(--faint)">未発行</td><td>—</td><td>—</td><td><span class="badge b-sub"><span class="d"></span>—</span></td><td class="r"><span class="btn btn-primary btn-sm" onclick="openModal('mIssue')">発行</span></td></tr>
+              <tr style="background:var(--row-warn)"><td style="font-weight:800">ティーガイア</td><td class="tnum" style="color:var(--faint)">未発行</td><td>—</td><td>—</td><td><span class="badge b-sub"><span class="d"></span>—</span></td><td class="r"><span class="btn btn-primary btn-sm" onclick="openModal('mIssue')">発行</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -43,7 +43,7 @@
             <div style="font-size:12px;font-weight:800;color:var(--good)">✓ 顧客に見せる</div>
             <div style="font-size:12px;color:var(--sub);line-height:2;margin-top:6px">申請フェーズと進捗／お願いしている書類／次回予定／担当PM／注意事項（交付決定前の発注NG）／採択結果</div>
           </div>
-          <div class="card" style="padding:14px 17px;border-color:#f3c7c2">
+          <div class="card" style="padding:14px 17px;border-color:var(--red-line)">
             <div style="font-size:12px;font-weight:800;color:var(--red)">✗ 見せない</div>
             <div style="font-size:12px;color:var(--sub);line-height:2;margin-top:6px">成果報酬・手数料／ヨミ%・採択率／社内メモ・議事録／他社情報／個人連絡先（窓口は公式LINE）</div>
           </div>
@@ -54,10 +54,10 @@
       <div class="phone">
         <div class="pnotch"><i></i></div>
         <div class="scr">
-          <div style="background:linear-gradient(135deg,var(--navy),var(--navy-3));color:#fff;padding:18px 18px 16px">
+          <div style="background:linear-gradient(135deg,var(--navy),var(--navy-3));color:var(--surface);padding:18px 18px 16px">
             <div style="font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.08em">INITIAL STATE ｜ お客様ページ</div>
             <div style="font-size:16px;font-weight:800;margin-top:5px">アストロラボ株式会社 様</div>
-            <div style="font-size:10.5px;color:#94a3bd;margin-top:2px">担当PM：幸田 ｜ 更新：2026/07/17 09:00</div>
+            <div style="font-size:10.5px;color:var(--navy-sub);margin-top:2px">担当PM：幸田 ｜ 更新：2026/07/17 09:00</div>
           </div>
           <div style="padding:14px 16px">
             <div style="font-size:11px;font-weight:800;color:var(--sub)">課題解決型補助金（東京都）の状況</div>
@@ -77,11 +77,11 @@
               </div>
             </div>
             <div style="font-size:11px;font-weight:800;color:var(--sub);margin-top:14px">🙏 いまお願いしていること（2点）</div>
-            <div class="card" style="padding:11px 14px;margin-top:7px;border-color:#ffe3c9;background:#fffaf4">
+            <div class="card" style="padding:11px 14px;margin-top:7px;border-color:var(--warn-line);background:var(--warn-bg-soft)">
               <div style="font-size:12px;font-weight:700">決算書（直近2期分）のご送付</div>
               <div style="font-size:10.5px;color:var(--sub);margin-top:2px">LINEで写真送付でもOKです</div>
             </div>
-            <div class="card" style="padding:11px 14px;margin-top:7px;border-color:#ffe3c9;background:#fffaf4">
+            <div class="card" style="padding:11px 14px;margin-top:7px;border-color:var(--warn-line);background:var(--warn-bg-soft)">
               <div style="font-size:12px;font-weight:700">賃金台帳のご準備</div>
               <div style="font-size:10.5px;color:var(--sub);margin-top:2px">7/23の定例までにあると申請が進みます</div>
             </div>
@@ -89,7 +89,7 @@
             <div class="card" style="padding:11px 14px;margin-top:7px">
               <div style="font-size:12px;font-weight:700">7/22（水）14:00 月次定例</div>
             </div>
-            <div class="card" style="padding:11px 14px;margin-top:12px;border-color:#f3c7c2;background:#fff8f7">
+            <div class="card" style="padding:11px 14px;margin-top:12px;border-color:var(--red-line);background:var(--row-red)">
               <div style="font-size:11.5px;font-weight:800;color:var(--red)">⚠ 大切な注意</div>
               <div style="font-size:10.5px;color:var(--sub);margin-top:2px">交付決定の前に発注・購入をすると補助対象外になります。発注前に必ずご相談ください。</div>
             </div>
@@ -121,6 +121,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=44"></script>
+<script src="assets/app.js?v=45"></script>
 </body>
 </html>

@@ -1,0 +1,44 @@
+/* =========================================================================
+   デザイントークン正本（CLAUDE.md §3 末尾）
+   1つの事実は1箇所にだけ書く：色・余白・角丸・影・書体の定義はこのファイルのみ。
+   各画面・各CSSはここの変数を参照し、生のHEX・独自の余白スケールを直書きしない。
+   主色＝Initial State ブランド（Navy）＋濃淡／状態色＝プラス(good)・マイナス(red)・
+   注意(warn=orange/gold)・良好(good)の4系統／本文1書体。
+   ========================================================================= */
+:root{
+  /* 主色（ブランド1色＋濃淡） */
+  --navy:#14233D; --navy-2:#1E3557; --navy-3:#28405f;
+  --navy-deep:#101c31;            /* サイドバー下端グラデ */
+  --navy-sub:#94a3bd;             /* 濃紺面上の補助文字 */
+  --navy-faint:#7686a0;           /* 濃紺面上の淡文字 */
+
+  /* アクセント（CTA・強調） */
+  --orange:#FF914C; --orange-d:#E8731F; --gold:#FDBF43;
+
+  /* 状態色（意味にだけ使う） */
+  --good:#1E8E5A;  --good-bg:#E8F5EE;
+  --red:#D43A2F;   --red-d:#a03027;  --red-bg:#FCEBEA;
+  --blue:#1A75BC;  --blue-bg:#EAF2FA; --blue-line:#d8e6f4;
+  --cream:#FFF3D6;
+
+  /* 行・面のソフト背景（状態色の極薄） */
+  --row-warn:#fffdf8;             /* 注意行 */
+  --row-red:#fff8f7;              /* 要対応行 */
+  --warm-bg:#fff8f2;              /* 強調タイル背景（橙系） */
+  --warn-bg-soft:#fffaf4;         /* お願いカード背景 */
+  --warn-line:#ffe3c9;            /* お願いカード枠 */
+  --red-line:#f3c7c2;             /* 要対応カード枠 */
+
+  /* テキスト・面・線 */
+  --ink:#151d2b; --sub:#4a5666; --faint:#8492a4; --purple:#5B5B8A;
+  --canvas:#F6F8FB; --surface:#ffffff; --surface-2:#FBFCFE;
+  --line:#E7EBF1; --line-2:#EEF1F6;
+
+  /* 影（2段のみ） */
+  --sh-sm:0 1px 2px rgba(20,35,61,.04),0 1px 3px rgba(20,35,61,.06);
+  --sh-md:0 2px 4px rgba(20,35,61,.04),0 6px 16px rgba(20,35,61,.07);
+
+  /* 角丸・書体 */
+  --r-sm:8px; --r:11px; --r-lg:16px; --r-full:999px;
+  --font:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+}

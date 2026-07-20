@@ -3,54 +3,79 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>会社｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=50" /><link rel="stylesheet" href="assets/style.css?v=50" /><link rel="stylesheet" href="assets/ui.css?v=50" />
+<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
 </head>
 <body data-page="companies">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">業務</div><h1>会社</h1></div><span class="sample">値はサンプル</span>
+    <div><div class="crumb">営業管理</div><h1>会社（顧客）</h1></div><span class="sample">値はサンプル</span>
     <div class="search">会社名・担当・LINE IDで検索<span class="kbd">⌘K</span></div>
     <span class="btn btn-primary btn-sm" onclick="openModal('mCompany')">＋ 新規会社</span>
   </div>
   <div class="content">
 
-    <div class="toolbar">
-      <span class="chip active">すべて 128</span>
-      <span class="chip">見込み 41</span>
-      <span class="chip">顧客 75</span>
-      <span class="chip">リピート顧客 12</span>
+    <div class="toolbar" id="stChips">
+      <span class="chip active" data-f="all">すべて 128</span>
+      <span class="chip" data-f="mikomi">見込み 41</span>
+      <span class="chip" data-f="kokyaku">顧客 75</span>
+      <span class="chip" data-f="repeat">リピート顧客 12</span>
       <span style="flex:1"></span>
-      <select class="inp" style="width:150px"><option>担当：すべて</option><option>幸田</option><option>北山</option><option>新谷</option></select>
+      <select class="inp" style="width:150px" id="tantoSel"><option value="all">担当：すべて</option><option>幸田</option><option>北山</option><option>新谷</option></select>
       <select class="inp" style="width:170px"><option>並び順：最終接点が新しい</option><option>受給目標達成率が低い</option><option>経過年数が長い</option></select>
     </div>
 
     <div class="card" style="overflow-x:auto">
       <table>
         <thead><tr><th>会社名</th><th>ステータス</th><th>経過年数</th><th>担当</th><th>案件系譜</th><th class="r">受給目標達成</th><th>最終接点</th><th>LINE</th><th></th></tr></thead>
-        <tbody>
-          <tr class="rowlink" onclick="location.href='company_detail.html'">
+        <tbody id="coBody">
+          <tr class="rowlink" data-st="repeat" data-tanto="幸田" onclick="location.href='company_detail.html'">
             <td style="font-weight:800">アストロラボ株式会社</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">1年5ヶ月</td><td>幸田</td><td>レ→B→補</td><td class="r"><span class="badge b-warn"><span class="d"></span>52%</span></td><td class="tnum">7/16 LINE受信</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-          <tr class="rowlink" onclick="location.href='company_detail.html'">
+          <tr class="rowlink" data-st="repeat" data-tanto="幸田" onclick="location.href='company_detail.html'">
             <td style="font-weight:800">セルプスジャパン株式会社</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">2年1ヶ月</td><td>幸田</td><td>レ→B→補×2</td><td class="r"><span class="badge b-good"><span class="d"></span>104%</span></td><td class="tnum">7/15 面談</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-          <tr class="rowlink" onclick="location.href='company_detail.html'" style="background:var(--row-warn)">
+          <tr class="rowlink" data-st="kokyaku" data-tanto="北山" onclick="location.href='company_detail.html'" style="background:var(--row-warn)">
             <td style="font-weight:800">株式会社ティーガイア</td><td><span class="badge b-good"><span class="d"></span>顧客</span></td><td class="tnum">0年11ヶ月</td><td>北山</td><td>レ→B</td><td class="r"><span class="badge b-red"><span class="d"></span>0%・先行アラート</span></td><td class="tnum">6/22 メール</td><td><span class="badge b-sub"><span class="d"></span>未連携</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-          <tr class="rowlink" onclick="location.href='company_detail.html'">
+          <tr class="rowlink" data-st="repeat" data-tanto="幸田" onclick="location.href='company_detail.html'">
             <td style="font-weight:800">株式会社リサスティー</td><td><span class="badge b-good"><span class="d"></span>リピート顧客</span></td><td class="tnum">1年8ヶ月</td><td>幸田</td><td>レ→B→補×2</td><td class="r"><span class="badge b-warn"><span class="d"></span>83%</span></td><td class="tnum">7/14 LINE送信</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-          <tr class="rowlink" onclick="location.href='company_detail.html'">
+          <tr class="rowlink" data-st="mikomi" data-tanto="新谷" onclick="location.href='company_detail.html'">
             <td style="font-weight:800">古山精機株式会社</td><td><span class="badge b-sub"><span class="d"></span>見込み</span></td><td class="tnum">—</td><td>新谷</td><td>（レポート提案中）</td><td class="r">—</td><td class="tnum">7/12 面談</td><td><span class="badge b-sub"><span class="d"></span>未連携</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-          <tr class="rowlink" onclick="location.href='company_detail.html'">
+          <tr class="rowlink" data-st="mikomi" data-tanto="杉山" onclick="location.href='company_detail.html'">
             <td style="font-weight:800">株式会社コスコ</td><td><span class="badge b-sub"><span class="d"></span>見込み</span></td><td class="tnum">—</td><td>杉山</td><td>（ヒアリング済）</td><td class="r">—</td><td class="tnum">7/17 ヒアリング</td><td><span class="badge b-sub"><span class="d"></span>未連携</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-          <tr class="rowlink" onclick="location.href='company_detail.html'">
+          <tr class="rowlink" data-st="kokyaku" data-tanto="幸田" onclick="location.href='company_detail.html'">
             <td style="font-weight:800">菱洋エレクトロ株式会社</td><td><span class="badge b-good"><span class="d"></span>顧客</span></td><td class="tnum">1年2ヶ月</td><td>幸田</td><td>B→補</td><td class="r"><span class="badge b-good"><span class="d"></span>実施中</span></td><td class="tnum">7/9 メール</td><td><span class="badge b-good"><span class="d"></span>連携済</span></td><td class="r" style="color:var(--faint)">›</td></tr>
         </tbody>
       </table>
-      <div class="pagen"><span>128社中 1–7</span><span class="pg on">1</span><span class="pg">2</span><span class="pg">3</span><span class="pg">…</span><span class="pg">19</span></div>
+      <div class="pagen"><span id="coCount">128社中 7社を表示（サンプル）</span></div>
     </div>
   </div>
 </div>
 </div>
+
+<script>
+/* 会社ステータス チップ／担当セレクトで表を絞り込み（死んでいたチップを機能化） */
+(function () {
+  var chips = document.getElementById("stChips"), body = document.getElementById("coBody"),
+      tanto = document.getElementById("tantoSel"), count = document.getElementById("coCount");
+  if (!chips || !body) return;
+  var stF = "all";
+  function apply() {
+    var tF = tanto ? tanto.value : "all", shown = 0;
+    body.querySelectorAll("tr").forEach(function (r) {
+      var okSt = (stF === "all" || r.getAttribute("data-st") === stF);
+      var okTa = (tF === "all" || r.getAttribute("data-tanto") === tF);
+      var vis = okSt && okTa; r.style.display = vis ? "" : "none"; if (vis) shown++;
+    });
+    if (count) count.textContent = "128社中 " + shown + "社を表示（サンプル）";
+  }
+  chips.addEventListener("click", function (e) {
+    var c = e.target.closest("span[data-f]"); if (!c) return;
+    chips.querySelectorAll("span[data-f]").forEach(function (s) { s.classList.toggle("active", s === c); });
+    stF = c.getAttribute("data-f"); apply();
+  });
+  if (tanto) tanto.addEventListener("change", apply);
+})();
+</script>
 
 <!-- 新規会社モーダル -->
 <div class="modal-bg" id="mCompany">
@@ -72,6 +97,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=50"></script>
+<script src="assets/app.js?v=51"></script>
 </body>
 </html>

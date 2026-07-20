@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>アストロラボ株式会社 様｜Initial State お客様ページ</title>
-<link rel="stylesheet" href="assets/tokens.css?v=50" /><link rel="stylesheet" href="assets/style.css?v=50" /><link rel="stylesheet" href="assets/ui.css?v=50" />
+<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
 <style>body{background:var(--canvas)}</style>
 </head>
 <body data-customer-page>
@@ -22,25 +22,34 @@
     <div style="font-size:10.5px;color:var(--navy-sub);margin-top:8px">担当：幸田（コンサルタント） ｜ 更新：2026/07/17 09:00</div>
   </div>
 
-  <!-- 申請状況 -->
-  <div class="cp-sec">補助金の申請状況</div>
+  <!-- 受給予定（顧客が一番知りたい数字を主役に） -->
+  <div class="cp-card" style="background:linear-gradient(135deg,var(--navy),var(--navy-3));color:#fff;border:0">
+    <div style="font-size:11px;color:var(--gold);font-weight:800">課題解決型補助金（東京都）｜受給予定額</div>
+    <div class="tnum" style="font-size:32px;font-weight:800;line-height:1.1;margin-top:4px">248<span style="font-size:15px">万円</span></div>
+    <div style="font-size:11px;color:var(--navy-sub);margin-top:4px">公募締切 9/30 ・ 担当 幸田が申請まで同席サポート</div>
+  </div>
+
+  <!-- 申請状況（役務進行の顧客向け表示・consult-status準拠） -->
+  <div class="cp-sec">いまの進み具合</div>
   <div class="cp-card">
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      <b style="font-size:14px">課題解決型補助金（東京都）</b>
-      <span class="badge b-blue" style="margin-left:auto"><span class="d"></span>いま：申請の準備中</span>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <b style="font-size:13.5px">申請の準備中です</b>
+      <span class="badge b-warn" style="margin-left:auto"><span class="d"></span>いま：交付申請</span>
     </div>
-    <div style="display:flex;gap:5px;margin-top:14px">
-      <div style="flex:1;height:9px;border-radius:5px;background:var(--blue)"></div>
+    <div style="display:flex;gap:4px">
+      <div style="flex:1;height:9px;border-radius:5px;background:var(--good)"></div>
+      <div style="flex:1;height:9px;border-radius:5px;background:var(--orange)"></div>
+      <div style="flex:1;height:9px;border-radius:5px;background:var(--line-2)"></div>
+      <div style="flex:1;height:9px;border-radius:5px;background:var(--line-2)"></div>
       <div style="flex:1;height:9px;border-radius:5px;background:var(--line-2)"></div>
       <div style="flex:1;height:9px;border-radius:5px;background:var(--line-2)"></div>
       <div style="flex:1;height:9px;border-radius:5px;background:var(--line-2)"></div>
     </div>
-    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--faint);margin-top:5px;font-weight:700">
-      <span style="color:var(--blue)">申請</span><span>交付決定</span><span>実施</span><span>実績報告</span>
+    <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--faint);margin-top:5px;font-weight:700;text-align:center">
+      <span style="color:var(--good);flex:1">着手</span><span style="color:var(--orange-d);flex:1">申請</span><span style="flex:1">採択</span><span style="flex:1">交付決定</span><span style="flex:1">実施</span><span style="flex:1">報告</span><span style="flex:1">完了</span>
     </div>
     <div style="font-size:12px;color:var(--sub);margin-top:12px;line-height:1.9;border-top:1px solid var(--line-2);padding-top:10px">
-      申請額 <b class="tnum">248万円</b> ・ 公募締切 9/30<br>
-      書類が揃い次第、電子申請に進みます（弊社が同席してサポートします）。
+      いま：申請に必要な書類をご準備いただいています。<b>書類が揃い次第、弊社が同席して電子申請</b>に進みます。<br>採択の結果は例年 申請から約2〜3か月でお知らせがあります。
     </div>
   </div>
 

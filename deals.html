@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>営業｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=50" /><link rel="stylesheet" href="assets/style.css?v=50" /><link rel="stylesheet" href="assets/ui.css?v=50" />
+<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
 </head>
 <!-- E-03 営業（営業管理エリア・v0.4.1）。獲得＝販売パイプライン lead→契約締結。
      表示は ボード＋テーブルの2つのみ（レポート/BPタブは廃止）。種別セグメント＝レポート/BPO/補助金助成金/その他。
@@ -17,6 +17,7 @@
     <div><div class="crumb">営業管理</div><h1>営業</h1></div>
     <span class="sample">値はサンプル</span>
     <div class="search">案件番号・会社で検索<span class="kbd">⌘K</span></div>
+    <a class="btn btn-ghost btn-sm" href="deal_detail.html#cost">経費を入力（案件詳細へ）</a><!-- 獲得段階の営業紹介料もここから -->
     <a class="btn btn-ghost btn-sm" href="projects.html">契約後の履行は 案件管理 へ →</a>
     <span class="btn btn-primary btn-sm" onclick="openModal('mDeal')">＋ 新規案件</span>
   </div>
@@ -164,6 +165,6 @@
   });
 })();
 </script>
-<script src="assets/app.js?v=50"></script>
+<script src="assets/app.js?v=51"></script>
 </body>
 </html>

@@ -191,10 +191,10 @@
     });
   }
 
-  /* バッジ遷移先のハイライト（#alerts） */
-  if (location.hash === "#alerts") {
-    var t = document.getElementById("alerts");
-    if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("pulse"); setTimeout(function () { t.classList.remove("pulse"); }, 2400); }
+  /* 遷移先アンカーのスクロール＋ハイライト（#alerts / #cost 等） */
+  if (location.hash && location.hash.length > 1) {
+    var t = document.getElementById(location.hash.slice(1));
+    if (t) { setTimeout(function () { t.scrollIntoView({ block: "center", behavior: "smooth" }); t.classList.add("pulse"); setTimeout(function () { t.classList.remove("pulse"); }, 2400); }, 60); }
   }
 
   /* 共通UI挙動 */

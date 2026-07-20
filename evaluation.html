@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>評価・賞与｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=50" /><link rel="stylesheet" href="assets/style.css?v=50" /><link rel="stylesheet" href="assets/ui.css?v=50" />
+<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
 </head>
 <body data-page="evaluation" data-role="kouda">
 <div class="app">
@@ -19,7 +19,7 @@
     <p style="font-size:12px;color:var(--sub);margin-bottom:12px;max-width:760px">賞与は上から下へ一本の流れで決まります：<b>全社スコア → 60点超過分が原資 → 3分割 → 部門へ人数比 → 個人へ部門長配分</b>。しきい値・目標・点数化テーブルの<b>値の正本は ST-02（config/rules.json）</b>。閲覧は<a href="rules.html">運用ルール集</a>。</p>
 
     <!-- 点数化の根拠（なぜこの点数か・値はST-02/config参照） -->
-    <div class="card" style="padding:0;margin-bottom:14px;border-left:4px solid var(--blue)">
+    <div class="card" id="scoreBasis" style="padding:0;margin-bottom:14px;border-left:4px solid var(--blue)">
       <div class="card-h"><span class="t">点数化の根拠（なぜこの点数か）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">目標・換算＝ST-02（config/rules.json）・四半期更新</span></div>
       <div style="overflow-x:auto">
       <table>
@@ -114,7 +114,7 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=50"></script>
+<script src="assets/app.js?v=51"></script>
 <script>
 function calcPct(){
   var ps=[].slice.call(document.querySelectorAll('.pct')).map(function(i){return parseFloat(i.value)||0});

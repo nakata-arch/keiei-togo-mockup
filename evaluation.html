@@ -16,7 +16,23 @@
   </div>
   <div class="content">
 
-    <p style="font-size:12px;color:var(--sub);margin-bottom:14px;max-width:720px">賞与は上から下へ一本の流れで決まります：<b>全社スコア → 60点超過分が原資 → 3分割 → 部門へ人数比 → 個人へ部門長配分</b>。しきい値は<a href="rules.html">ルール</a>参照。</p>
+    <p style="font-size:12px;color:var(--sub);margin-bottom:12px;max-width:760px">賞与は上から下へ一本の流れで決まります：<b>全社スコア → 60点超過分が原資 → 3分割 → 部門へ人数比 → 個人へ部門長配分</b>。しきい値・目標・点数化テーブルの<b>値の正本は ST-02（config/rules.json）</b>。閲覧は<a href="rules.html">運用ルール集</a>。</p>
+
+    <!-- 点数化の根拠（なぜこの点数か・値はST-02/config参照） -->
+    <div class="card" style="padding:0;margin-bottom:14px;border-left:4px solid var(--blue)">
+      <div class="card-h"><span class="t">点数化の根拠（なぜこの点数か）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">目標・換算＝ST-02（config/rules.json）・四半期更新</span></div>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>部門</th><th>主指標（1指標のみ）</th><th class="r">目標（ST-02）</th><th class="r">実績</th><th class="r">達成率</th><th class="r">点</th><th>判定</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700">営業部</td><td>獲得（レポート・BPO件数）</td><td class="r tnum">月8件</td><td class="r tnum">9件（レポ7・BPO2）</td><td class="r tnum">112%</td><td class="r tnum" style="font-weight:800;color:var(--good)">67</td><td><span class="badge b-good"><span class="d"></span>合格超え</span></td></tr>
+          <tr><td style="font-weight:700">コンサル部</td><td>採択金額</td><td class="r tnum">560万円</td><td class="r tnum">520万円</td><td class="r tnum">93%</td><td class="r tnum" style="font-weight:800;color:var(--orange-d)">58</td><td><span class="badge b-warn"><span class="d"></span>合格まで2点</span></td></tr>
+          <tr><td style="font-weight:700">管理部</td><td>時間削減（残業）</td><td class="r tnum">残業ゼロ</td><td class="r tnum">残業ゼロ</td><td class="r tnum">100%</td><td class="r tnum" style="font-weight:800">60</td><td><span class="badge b-sub"><span class="d"></span>合格</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="hint-t" style="padding:10px 18px">点＝主指標の目標達成率を点数化テーブル（下限40点・合格60点＝目標達成）で換算。<b>合格ライン60点・換算テーブル・各部門の目標値は ST-02（config/rules.json）が正本</b>。全社スコア（粗利67・営業利益57）は管理会計の実績（freee）から。→「なぜこの点数か」は 目標（ST-02）×実績（freee）で辿れる。<br>賞与＝褒賞分（原資の配分まで本画面で確定）。基本給への反映（変動ピッチ・給与テーブル＝A-10）は未定のため本画面では扱わない（金額変換式は入れない）。</div>
+    </div>
 
     <div class="flowv" style="max-width:980px">
 

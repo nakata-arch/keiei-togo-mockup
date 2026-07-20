@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "track": "B (runtime)",
+    "description": "運用値の正本（ランタイム）。ST-02（ルール編集）が編集する。構造・定規は Track A（spec/ バンドル＝ビルドタイム）。評価基準・給与パラメータ・しきい値はこの値を参照する。",
+    "editor": "ST-02 / st02_rules.html",
+    "note": "モックのためサンプル値。実運用では ST-02 の保存で更新（成功応答後・楽観更新なし）。A-09（会社独自ルールの設定値化）はこの器を用いる。"
+  },
+  "approval": {
+    "keiei_kaigi_threshold_yen": 500000,
+    "first_approver": "北山"
+  },
+  "billing": {
+    "report": "納品した月",
+    "bpo": "契約締結の月",
+    "hojo_chakushu_yen": 300000,
+    "hojo_seika_rate": 0.15
+  },
+  "evaluation": {
+    "pass_score": 60,
+    "repay_line_score": 40,
+    "gross_profit_pass_yen_month": 9910000,
+    "operating_profit_pass_yen_month": 4410000,
+    "surplus_split": { "hoshou": 0.33, "sairyou": 0.33, "ryuho": 0.34 },
+    "dept_metric": { "eigyo": "獲得", "consult": "採択金額", "kanri": "時間削減" },
+    "dept_target": { "eigyo_kensu_month": 8, "consult_saitaku_yen": 5600000 }
+  },
+  "anken": {
+    "stagnation_business_days": 7,
+    "bpo_completion_line": "same_amount",
+    "juryu_target_multiplier": 2,
+    "hojo_seika_rate": 0.15
+  },
+  "payroll": {
+    "source": "PL（役員報酬＋外注費）",
+    "use_freee_payroll_api": false,
+    "types": {
+      "koyou_jikyu": "時給 × 労働時間",
+      "gyoumu_itaku": "契約額（固定）",
+      "seika_hoshu": "実績 × 率"
+    },
+    "bonus": {
+      "from": "評価の褒賞分",
+      "pitch_and_table": "A-10 未定（金額変換式は未実装・枠のみ）"
+    }
+  }
+}

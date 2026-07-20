@@ -85,24 +85,26 @@
         <div class="hint-t" style="padding:0 18px 14px">正＝domain/consult-status.state.mmd。完了条件＝効果報告まで（補助金・約2年）。<b>採択＝成果確定</b>。交付決定前の発注は警告のみ。</div>
       </div>
 
-      <!-- 売上・経費・粗利（案件別） -->
-      <div class="card b8" style="padding:0;border-left:3px solid var(--good)">
-        <div class="card-h"><span class="t">案件別 売上・経費・粗利</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">正本＝freee(P&L)／管理会計Excel・コンサル部門</span></div>
+      <!-- 売上・経費・粗利（案件別・明細から算出。固定率は使わない） -->
+      <div class="card b12" style="padding:0;border-left:3px solid var(--good)">
+        <div class="card-h"><span class="t">案件別 売上・経費・粗利（明細から算出）</span><span class="sp"></span><span class="btn btn-ghost btn-sm" onclick="openModal('mCost')">＋ 経費を追加</span><span style="font-size:10.5px;color:var(--faint);margin-left:8px">正本＝freee(P&L)／管理会計Excel</span></div>
         <div style="overflow-x:auto">
         <table>
           <thead><tr><th>区分</th><th>内容</th><th class="r">金額</th><th>状態</th><th>分類</th></tr></thead>
           <tbody>
-            <tr><td rowspan="2" style="font-weight:700;vertical-align:top">売上</td><td>着手金</td><td class="r tnum">30.0万円</td><td><span class="badge b-good"><span class="d"></span>発行済・期日7/31</span></td><td style="font-size:11px;color:var(--faint)">コンサル売上</td></tr>
-            <tr><td>成果報酬（採択15%）</td><td class="r tnum" style="color:var(--faint)">37.2万円</td><td><span class="badge b-sub"><span class="d"></span>採択後に確定</span></td><td style="font-size:11px;color:var(--faint)">コンサル売上</td></tr>
-            <tr><td rowspan="2" style="font-weight:700;vertical-align:top">経費（原価）</td><td>営業紹介料（CCコミュニティ）</td><td class="r tnum">▲6.7万円</td><td><span class="badge b-warn"><span class="d"></span>成果連動</span></td><td style="font-size:11px;color:var(--faint)">原価（営業紹介＝原価）</td></tr>
-            <tr><td>現場人件費（コンサル工数）</td><td class="r tnum">▲20.0万円</td><td><span class="badge b-good"><span class="d"></span>計上済</span></td><td style="font-size:11px;color:var(--faint)">原価</td></tr>
+            <tr><td rowspan="2" style="font-weight:700;vertical-align:top">売上</td><td>着手金</td><td class="r tnum">30.0万円</td><td><span class="badge b-good"><span class="d"></span>発行済・期日7/31</span></td><td><span class="badge b-blue" style="font-size:10px">コンサル売上</span></td></tr>
+            <tr><td>成果報酬（採択15%）</td><td class="r tnum" style="color:var(--faint)">37.2万円</td><td><span class="badge b-sub"><span class="d"></span>採択後に確定</span></td><td><span class="badge b-blue" style="font-size:10px">コンサル売上</span></td></tr>
+            <tr><td rowspan="2" style="font-weight:700;vertical-align:top">原価</td><td>営業紹介料（CCコミュニティ）</td><td class="r tnum">▲6.7万円</td><td><span class="badge b-warn"><span class="d"></span>成果連動</span></td><td><span class="badge b-warn" style="font-size:10px">原価</span></td></tr>
+            <tr><td>現場人件費（コンサル工数）</td><td class="r tnum">▲20.0万円</td><td><span class="badge b-good"><span class="d"></span>計上済</span></td><td><span class="badge b-warn" style="font-size:10px">原価</span></td></tr>
+            <tr><td style="font-weight:700;vertical-align:top">販管費</td><td>管理外注（記帳代行・按分）</td><td class="r tnum">▲5.0万円</td><td><span class="badge b-good"><span class="d"></span>計上済</span></td><td><span class="badge b-sub" style="font-size:10px">販管費</span></td></tr>
           </tbody>
           <tfoot>
-            <tr style="background:var(--good-bg)"><td colspan="2" style="font-weight:800">案件粗利（売上−原価）</td><td class="r tnum" style="font-weight:800">40.5万円</td><td colspan="2" style="font-size:11px;color:var(--good)">粗利率 60%（見込）</td></tr>
+            <tr style="background:var(--good-bg)"><td colspan="2" style="font-weight:800">案件粗利（売上 67.2 − 原価 26.7）</td><td class="r tnum" style="font-weight:800">40.5万円</td><td colspan="2" style="font-size:11px;color:var(--good)">粗利率 60.3%（明細から算出・固定率ではない）</td></tr>
+            <tr style="background:var(--cream)"><td colspan="2" style="font-weight:800">案件 営業利益（粗利 − 販管費 5.0）</td><td class="r tnum" style="font-weight:800">35.5万円</td><td colspan="2" style="font-size:11px;color:var(--faint)">営業利益率 52.8%</td></tr>
           </tfoot>
         </table>
         </div>
-        <div class="hint-t" style="padding:10px 18px">外注費の分類：<b>営業紹介料＝原価／管理外注＝販管費</b>をベンダー単位で判定（正本の分類ルールに従う）。補助金/助成金の売上・入金は<b>コンサル部門</b>帰属で集計→経営サマリー・予実へ。</div>
+        <div class="hint-t" style="padding:10px 18px">経費は案件ごとに明細入力し、明細を<b>原価／販管費</b>に分類（原価＝営業紹介料・現場人件費／販管費＝管理外注）。粗利＝売上−<b>原価</b>（販管費は含めない）。入力はこの画面（E-04）に集約し、営業管理・案件管理どちらの案件からも到達可（獲得段階の営業紹介料もここで入力）。集計→経営サマリー・予実（純額売上−営業経費−現場人件費＝限界利益−販管費＝営業利益）。補助金/助成金の売上・入金は<b>コンサル部門</b>帰属。</div>
       </div>
 
       <!-- タスク（役務の現ステージ・顧客ポータル同期） -->
@@ -129,6 +131,25 @@
 
   </div>
 </div>
+</div>
+
+<!-- 経費追加（明細入力・原価/販管費分類・楽観更新なし） -->
+<div class="modal-bg" id="mCost">
+  <div class="modal">
+    <div class="modal-h"><span class="t">経費を追加（この案件）</span><span class="x" onclick="closeModal('mCost')">✕</span></div>
+    <div class="modal-b">
+      <div class="inp-row">
+        <label class="field"><span class="fl">内容<span class="req">*</span></span><input class="inp" placeholder="例：営業紹介料 / 現場人件費 / 管理外注" /></label>
+        <label class="field"><span class="fl">金額（円）</span><input class="inp tnum" placeholder="200,000" /></label>
+      </div>
+      <div class="inp-row">
+        <label class="field"><span class="fl">分類<span class="req">*</span></span><select class="inp"><option>原価（粗利から差し引く）</option><option>販管費（営業利益から差し引く）</option></select></label>
+        <label class="field"><span class="fl">ベンダー（分類マスタ）</span><input class="inp" placeholder="例：CCコミュニティ" /></label>
+      </div>
+      <div class="hint-t">分類は案件ごとの明細で決める（同じベンダーでも案件により原価/販管費が異なりうる）。粗利は原価のみ差し引き、販管費は営業利益で差し引く。正本（freee）反映は成功応答後（楽観更新なし）。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mCost')">キャンセル</span><span class="btn btn-primary">明細を追加</span></div>
+  </div>
 </div>
 
 <script src="assets/app.js?v=49"></script>

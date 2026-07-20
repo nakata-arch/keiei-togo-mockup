@@ -2,19 +2,19 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>案件｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=48" /><link rel="stylesheet" href="assets/style.css?v=48" /><link rel="stylesheet" href="assets/ui.css?v=48" />
+<title>営業｜経営統合システム</title>
+<link rel="stylesheet" href="assets/tokens.css?v=49" /><link rel="stylesheet" href="assets/style.css?v=49" /><link rel="stylesheet" href="assets/ui.css?v=49" />
 </head>
-<!-- E-03 営業案件（営業管理エリア・v0.4 Pillar A）。獲得までの管理＝販売パイプライン lead→契約締結。
-     tabs: [ボード, テーブル, レポート, BP]＝全タブ有効（CLAUDE.md §2-4）。ステータス＝anken-status.state.mmd（10ステージ）。
-     遷移UI＝window.openStatus（許可遷移のみ・楽観更新なし）。契約後の役務進行・請求入金・売上経費は「案件管理」(E-05/projects.html)。
-     案件クリック → E-04 案件詳細（2軸表示）。 -->
+<!-- E-03 営業（営業管理エリア・v0.4.1）。獲得＝販売パイプライン lead→契約締結。
+     表示は ボード＋テーブルの2つのみ（レポート/BPタブは廃止）。種別セグメント＝レポート/BPO/補助金助成金/その他。
+     成約列は当月分のみ・以前の成約は畳む。分岐終端（失注/長期リード/ニーズなし/破棄/キャンセル）は畳んで参照可。
+     ステータス正＝anken-status.state.mmd。遷移UI＝window.openStatus。案件クリック → E-04（2軸）。 -->
 <body data-page="deals" data-role="kouda">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">営業管理</div><h1>営業案件（獲得パイプライン）</h1></div>
+    <div><div class="crumb">営業管理</div><h1>営業</h1></div>
     <span class="sample">値はサンプル</span>
     <div class="search">案件番号・会社で検索<span class="kbd">⌘K</span></div>
     <a class="btn btn-ghost btn-sm" href="projects.html">契約後の履行は 案件管理 へ →</a>
@@ -22,106 +22,107 @@
   </div>
   <div class="content">
 
-    <div class="dtabs">
-      <span class="dtab on" data-g="e" data-t="board" onclick="swTab('e','board')">ボード（パイプライン）</span>
-      <span class="dtab" data-g="e" data-t="table" onclick="swTab('e','table')">テーブル<span class="n">10</span></span>
-      <span class="dtab" data-g="e" data-t="report" onclick="swTab('e','report')">レポート<span class="n">2</span></span>
-      <span class="dtab" data-g="e" data-t="bp" onclick="swTab('e','bp')">BP<span class="n">2</span></span>
+    <!-- 種別セグメント（フィルタ）＋タブ -->
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px">
+      <div class="dtabs" style="margin:0">
+        <span class="dtab on" data-g="e" data-t="board" onclick="swTab('e','board')">ボード</span>
+        <span class="dtab" data-g="e" data-t="table" onclick="swTab('e','table')">テーブル<span class="n">12</span></span>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+        <span style="font-size:11px;color:var(--faint);font-weight:700">種別</span>
+        <span class="seg" id="typeSeg">
+          <span class="on" data-f="all">すべて</span><span data-f="report">レポート</span><span data-f="bpo">BPO</span><span data-f="hojo">補助金助成金</span><span data-f="other">その他</span>
+        </span>
+      </div>
     </div>
 
-    <!-- ボード＝販売パイプライン（列＝ステータス。正＝anken-status.state.mmd） -->
+    <!-- ボード＝販売パイプライン（列＝ステータス・正＝anken-status.state.mmd） -->
     <div class="dpane on" data-g="e" data-t="board">
-      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">列＝案件ステータス（販売パイプライン・A-03確定）。カードをクリックで案件詳細（E-04）。ステータス変更は E-04 の「ステータスを更新」から。</p>
+      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">列＝案件ステータス（獲得）。成約列は<b>当月分のみ</b>。以前の成約・分岐終端は下の折りたたみで参照。カードで案件詳細（E-04）。</p>
       <div class="ph-board" style="grid-template-columns:repeat(6,minmax(150px,1fr))">
         <div class="ph-col">
           <div class="ph-col-h"><span class="n" style="background:var(--navy-sub)">1</span><span class="t">リード</span><span class="c">1</span></div>
           <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">久恵比寿｜BPO顧問（見込）</div><div class="sc">IS-2026-0101・新谷</div><div class="sf"><span class="badge b-sub"><span class="d"></span>BP</span><span class="amt tnum">240万円/年</span></div></a>
+            <a class="scard" data-type="bpo" href="deal_detail.html" style="display:block"><div class="sn">久恵比寿｜BPO顧問（見込）</div><div class="sc">IS-2026-0101・新谷</div><div class="sf"><span class="badge b-sub"><span class="d"></span>BPO</span><span class="amt tnum">240万円/年</span></div></a>
           </div>
         </div>
         <div class="ph-col">
           <div class="ph-col-h"><span class="n" style="background:var(--blue)">2</span><span class="t">アポ確</span><span class="c">1</span></div>
           <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">ティーガイア｜省力化投資</div><div class="sc">IS-2026-0098・幸田</div><div class="sf"><span class="badge b-good"><span class="d"></span>補助金</span><span class="amt tnum">1,000万円</span></div></a>
+            <a class="scard" data-type="hojo" href="deal_detail.html" style="display:block"><div class="sn">ティーガイア｜省力化投資</div><div class="sc">IS-2026-0098・幸田</div><div class="sf"><span class="badge b-good"><span class="d"></span>補助金</span><span class="amt tnum">1,000万円</span></div></a>
           </div>
         </div>
         <div class="ph-col">
           <div class="ph-col-h"><span class="n" style="background:var(--blue)">3</span><span class="t">商談中</span><span class="c">1</span></div>
           <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">古山精機｜診断レポート</div><div class="sc">IS-2026-0095・北山</div><div class="sf"><span class="badge b-blue"><span class="d"></span>レポート</span><span class="amt tnum">5万円</span></div></a>
+            <a class="scard" data-type="report" href="deal_detail.html" style="display:block"><div class="sn">古山精機｜診断レポート</div><div class="sc">IS-2026-0095・北山</div><div class="sf"><span class="badge b-blue"><span class="d"></span>レポート</span><span class="amt tnum">5万円</span></div></a>
           </div>
         </div>
         <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--orange-d)">4</span><span class="t">提案後</span><span class="c">1</span></div>
-          <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">ユアーズ静岡｜診断レポート</div><div class="sc">IS-2026-0092・新谷</div><div class="sf"><span class="badge b-blue"><span class="d"></span>レポート</span><span class="amt tnum">5万円</span></div></a>
-          </div>
+          <div class="ph-col-h"><span class="n" style="background:var(--orange-d)">4</span><span class="t">提案後</span><span class="c">0</span></div>
+          <div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">—</div></div>
         </div>
         <div class="ph-col">
           <div class="ph-col-h"><span class="n" style="background:var(--orange-d)">5</span><span class="t">クロージング</span><span class="c">1</span></div>
           <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">セルプスJ｜新事業進出</div><div class="sc">IS-2026-0081・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>〆切 8/29</span><span class="amt tnum">1,000万円</span></div></a>
+            <a class="scard" data-type="hojo" href="deal_detail.html" style="display:block"><div class="sn">セルプスJ｜新事業進出</div><div class="sc">IS-2026-0081・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>〆切 8/29</span><span class="amt tnum">1,000万円</span></div></a>
           </div>
         </div>
         <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--good)">6</span><span class="t">成約</span><span class="c">5</span></div>
+          <div class="ph-col-h"><span class="n" style="background:var(--good)">6</span><span class="t">成約（当月）</span><span class="c">2</span></div>
           <div class="ph-col-b">
-            <a class="scard stale" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜課題解決型</div><div class="sc">IS-2026-0074・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>履行 停滞8日</span><span class="amt tnum">248万円</span></div></a>
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜BPO顧問</div><div class="sc">IS-2026-0058・幸田</div><div class="sf"><span class="badge b-good"><span class="d"></span>BP</span><span class="amt tnum">240万円/年</span></div></a>
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">ヤマモト食品｜BPO顧問</div><div class="sc">IS-2026-0067・新谷</div><div class="sf"><span class="badge b-good"><span class="d"></span>BP</span><span class="amt tnum">240万円/年</span></div></a>
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">リサスティー｜経営力強化</div><div class="sc">IS-2026-0055・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>履行 交付決定</span><span class="amt tnum">400万円</span></div></a>
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">菱洋エレクトロ｜省力化投資</div><div class="sc">IS-2026-0032・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>履行 実施</span><span class="amt tnum">1,200万円</span></div></a>
+            <a class="scard" data-type="report" href="deal_detail.html" style="display:block"><div class="sn">ユアーズ静岡｜診断レポート</div><div class="sc">IS-2026-0092・新谷</div><div class="sf"><span class="badge b-good"><span class="d"></span>成約 7/16</span><span class="amt tnum">5万円</span></div></a>
+            <a class="scard" data-type="other" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜スポット業務改善</div><div class="sc">IS-2026-0087・幸田</div><div class="sf"><span class="badge b-good"><span class="d"></span>成約 7/9</span><span class="amt tnum">30万円</span></div></a>
           </div>
         </div>
       </div>
-      <p style="font-size:11px;color:var(--faint);margin-top:10px">分岐ステータス（長期リード・失注・ニーズなし・破棄）は本ボードでは畳んで表示。テーブルで絞り込み可。</p>
+
+      <!-- 以前の成約（畳み・参照可） -->
+      <details style="margin-top:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)">
+        <summary style="padding:10px 14px;cursor:pointer;font-size:12px;font-weight:700">以前の成約 6件（当月以外・棚卸し用）</summary>
+        <div style="padding:0 14px 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px">
+          <a class="scard" data-type="hojo" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜課題解決型</div><div class="sc">IS-2026-0074・6月成約</div><div class="sf"><span class="badge b-good"><span class="d"></span>成約</span><span class="amt tnum">248万円</span></div></a>
+          <a class="scard" data-type="bpo" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜BPO顧問</div><div class="sc">IS-2026-0058・2月成約</div><div class="sf"><span class="badge b-good"><span class="d"></span>成約</span><span class="amt tnum">240万円/年</span></div></a>
+          <a class="scard" data-type="bpo" href="deal_detail.html" style="display:block"><div class="sn">ヤマモト食品｜BPO顧問</div><div class="sc">IS-2026-0067・5月成約</div><div class="sf"><span class="badge b-good"><span class="d"></span>成約</span><span class="amt tnum">240万円/年</span></div></a>
+          <a class="scard" data-type="hojo" href="deal_detail.html" style="display:block"><div class="sn">リサスティー｜経営力強化</div><div class="sc">IS-2026-0055・6月成約</div><div class="sf"><span class="badge b-good"><span class="d"></span>成約</span><span class="amt tnum">400万円</span></div></a>
+          <a class="scard" data-type="hojo" href="deal_detail.html" style="display:block"><div class="sn">菱洋エレクトロ｜省力化投資</div><div class="sc">IS-2026-0032・6月成約</div><div class="sf"><span class="badge b-good"><span class="d"></span>成約</span><span class="amt tnum">1,200万円</span></div></a>
+          <a class="scard" data-type="report" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜診断レポート</div><div class="sc">IS-2026-0041・1月成約</div><div class="sf"><span class="badge b-good"><span class="d"></span>成約</span><span class="amt tnum">5万円</span></div></a>
+        </div>
+      </details>
+
+      <!-- 分岐・終端（畳み・参照可） -->
+      <details style="margin-top:10px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)">
+        <summary style="padding:10px 14px;cursor:pointer;font-size:12px;font-weight:700">分岐・終端（長期リード・失注・ニーズなし・破棄・キャンセル）</summary>
+        <div style="padding:0 14px 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px">
+          <a class="scard" data-type="bpo" href="deal_detail.html" style="display:block"><div class="sn">道場フーズ｜BPO相談</div><div class="sc">IS-2026-0044・長期リード</div><div class="sf"><span class="badge b-sub"><span class="d"></span>長期リード</span><span class="amt tnum">—</span></div></a>
+          <a class="scard" data-type="hojo" href="deal_detail.html" style="display:block"><div class="sn">北陸機械｜ものづくり</div><div class="sc">IS-2026-0060・失注</div><div class="sf"><span class="badge b-red"><span class="d"></span>失注</span><span class="amt tnum">—</span></div></a>
+          <a class="scard" data-type="report" href="deal_detail.html" style="display:block"><div class="sn">サンプル商事｜診断</div><div class="sc">IS-2026-0071・ニーズなし</div><div class="sf"><span class="badge b-sub"><span class="d"></span>ニーズなし</span><span class="amt tnum">—</span></div></a>
+          <a class="scard" data-type="hojo" href="deal_detail.html" style="display:block"><div class="sn">緑川製作所｜省力化</div><div class="sc">IS-2026-0079・キャンセル</div><div class="sf"><span class="badge b-red"><span class="d"></span>キャンセル</span><span class="amt tnum">—</span></div></a>
+        </div>
+      </details>
     </div>
 
-    <!-- テーブル（全件・ステータス＝実ラベル＋許可遷移UI） -->
+    <!-- テーブル（全件・ステータス実ラベル＋許可遷移UI） -->
     <div class="dpane" data-g="e" data-t="table">
       <div class="card" style="overflow-x:auto">
         <table>
-          <thead><tr><th>案件番号</th><th>会社</th><th>種別</th><th>ステータス（販売パイプライン）</th><th class="r">金額</th><th>担当</th><th>更新</th><th></th></tr></thead>
+          <thead><tr><th>案件番号</th><th>会社</th><th>種別</th><th>ステータス（獲得）</th><th class="r">金額</th><th>担当</th><th></th></tr></thead>
           <tbody>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0101</td><td>久恵比寿</td><td><span class="badge b-sub"><span class="d"></span>BP</span></td><td><span class="badge b-sub"><span class="d"></span>リード</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0101','lead')">変更</span></td><td class="r tnum">240万円/年</td><td>新谷</td><td class="tnum">7/17</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0098</td><td>ティーガイア</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-blue"><span class="d"></span>アポ確</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0098','apo')">変更</span></td><td class="r tnum">1,000万円</td><td>幸田</td><td class="tnum">7/16</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0095</td><td>古山精機</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-blue"><span class="d"></span>商談中</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0095','shodan')">変更</span></td><td class="r tnum">5万円</td><td>北山</td><td class="tnum">7/14</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-warn"><span class="d"></span>提案後</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0092','teiango')">変更</span></td><td class="r tnum">5万円</td><td>新谷</td><td class="tnum">7/16</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'" style="background:var(--row-warn)"><td class="tnum" style="font-weight:800">IS-2026-0081</td><td>セルプスジャパン</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-warn"><span class="d"></span>クロージング</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0081','closing')">変更</span></td><td class="r tnum">1,000万円</td><td>幸田</td><td class="tnum">7/15</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'" style="background:var(--row-warn)"><td class="tnum" style="font-weight:800">IS-2026-0074</td><td>アストロラボ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--red-d)">履行:交付申請/停滞8日</span></td><td class="r tnum">248万円</td><td>幸田</td><td class="tnum">7/9</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td><span class="badge b-warn"><span class="d"></span>BP</span></td><td><span class="badge b-good"><span class="d"></span>成約</span></td><td class="r tnum">240万円/年</td><td>幸田</td><td class="tnum">7/16</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-warn"><span class="d"></span>BP</span></td><td><span class="badge b-good"><span class="d"></span>成約</span></td><td class="r tnum">240万円/年</td><td>新谷</td><td class="tnum">7/10</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0055</td><td>リサスティー</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--faint)">履行:交付決定</span></td><td class="r tnum">400万円</td><td>幸田</td><td class="tnum">7/8</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0032</td><td>菱洋エレクトロ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--faint)">履行:実施</span></td><td class="r tnum">1,200万円</td><td>幸田</td><td class="tnum">7/11</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="bpo" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0101</td><td>久恵比寿</td><td><span class="badge b-sub"><span class="d"></span>BPO</span></td><td><span class="badge b-sub"><span class="d"></span>リード</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0101','lead')">変更</span></td><td class="r tnum">240万円/年</td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="hojo" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0098</td><td>ティーガイア</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-blue"><span class="d"></span>アポ確</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0098','apo')">変更</span></td><td class="r tnum">1,000万円</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="report" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0095</td><td>古山精機</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-blue"><span class="d"></span>商談中</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0095','shodan')">変更</span></td><td class="r tnum">5万円</td><td>北山</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="hojo" onclick="location.href='deal_detail.html'" style="background:var(--row-warn)"><td class="tnum" style="font-weight:800">IS-2026-0081</td><td>セルプスジャパン</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-warn"><span class="d"></span>クロージング</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStatus('IS-2026-0081','closing')">変更</span></td><td class="r tnum">1,000万円</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="report" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-good"><span class="d"></span>成約（当月）</span></td><td class="r tnum">5万円</td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="other" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0087</td><td>アストロラボ</td><td><span class="badge b-sub"><span class="d"></span>その他</span></td><td><span class="badge b-good"><span class="d"></span>成約（当月）</span></td><td class="r tnum">30万円</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="hojo" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0074</td><td>アストロラボ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--faint)">6月</span></td><td class="r tnum">248万円</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="bpo" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td><span class="badge b-warn"><span class="d"></span>BPO</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--faint)">2月</span></td><td class="r tnum">240万円/年</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="bpo" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-warn"><span class="d"></span>BPO</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--faint)">5月</span></td><td class="r tnum">240万円/年</td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="hojo" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0055</td><td>リサスティー</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--faint)">6月</span></td><td class="r tnum">400万円</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="hojo" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0032</td><td>菱洋エレクトロ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--faint)">6月</span></td><td class="r tnum">1,200万円</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="report" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0041</td><td>アストロラボ</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-good"><span class="d"></span>成約</span> <span style="font-size:10.5px;color:var(--faint)">1月</span></td><td class="r tnum">5万円</td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
           </tbody>
         </table>
-        <div style="padding:9px 16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">「変更」＝ステータスを許可遷移のみで更新（正＝anken-status.state.mmd）。成約は本流の終端のため変更リンクなし。</div>
-      </div>
-    </div>
-
-    <!-- レポート（ソリューション別ビュー） -->
-    <div class="dpane" data-g="e" data-t="report">
-      <div class="card" style="overflow-x:auto">
-        <table>
-          <thead><tr><th>案件番号</th><th>会社</th><th>ステータス</th><th>ヒアリング日</th><th>納品予定（＋7営業日〜）</th><th class="r">金額</th><th>担当</th><th></th></tr></thead>
-          <tbody>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0092</td><td>ユアーズ静岡</td><td><span class="badge b-warn"><span class="d"></span>提案後</span></td><td class="tnum">7/7</td><td class="tnum" style="font-weight:700">7/18 10:00</td><td class="r tnum">5万円</td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0095</td><td>古山精機</td><td><span class="badge b-blue"><span class="d"></span>商談中</span></td><td class="tnum">7/12</td><td class="tnum">7/23（調整中）</td><td class="r tnum">5万円</td><td>北山</td><td class="r" style="color:var(--faint)">›</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- BP（ソリューション別ビュー・受給目標） -->
-    <div class="dpane" data-g="e" data-t="bp">
-      <div class="card" style="overflow-x:auto">
-        <table>
-          <thead><tr><th>案件番号</th><th>会社</th><th>契約日</th><th class="r">契約金額</th><th class="r">受給目標（×2）</th><th class="r">採択実績</th><th>達成</th><th></th></tr></thead>
-          <tbody>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td class="tnum">2026/02</td><td class="r tnum">240万円/年</td><td class="r tnum">480万円</td><td class="r tnum">248万円</td><td><span class="badge b-warn"><span class="d"></span>52%</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td class="tnum">2026/05</td><td class="r tnum">240万円/年</td><td class="r tnum">480万円</td><td class="r tnum">0円</td><td><span class="badge b-red"><span class="d"></span>0%・申請未着手</span></td><td class="r" style="color:var(--faint)">›</td></tr>
-          </tbody>
-        </table>
+        <div style="padding:9px 16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">「変更」＝獲得ステータスを許可遷移のみで更新（正＝anken-status.state.mmd）。成約後の履行は 案件管理 へ。</div>
       </div>
     </div>
 
@@ -136,18 +137,33 @@
     <div class="modal-b">
       <div class="inp-row">
         <label class="field"><span class="fl">会社<span class="req">*</span></span><select class="inp"><option>アストロラボ株式会社</option><option>株式会社ティーガイア</option><option>久恵比寿</option></select></label>
-        <label class="field"><span class="fl">案件種別<span class="req">*</span></span><select class="inp"><option>補助金</option><option>レポート</option><option>BP（顧問）</option></select></label>
+        <label class="field"><span class="fl">案件種別<span class="req">*</span></span><select class="inp"><option>補助金助成金</option><option>レポート</option><option>BPO</option><option>その他</option></select></label>
       </div>
       <div class="inp-row">
         <label class="field"><span class="fl">案件番号（自動採番）</span><input class="inp tnum" value="IS-2026-0102" readonly /></label>
         <label class="field"><span class="fl">初期ステータス</span><input class="inp" value="リード" readonly /></label>
       </div>
-      <div class="hint-t">正本（HubSpot）への登録が失敗した場合は一覧に追加せず、エラーを表示します（楽観更新なし・CLAUDE.md §1-2）。以降のステータスは許可遷移のみ（正＝anken-status.state.mmd）。</div>
+      <div class="hint-t">補助金助成金は原則 BPO（親）に紐付く子案件として作成（Deal ID関連・A-14）。正本（HubSpot）登録が失敗した場合は一覧に追加せずエラー表示（楽観更新なし・§1-2）。</div>
     </div>
     <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mDeal')">キャンセル</span><span class="btn btn-primary">登録</span></div>
   </div>
 </div>
 
-<script src="assets/app.js?v=48"></script>
+<script>
+/* 種別セグメント＝ボード/テーブルのカード・行を data-type でフィルタ（営業管理・骨格） */
+(function () {
+  var seg = document.getElementById("typeSeg");
+  if (!seg) return;
+  seg.addEventListener("click", function (e) {
+    var b = e.target.closest("span[data-f]"); if (!b) return;
+    seg.querySelectorAll("span[data-f]").forEach(function (s) { s.classList.toggle("on", s === b); });
+    var f = b.getAttribute("data-f");
+    document.querySelectorAll("[data-type]").forEach(function (el) {
+      el.style.display = (f === "all" || el.getAttribute("data-type") === f) ? "" : "none";
+    });
+  });
+})();
+</script>
+<script src="assets/app.js?v=49"></script>
 </body>
 </html>

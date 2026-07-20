@@ -17,6 +17,10 @@ meta:
                   Z-06=主表示IS番号/Deal IDは結合キー(data-deal-id)。rules二層＝編集ST-02(st02_rules.html)/閲覧rules.html(rules_view)。
                   A-01/A-02確定反映。Z-02〜06クローズ。A-09/A-10（会社独自ルール・給与手当計算）はv0.4。
   gate1_v0.3: 2026-07-20 実装後Gate1。全画面 kanpu=v。E-03/E-04ステータス実装。conformance参照。
+  changelog_v0.4: Pillar A＝営業管理（獲得）／案件管理（履行）の2エリア分離。consult-status.state.mmd新設。E-05新設・E-04 2軸＋売上経費。
+  changelog_v0.4.1: 案件管理を種別別の独立ステータスに（E-05タブ＝レポート/BPO/補助金助成金/その他・各独自ステージ）。
+                    BPO(親)⇔補助金助成金(子)を Deal ID 関連で 1:N（A-14）。会社詳細/案件詳細は種別で分けず束ねる。
+                    営業＝ボード＋テーブルの2表示＋種別セグメント＋当月成約＋畳める分岐終端（キャンセル追加）。命名：営業案件→営業／案件（履行）→案件。
   note: 旧ナビからの変更＝「業務」カテゴリ廃止 / 経理を「経理処理」「経営管理」に分離(A-01) /
         会社・案件を「営業」配下へ / 文書・ルール・予算設計・顧客ポータル管理を設定(admin)へ移設 /
         ロゴは Initial State のみ（Bizplan 削除）
@@ -68,12 +72,12 @@ screens:
       ポータルプレビュー: ST-04
     progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
   - id: E-03
-    name: 営業案件（獲得パイプライン）
+    name: 営業（獲得パイプライン）        # サイドバー項目名＝「営業」（v0.4.1命名）
     nav: main   # 営業管理エリア
-    tabs: [ボード, テーブル, レポート, BP]   # 全タブ有効（CLAUDE.md §2-4）
-          # Gate1(v0.4): 販売パイプライン（獲得 lead→契約締結）のみ。ボード=ステータス列／テーブル=実ラベル＋openStatus遷移UI。
-          #   旧「補助金履行」タブは案件管理(E-05)へ移設（獲得と履行を2エリアに分離＝Pillar A）。
-    state_ref: domain/anken-status.state.mmd          # 販売パイプライン10ステージ（A-03確定）
+    tabs: [ボード, テーブル]   # v0.4.1: 2表示のみ（レポート/BPタブ廃止）。全タブ有効（CLAUDE.md §2-4）
+          # Gate1(v0.4.1): 種別セグメント（レポート/BPO/補助金助成金/その他）でボード・テーブルをフィルタ。
+          #   成約列は当月分のみ・以前の成約は畳み（details）。分岐終端（失注/長期リード/ニーズなし/破棄/キャンセル）は畳んで参照可。
+    state_ref: domain/anken-status.state.mmd          # 販売パイプライン（10＋キャンセル）
     to:
       案件クリック: E-04
       ステータス更新: E-03       # 許可遷移のみ・成功応答後に反映
@@ -83,20 +87,21 @@ screens:
 
   # ---- 案件管理（履行：契約後の役務進行＋請求入金＋売上経費）----
   - id: E-05
-    name: 案件（履行）一覧
+    name: 案件（種別別・履行）           # サイドバー項目名＝「案件」（v0.4.1命名）
     nav: main   # 案件管理エリアの入口
     role: 営業・経営・管理（顧客は不可）
-    tabs: [補助金/助成金（役務）, テーブル（履行中）, BPO実施, レポート納品]
+    tabs: [レポート, BPO, 補助金助成金, その他]   # v0.4.1: 種別ごとの独立ステータスビュー（混在テーブル廃止）
     note: |
-      契約後の履行を管理。KPI＝コンサル＝採択金額／入金。
-      # Gate1(v0.4): 補助金役務ボード＝consult-status.state.mmd。テーブルに役務ステージ＋完了条件。
-      #   BPO=完了ライン受給同額（A-13仮・×2は参考）。レポート=納品で完了。役務更新UI＝window.openConsult。
-    state_ref: domain/consult-status.state.mmd
+      契約後の履行を種別別の独自ステータスで管理（他種別のステージを混ぜない）。KPI＝コンサル＝採択金額／入金。
+      # Gate1(v0.4.1): レポート=受注→制作→納品→完了／BPO=実施中→完了（受給同額A-13）／
+      #   補助金助成金=consult-status.state.mmd／その他=案件発生→実施→完了。
+      #   補助金助成金は BPO(親) に紐付く子案件（Deal ID関連 1:N・A-14）。役務更新UI＝window.openConsult / window.openStage。
+    state_ref: domain/consult-status.state.mmd   # 補助金助成金の正。他種別は軽量状態（app.js STAGEMAPS）
     to:
       案件クリック: E-04
       役務更新: E-05         # 前進のみ・成功応答後に反映（楽観更新なし）。採択＝成果報酬の請求トリガー
       役務更新失敗: E-05
-    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}   # v0.4新設
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
 
   - id: E-04
     name: 案件詳細（2軸）
@@ -109,6 +114,7 @@ screens:
       #   主表示=IS番号／Deal IDは data-deal-id＋副次（Z-06）。タスク＝P-01の社内側。役務更新UI＝window.openConsult。
     contains:
       - 案件サマリー（IS番号＝主表示／Deal ID＝結合キー・種別・部門=コンサル・担当＝TimeRex）
+      - 親子紐付け（補助金子案件→親BPOへのリンク・親の受給目標×2との関係注記。A-14・1:N）
       - お金軸（契約締結→着手金→成果報酬。着手金=契約時／成果報酬=採択後）
       - 役務軸（consult-status.state.mmd・前進のみ・楽観更新なし）
       - 売上・経費・粗利（案件別。売上=着手金+成果報酬／原価=営業紹介料+現場人件費／外注費分類=営業紹介料は原価・管理外注は販管費）

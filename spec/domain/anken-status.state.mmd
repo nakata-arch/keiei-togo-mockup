@@ -12,9 +12,11 @@
 %%   lost     失注                   = closedlost
 %%   noneeds  ニーズなし             = 183400476
 %%   haiki    破棄/ニーズ評価         = presentationscheduled
+%%   cancel   キャンセル             = （v0.4.1追加・終端。契約後の取消含む）
 %%
-%% 注: HubSpotは遷移を強制しないため、下の矢印は「UIが許可する遷移」の設計案（中田さん確認待ち）。
-%%     アクティブ全段階(apo〜closing)から lost へ遷移可。図では代表矢印のみ。
+%% 注: HubSpotは遷移を強制しないため、下の矢印は「UIが許可する遷移」の設計案。
+%%     アクティブ全段階(apo〜closing)から lost へ遷移可。cancel はアクティブ全段階＋won（契約後取消）から可。図では代表矢印のみ。
+%%     終端の分岐（longlead/lost/noneeds/haiki/cancel）は営業ボードでは畳んで表示し、フィルタで棚卸し参照する。
 
 stateDiagram-v2
     [*] --> lead
@@ -29,6 +31,7 @@ stateDiagram-v2
     lost: 失注
     noneeds: ニーズなし
     haiki: 破棄・ニーズ評価
+    cancel: キャンセル
 
     lead --> apo
     lead --> longlead
@@ -40,8 +43,10 @@ stateDiagram-v2
     closing --> won
     closing --> lost
     longlead --> apo
+    won --> cancel
 
     won --> [*]
     lost --> [*]
     noneeds --> [*]
     haiki --> [*]
+    cancel --> [*]

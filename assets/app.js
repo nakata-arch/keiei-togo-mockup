@@ -62,9 +62,9 @@
     { label: "営業管理", items: [   /* v0.4 Pillar A: 獲得までの管理（lead→契約締結） */
       { id: "companies", file: "companies.html", ic: IC.company, label: "会社（顧客）",  /* E-01（E-02はここから遷移） */
         sets: ["admin", "kanri", "bucho", "ippan"] },
-      { id: "deals",     file: "deals.html",     ic: IC.deals,   label: "営業案件", sets: ALL } ] },   /* E-03 販売パイプライン */
+      { id: "deals",     file: "deals.html",     ic: IC.deals,   label: "営業", sets: ALL } ] },   /* E-03 販売パイプライン */
     { label: "案件管理", items: [   /* v0.4 Pillar A: 契約後の履行管理（役務進行＋請求入金＋売上経費） */
-      { id: "projects",  file: "projects.html",  ic: IC.flow,    label: "案件（履行）", sets: ALL } ] },   /* E-05 */
+      { id: "projects",  file: "projects.html",  ic: IC.flow,    label: "案件", sets: ALL } ] },   /* E-05 種別別ビュー */
     { label: "経理処理", items: [   /* A-01: 経理処理と経営管理の分離は仮 */
       { id: "invoices",  file: "invoices.html",  ic: IC.invoice, label: "支払処理", count: 4, anchor: "#alerts", sets: ["admin", "kanri"] },   /* K-01 */
       { id: "reconcile", file: "reconcile.html", ic: IC.recon,   label: "入金消込", count: 3, anchor: "#alerts", sets: ["admin", "kanri"] } ] }, /* K-02 */
@@ -217,11 +217,12 @@
     shodan:   { label: "商談中・提案準備中",       badge: "b-blue", next: ["teiango", "lost"] },
     teiango:  { label: "提案後",                 badge: "b-warn", next: ["closing", "lost"] },
     closing:  { label: "クロージング・契約書締結待", badge: "b-warn", next: ["won", "lost"] },
-    won:      { label: "成約・契約書締結済",       badge: "b-good", next: [] },
+    won:      { label: "成約・契約書締結済",       badge: "b-good", next: ["cancel"] },
     longlead: { label: "長期リード",             badge: "b-sub",  next: ["apo"] },
     lost:     { label: "失注",                   badge: "b-red",  next: [] },
     noneeds:  { label: "ニーズなし",             badge: "b-sub",  next: [] },
-    haiki:    { label: "破棄・ニーズ評価",         badge: "b-red",  next: [] }
+    haiki:    { label: "破棄・ニーズ評価",         badge: "b-red",  next: [] },
+    cancel:   { label: "キャンセル",             badge: "b-red",  next: [] }
   };
   window.STAGES = STAGES;
   window.stageBadge = function (k) { var s = STAGES[k]; return s ? '<span class="badge ' + s.badge + '"><span class="d"></span>' + s.label + "</span>" : k; };
@@ -289,6 +290,45 @@
     m.innerHTML = '<div class="modal"><div class="modal-h"><span class="t">役務ステージを更新</span><span class="x" onclick="closeModal(\'stModal\')">✕</span></div>' +
                   '<div class="modal-b">' + body + '</div><div class="modal-f">' + foot +
                   '</div><div class="hint-t" style="padding:0 20px 14px">HubSpot（正本）へ書き込み、成功応答後に反映（楽観更新なし）。採択＝成果報酬の請求トリガー（board連携）。</div></div>';
+    document.body.appendChild(m);
+  };
+
+  /* ===== 種別別の役務ステータス（軽量・レポート/BPO/その他）=====
+     補助金助成金は consult-status（上の CONSULT）が正。以下は種別ごとの軽量な状態フィールド（v0.4.1）。
+     混在させず、案件管理（E-05）の種別タブごとに独立ステータスとして持つ。 */
+  var STAGEMAPS = {
+    report: { title: "レポート 役務", steps: {
+      juchu:  { label: "受注", badge: "b-sub",  next: ["seisaku"] },
+      seisaku:{ label: "制作", badge: "b-blue", next: ["nohin"] },
+      nohin:  { label: "納品", badge: "b-warn", next: ["kanryo"] },
+      kanryo: { label: "完了", badge: "b-good", next: [] } } },
+    bpo: { title: "BPO 役務", steps: {
+      jisshi: { label: "実施中", badge: "b-blue", next: ["kanryo"] },
+      kanryo: { label: "完了",   badge: "b-good", next: [] } } },   /* 完了＝受給が契約と同額の見込み（A-13） */
+    other: { title: "その他 役務", steps: {
+      hassei: { label: "案件発生", badge: "b-sub",  next: ["jisshi"] },
+      jisshi: { label: "実施",     badge: "b-blue", next: ["kanryo"] },
+      kanryo: { label: "完了",     badge: "b-good", next: [] } } }
+  };
+  window.openStage = function (kind, dealNo, cur) {
+    var map = STAGEMAPS[kind]; if (!map) return;
+    var s = map.steps[cur] || map.steps[Object.keys(map.steps)[0]];
+    document.querySelectorAll("#stModal").forEach(function (n) { n.remove(); });
+    function bd(k) { var x = map.steps[k]; return x ? '<span class="badge ' + x.badge + '"><span class="d"></span>' + x.label + "</span>" : k; }
+    var body, foot;
+    if (s.next.length) {
+      body = '<div class="hint-t" style="margin-bottom:12px">' + dealNo + '（' + map.title + '） 現在：' + bd(cur) + '<br>前進のみ。' +
+             (kind === "bpo" ? "完了＝受給が契約金額と同額の見込み（A-13）。" : "") + "</div>" +
+             s.next.map(function (k) { return '<div class="cand" data-k="' + k + '" style="display:flex;gap:10px;align-items:center;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;margin-bottom:8px">' + bd(k) + "</div>"; }).join("");
+      foot = '<span class="btn btn-ghost" onclick="closeModal(\'stModal\')">キャンセル</span><span class="btn btn-primary">この役務ステージへ更新</span>';
+    } else {
+      body = '<div class="hint-t">' + dealNo + '（' + map.title + '） 現在：' + bd(cur) + ' は完了です。</div>';
+      foot = '<span class="btn btn-ghost" onclick="closeModal(\'stModal\')">閉じる</span>';
+    }
+    var m = document.createElement("div"); m.className = "modal-bg open"; m.id = "stModal";
+    m.innerHTML = '<div class="modal"><div class="modal-h"><span class="t">' + map.title + 'を更新</span><span class="x" onclick="closeModal(\'stModal\')">✕</span></div>' +
+                  '<div class="modal-b">' + body + '</div><div class="modal-f">' + foot +
+                  '</div><div class="hint-t" style="padding:0 20px 14px">種別別の軽量ステータス。成功応答後に反映（楽観更新なし）。補助金助成金は consult-status を正とする。</div></div>';
     document.body.appendChild(m);
   };
 

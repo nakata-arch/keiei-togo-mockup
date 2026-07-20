@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>アストロラボ株式会社｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=48" /><link rel="stylesheet" href="assets/style.css?v=48" /><link rel="stylesheet" href="assets/ui.css?v=48" />
+<link rel="stylesheet" href="assets/tokens.css?v=49" /><link rel="stylesheet" href="assets/style.css?v=49" /><link rel="stylesheet" href="assets/ui.css?v=49" />
 </head>
 <body data-page="companies">
 <div class="app">
@@ -51,16 +51,16 @@
 
     <!-- t1 概要・案件（共通グリッド＝bento 12col に整列・Q3是正）。案件カード→E-04 案件詳細（2軸）。系譜＝営業案件→案件（履行）の連鎖（v0.4 Pillar A） -->
     <div class="dpane on" data-g="c" data-t="t1">
-      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">案件の系譜：<b>営業管理</b>で獲得（契約締結）→ <b>案件管理</b>で履行（役務・請求入金・売上経費）。カードで案件詳細（E-04・2軸）。</p>
+      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">案件の系譜：<b>営業管理</b>で獲得（契約締結）→ <b>案件管理</b>で履行。<b>BPO（親）⇔ 補助金助成金（子）は1:N</b>（年度ごとに子案件がぶら下がる・Deal ID関連）。カードで案件詳細（E-04・2軸）。</p>
       <div class="bento">
           <div class="card lineage b12">
             <div class="ln-node"><span class="lt" style="color:var(--blue)">診断レポート</span><div class="ln">IS-2026-0041</div><div class="ls">2026/01・5万円・新谷</div><div style="margin-top:8px"><span class="badge b-good"><span class="d"></span>完了</span></div></div>
             <div class="ln-arrow">→</div>
-            <div class="ln-node"><span class="lt" style="color:var(--orange-d)">BPO顧問</span><div class="ln">IS-2026-0058</div><div class="ls">2026/02・240万円/年・幸田</div><div style="margin-top:8px"><span class="badge b-good"><span class="d"></span>契約中</span></div></div>
+            <div class="ln-node" style="border-color:var(--orange-d)"><span class="lt" style="color:var(--orange-d)">BPO顧問（親）</span><div class="ln">IS-2026-0058</div><div class="ls">2026/02・240万円/年・幸田</div><div style="margin-top:8px"><span class="badge b-good"><span class="d"></span>契約中</span><span class="badge b-warn" style="margin-left:4px"><span class="d"></span>子2件 1:N</span></div></div>
             <div class="ln-arrow">→</div>
-            <a class="ln-node" href="deal_detail.html" style="display:block"><span class="lt" style="color:var(--good)">補助金：課題解決型</span><div class="ln">IS-2026-0074</div><div class="ls">成約・履行=交付申請・248万円・幸田</div><div style="margin-top:8px"><span class="badge b-red"><span class="d"></span>停滞8日 →案件へ</span></div></a>
+            <a class="ln-node" href="deal_detail.html" style="display:block"><span class="lt" style="color:var(--good)">└ 子：補助金 課題解決型</span><div class="ln">IS-2026-0074</div><div class="ls">今年度・成約・履行=交付申請・248万円</div><div style="margin-top:8px"><span class="badge b-red"><span class="d"></span>停滞8日 →案件へ</span></div></a>
             <div class="ln-arrow">→</div>
-            <div class="ln-node" style="border-style:dashed;opacity:.7;cursor:pointer" onclick="openModal('mPropose')"><span class="lt" style="color:var(--faint)">次の申請候補（未起票）</span><div class="ln">ものづくり補助金</div><div class="ls">設備更新の相談あり ＋起票する</div></div>
+            <div class="ln-node" style="border-style:dashed;opacity:.7;cursor:pointer" onclick="openModal('mPropose')"><span class="lt" style="color:var(--faint)">└ 子候補：ものづくり（来年度）</span><div class="ln">未起票</div><div class="ls">設備更新の相談あり ＋起票する</div></div>
           </div>
           <div class="card b8" style="padding:0">
             <div class="card-h"><span class="t">直近の予定（カレンダー）</span></div>
@@ -175,6 +175,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=48"></script>
+<script src="assets/app.js?v=49"></script>
 </body>
 </html>

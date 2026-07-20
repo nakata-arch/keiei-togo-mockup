@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>IS-2026-0074 案件詳細｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=48" /><link rel="stylesheet" href="assets/style.css?v=48" /><link rel="stylesheet" href="assets/ui.css?v=48" />
+<link rel="stylesheet" href="assets/tokens.css?v=49" /><link rel="stylesheet" href="assets/style.css?v=49" /><link rel="stylesheet" href="assets/ui.css?v=49" />
 </head>
 <!-- E-04 案件詳細（v0.4 Pillar A：2軸表示）。案件管理エリアの作業単位。
      お金軸＝契約獲得→請求→入金（着手金＝契約時／成果報酬＝採択後）。役務軸＝consult-status.state.mmd（着手→…→完了）。
@@ -46,6 +46,16 @@
           </div>
         </div>
         <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint)">結合キー（システム内部）：HubSpot Deal ID <span class="tnum">21894-0074</span>。freee・board・GreatSign はこのIDで突合。人が読む・言う・検索するのは案件番号 IS-2026-0074。</div>
+      </div>
+
+      <!-- 親子紐付け（BPO⇔補助金助成金・Deal ID関連・A-14） -->
+      <div class="card b12" style="padding:13px 18px;border-left:3px solid var(--orange)">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <span class="badge b-warn"><span class="d"></span>補助金 子案件</span>
+          <span style="font-size:12.5px">親：<a href="deal_detail.html" style="font-weight:700;color:var(--blue)">IS-2026-0058 アストロラボ｜BPO顧問</a>（Deal ID関連・1:N）</span>
+          <span style="margin-left:auto;font-size:11.5px;color:var(--sub)">親BPOの受給目標 <b class="tnum">480万円</b>（契約240万×2）に対し、本子案件 <b class="tnum">248万円</b> が充当（残 232万円・目標は参考／完了ラインは同額240万＝A-13）</span>
+        </div>
+        <div class="hint-t" style="margin-top:6px">補助金助成金は BPO に紐付いて販売（親子1:N・年度ごとに複数の子）。レコードは統合せず Deal ID で関連（一情報一箇所・A-14）。</div>
       </div>
 
       <!-- お金軸（契約獲得 → 請求 → 入金） -->
@@ -121,6 +131,6 @@
 </div>
 </div>
 
-<script src="assets/app.js?v=48"></script>
+<script src="assets/app.js?v=49"></script>
 </body>
 </html>

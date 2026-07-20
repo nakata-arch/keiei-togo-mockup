@@ -1,4 +1,4 @@
-/* 経営統合システム 共通ナビ（構造の正＝screens.yaml v0.1）
+/* 経営統合システム 共通ナビ（構造の正＝screens.yaml v0.3）
    - nav_structure.main: ホーム / 営業（獲得） / 経理処理 / 経営管理 / 人事(A-02仮) / 設定(=adminモード)
    - 設定はページ遷移ではなくモード：サイドバーを ST-01〜07 に差し替える（CLAUDE.md §2-1）
    - バッジはホーム内カードと1対1（CLAUDE.md §2-2 / Q9）。クリックで該当カードへスクロール
@@ -79,7 +79,7 @@
   /* ===== 設定モードのナビ（screens.yaml nav_structure.admin：ST-01〜07）===== */
   var ADMIN = [
     { id: "budget_design", file: "budget_design.html",    ic: IC.design, label: "予算設計（編集）" }, /* ST-01 */
-    { id: "rules",         file: "rules.html",            ic: IC.book,   label: "ルール編集" },        /* ST-02 */
+    { id: "rules",         file: "st02_rules.html",       ic: IC.book,   label: "ルール編集" },        /* ST-02 編集エンジン（値の正本）。閲覧はrules.html＝A-11/Z-05 */
     { id: "documents",     file: "documents.html",        ic: IC.folder, label: "文書テンプレート" },  /* ST-03 */
     { id: "portal",        file: "portal.html",           ic: IC.portal, label: "顧客ポータル管理" },  /* ST-04 */
     { id: "settings",      file: "settings.html",         ic: IC.users,  label: "権限・ユーザー" },    /* ST-05 */
@@ -205,6 +205,48 @@
     var t = document.createElement("div"); t.className = "toast"; t.textContent = msg; c.appendChild(t);
     setTimeout(function () { t.classList.add("out"); setTimeout(function () { t.remove(); }, 260); }, 2400);
   };
+  /* ===== 案件ステータス（販売パイプライン10ステージ）=====
+     正＝domain/anken-status.state.mmd（A-03確定）。next[] は state.mmd の「UIが許可する遷移」。
+     本流は前進のみ／失注はアクティブ全段階から／長期リード→アポ確の復帰／その他の逆走は不可（例外はHubSpotで直接修正）。 */
+  var STAGES = {
+    lead:     { label: "リード",                 badge: "b-sub",  next: ["apo", "longlead", "noneeds"] },
+    apo:      { label: "アポ確",                 badge: "b-blue", next: ["shodan", "haiki", "lost"] },
+    shodan:   { label: "商談中・提案準備中",       badge: "b-blue", next: ["teiango", "lost"] },
+    teiango:  { label: "提案後",                 badge: "b-warn", next: ["closing", "lost"] },
+    closing:  { label: "クロージング・契約書締結待", badge: "b-warn", next: ["won", "lost"] },
+    won:      { label: "成約・契約書締結済",       badge: "b-good", next: [] },
+    longlead: { label: "長期リード",             badge: "b-sub",  next: ["apo"] },
+    lost:     { label: "失注",                   badge: "b-red",  next: [] },
+    noneeds:  { label: "ニーズなし",             badge: "b-sub",  next: [] },
+    haiki:    { label: "破棄・ニーズ評価",         badge: "b-red",  next: [] }
+  };
+  window.STAGES = STAGES;
+  window.stageBadge = function (k) { var s = STAGES[k]; return s ? '<span class="badge ' + s.badge + '"><span class="d"></span>' + s.label + "</span>" : k; };
+  window.openStatus = function (dealNo, cur) {
+    var s = STAGES[cur] || STAGES.lead;
+    document.querySelectorAll("#stModal").forEach(function (n) { n.remove(); });
+    var body, foot;
+    if (s.next.length) {
+      body = '<div class="hint-t" style="margin-bottom:12px">' + dealNo + ' の現在：' + window.stageBadge(cur) +
+             '<br>許可された遷移のみ選べます（正＝anken-status.state.mmd）。逆走・スキップは不可。</div>' +
+             s.next.map(function (k) {
+               return '<div class="cand" data-k="' + k + '" style="display:flex;gap:10px;align-items:center;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;margin-bottom:8px">' +
+                      window.stageBadge(k) + (k === "lost" ? '<span style="font-size:11px;color:var(--faint)">アクティブ全段階から可</span>' : "") + "</div>";
+             }).join("");
+      foot = '<span class="btn btn-ghost" onclick="closeModal(\'stModal\')">キャンセル</span><span class="btn btn-primary">この段階へ更新</span>';
+    } else {
+      body = '<div class="hint-t">' + dealNo + ' の現在：' + window.stageBadge(cur) +
+             ' は本流の終端です。ここからの前進はありません。失注へ戻す等の例外は HubSpot で直接修正します。</div>';
+      foot = '<span class="btn btn-ghost" onclick="closeModal(\'stModal\')">閉じる</span>';
+    }
+    var m = document.createElement("div"); m.className = "modal-bg open"; m.id = "stModal";
+    m.innerHTML = '<div class="modal"><div class="modal-h"><span class="t">ステータスを更新</span><span class="x" onclick="closeModal(\'stModal\')">✕</span></div>' +
+                  '<div class="modal-b">' + body + '</div>' +
+                  '<div class="modal-f">' + foot +
+                  '</div><div class="hint-t" style="padding:0 20px 14px">HubSpot（正本）へ書き込み、成功応答を受けてから画面に反映します（楽観更新なし・CLAUDE.md §1-2）。失敗時は反映せずエラー表示。</div></div>';
+    document.body.appendChild(m);
+  };
+
   document.addEventListener("click", function (e) {
     var t = e.target;
     if (t.classList && t.classList.contains("modal-bg")) t.classList.remove("open");
@@ -225,7 +267,8 @@
   MAIN.forEach(function (b) { b.items.forEach(function (it) { if (it.sets.indexOf(S) !== -1) CMDK.push({ g: "画面", n: it.label, f: it.file }); }); });
   if (S === "admin") ADMIN.forEach(function (a) { CMDK.push({ g: "設定", n: a.label, f: a.file }); });
   [["アストロラボ株式会社", "リピート顧客・BPO契約中"], ["セルプスジャパン株式会社", "リピート顧客"], ["株式会社ティーガイア", "顧客・申請未着手"], ["株式会社リサスティー", "リピート顧客"], ["菱洋エレクトロ株式会社", "顧客・実施中"], ["古山精機株式会社", "見込み"]].forEach(function (c) { CMDK.push({ g: "会社", n: c[0], s: c[1], f: "company_detail.html" }); });
-  [["IS-2026-0074", "アストロラボ｜課題解決型（申請・停滞8日）"], ["IS-2026-0081", "セルプスジャパン｜新事業進出（申請）"], ["IS-2026-0055", "リサスティー｜経営力強化（交付決定）"], ["IS-2026-0032", "菱洋エレクトロ｜省力化投資（実施）"]].forEach(function (d) { CMDK.push({ g: "案件", n: d[0], s: d[1], f: "deal_detail.html" }); });   /* E-04 案件詳細（screens.yaml v0.2） */
+  [["IS-2026-0074", "アストロラボ｜課題解決型・成約（補助金 履行=交付申請/停滞8日）"], ["IS-2026-0081", "セルプスジャパン｜新事業進出・クロージング"], ["IS-2026-0098", "ティーガイア｜省力化投資・アポ確"], ["IS-2026-0032", "菱洋エレクトロ｜省力化投資・成約（履行=実施）"]].forEach(function (d) { CMDK.push({ g: "案件", n: d[0], s: d[1], f: "deal_detail.html" }); });   /* E-04 案件詳細（ステータス=販売パイプライン／A-03確定） */
+  CMDK.push({ g: "参照", n: "運用ルール集", s: "現場が読む手引き（閲覧専用・値の正本はST-02）", f: "rules.html" });
 
   var ckBg = null, ckInp = null, ckList = null, ckSel = 0, ckHits = [];
   function ckRender(q) {

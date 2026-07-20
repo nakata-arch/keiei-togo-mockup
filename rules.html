@@ -2,32 +2,50 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ルール｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=46" /><link rel="stylesheet" href="assets/style.css?v=46" /><link rel="stylesheet" href="assets/ui.css?v=46" />
+<title>運用ルール集｜経営統合システム</title>
+<link rel="stylesheet" href="assets/tokens.css?v=47" /><link rel="stylesheet" href="assets/style.css?v=47" /><link rel="stylesheet" href="assets/ui.css?v=47" />
 </head>
-<body data-page="rules" data-role="kouda">
+<!-- 運用ルール集（閲覧専用）＝A-11/Z-05。現場が機械的に守る手引き。
+     値の正本は ST-02（ルール編集）。ここは ST-02 の値を参照して描画する（二重管理しない）。
+     data-page="rules_view"＝admin画面ではない → 全ロールが主ナビのまま閲覧可（非adminを弾かない＝Z-02解消）。 -->
+<body data-page="rules_view" data-role="kouda">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">共通認識</div><h1>ルール</h1></div><span class="sample">値はサンプル</span>
+    <div><div class="crumb">共通認識（閲覧専用）</div><h1>運用ルール集</h1></div><span class="sample">値はサンプル</span>
     <div class="search">ルールを検索<span class="kbd">⌘K</span></div>
   </div>
   <div class="content">
 
-    <p style="font-size:12.5px;color:var(--sub);margin-bottom:14px;max-width:760px">システム全体で使われる判定・しきい値の正本です。各画面ではルールの説明を繰り返さず、このページを共通認識とします。</p>
-
-    <!-- ルール → 予算 → 各画面 の流れ -->
-    <div class="card" style="display:flex;align-items:center;gap:10px;padding:13px 18px;margin-bottom:18px;flex-wrap:wrap;border-left:4px solid var(--orange)">
-      <span style="font-size:11px;font-weight:800;color:var(--orange-d)">ルールの流れ</span>
-      <span class="badge b-navy">① ここで前提を確定（編集＝管理者）</span><span style="color:var(--faint);font-weight:800">→</span>
-      <a class="badge b-blue" href="budget_design.html"><span class="d"></span>② 予算設計で逆算（60点の根拠）</a><span style="color:var(--faint);font-weight:800">→</span>
-      <a class="badge b-blue" href="budget.html"><span class="d"></span>③ 予算・実績</a><span style="color:var(--faint);font-weight:800">→</span>
-      <a class="badge b-blue" href="evaluation.html"><span class="d"></span>④ 評価・賞与の基準に反映</a>
-      <span class="btn btn-primary btn-sm" style="margin-left:auto" onclick="openModal('mEditRule')">ルールを編集（管理者）</span>
+    <div class="card" style="display:flex;align-items:center;gap:10px;padding:12px 18px;margin-bottom:16px;flex-wrap:wrap;border-left:4px solid var(--blue)">
+      <span class="badge b-blue"><span class="d"></span>閲覧専用</span>
+      <span style="font-size:12px;color:var(--sub)">現場が機械的に守る手引きです。数値の<b>正本は「設定 › ルール編集（ST-02）」</b>。ここでは説明を繰り返さず、確定値を参照表示します。</span>
+      <a class="btn btn-ghost btn-sm" href="st02_rules.html" style="margin-left:auto">値を編集する（管理者 → ST-02）</a>
     </div>
 
     <div class="bento">
+      <!-- 案件ステータス（販売パイプライン・A-03確定） -->
+      <div class="tile b12">
+        <div class="tl">案件ステータス（販売パイプライン・10ステージ）</div>
+        <div style="font-size:11px;color:var(--faint);margin:6px 0 12px">正＝domain/anken-status.state.mmd。本流は前進のみ・失注はアクティブ全段階から・長期リード→アポ確の復帰可。逆走・スキップ不可（例外はHubSpotで直接修正）。</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;align-items:center">
+          <span class="badge b-sub"><span class="d"></span>リード</span><span style="color:var(--faint)">→</span>
+          <span class="badge b-blue"><span class="d"></span>アポ確</span><span style="color:var(--faint)">→</span>
+          <span class="badge b-blue"><span class="d"></span>商談中・提案準備中</span><span style="color:var(--faint)">→</span>
+          <span class="badge b-warn"><span class="d"></span>提案後</span><span style="color:var(--faint)">→</span>
+          <span class="badge b-warn"><span class="d"></span>クロージング・契約書締結待</span><span style="color:var(--faint)">→</span>
+          <span class="badge b-good"><span class="d"></span>成約・契約書締結済</span>
+          <span style="width:14px"></span>
+          <span style="font-size:11px;color:var(--faint)">分岐：</span>
+          <span class="badge b-sub"><span class="d"></span>長期リード</span>
+          <span class="badge b-red"><span class="d"></span>失注</span>
+          <span class="badge b-sub"><span class="d"></span>ニーズなし</span>
+          <span class="badge b-red"><span class="d"></span>破棄・ニーズ評価</span>
+        </div>
+        <div class="hint-t" style="margin-top:10px">補助金の「交付申請→交付決定→実施→実績報告→事業化状況報告」は<b>成約後の履行管理</b>であり、案件ステータスとは別軸（案件詳細 E-04 の履行セクション）。</div>
+      </div>
+
       <!-- 資金の4段階 -->
       <div class="tile b6">
         <div class="tl">資金の4段階（キャッシュフロー）</div>
@@ -79,7 +97,7 @@
             <tr><td>受給目標 先行アラート</td><td class="r">前半6ヶ月以内に補助金の申請が無い場合</td></tr>
             <tr><td>受給目標 結果アラート</td><td class="r">1年時点で採択金額が目標未達の場合</td></tr>
             <tr><td>順序ガード</td><td class="r">交付決定前の発注入力＝警告のみ（ブロックしない）</td></tr>
-            <tr><td>補助金フェーズ</td><td class="r">申請 → 交付決定 → 実施 → 実績報告（一方向・最長2年）</td></tr>
+            <tr><td>補助金 履行フェーズ</td><td class="r">申請 → 交付決定 → 実施 → 実績報告 → 事業化状況報告（成約後・一方向・最長2年）</td></tr>
           </tbody>
         </table>
       </div>
@@ -105,6 +123,7 @@
             <tr><td>実施担当（第一）</td><td class="r" style="font-weight:800">TimeRex参加者</td></tr>
             <tr><td>実施担当（第二）</td><td class="r">カレンダー予定に記載した取引ID＋参加者</td></tr>
             <tr><td>案件番号</td><td class="r tnum">IS-{年}-{連番}（起票時に自動採番・全ツールへ配布）</td></tr>
+            <tr><td>主キー（システム）</td><td class="r">HubSpot 取引ID（Deal ID）。画面の主表示は IS 番号、Deal ID は結合キー</td></tr>
             <tr><td>会社ステータス</td><td class="r">見込み →（フォーム入力）→ 顧客 →（BPO契約）→ リピート顧客</td></tr>
             <tr><td>成果報酬の発生時点</td><td class="r">面談fee＝アポ／レポート＝受注／BPO＝契約日／補助金＝採択</td></tr>
           </tbody>
@@ -115,29 +134,7 @@
   </div>
 </div>
 </div>
-<!-- ルール編集モーダル（管理者） -->
-<div class="modal-bg" id="mEditRule">
-  <div class="modal">
-    <div class="modal-h"><span class="t">ルールの編集（管理者のみ）</span><span class="x" onclick="closeModal('mEditRule')">✕</span></div>
-    <div class="modal-b">
-      <div class="inp-row">
-        <label class="field"><span class="fl">停滞アラート（営業日）</span><input class="inp tnum" value="7" /></label>
-        <label class="field"><span class="fl">承認しきい値（経営層会議）</span><input class="inp tnum" value="500,000円" /></label>
-      </div>
-      <div class="inp-row">
-        <label class="field"><span class="fl">受給目標の倍率</span><input class="inp tnum" value="BPO契約金額 × 2" /></label>
-        <label class="field"><span class="fl">成果報酬率</span><input class="inp tnum" value="15%" /></label>
-      </div>
-      <div class="inp-row">
-        <label class="field"><span class="fl">借入返済（月）</span><input class="inp tnum" value="3,300,000円" /></label>
-        <label class="field"><span class="fl">実効税率</span><input class="inp tnum" value="31.5%" /></label>
-      </div>
-      <div class="hint-t">保存すると<b>予算設計 → 予算・実績 → 評価・賞与</b>の順に再計算・反映されます。変更履歴は記録され、四半期の見直しで棚卸しします。</div>
-    </div>
-    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mEditRule')">キャンセル</span><span class="btn btn-primary">保存して再計算</span></div>
-  </div>
-</div>
 
-<script src="assets/app.js?v=46"></script>
+<script src="assets/app.js?v=47"></script>
 </body>
 </html>

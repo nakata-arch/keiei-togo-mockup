@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>IS-2026-0074 案件詳細｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=46" /><link rel="stylesheet" href="assets/style.css?v=46" /><link rel="stylesheet" href="assets/ui.css?v=46" />
+<link rel="stylesheet" href="assets/tokens.css?v=47" /><link rel="stylesheet" href="assets/style.css?v=47" /><link rel="stylesheet" href="assets/ui.css?v=47" />
 </head>
-<!-- E-04 案件詳細。screens.yaml v0.2：E-02案件カード・E-03案件クリックの遷移先。
-     主キー=HubSpot Deal ID。P-01（顧客ポータル）の社内側の双子＝案件別「依頼中／次回予定」の元データ。
-     data-page="companies" で 営業（獲得）グループをアクティブ表示（トップメニュー項目ではなくパンくずで到達）。 -->
-<body data-page="companies">
+<!-- E-04 案件詳細。screens.yaml v0.2/0.3：E-02案件カード・E-03案件クリックの遷移先。
+     Z-06確定：主表示＝社内番号 IS-2026-NNNN／HubSpot Deal ID は data-deal-id ＋副次表示（結合キー・§0の主キー）。
+     ステータス＝販売パイプライン（A-03確定・正＝domain/anken-status.state.mmd）。遷移UI＝window.openStatus。
+     補助金の履行フェーズは成約後の別軸（下部の別セクション）。 -->
+<body data-page="companies" data-deal-id="21894-0074">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
@@ -18,16 +19,17 @@
       <h1>補助金：課題解決型（新事業進出）</h1>
     </div>
     <span class="sample">値はサンプル</span>
-    <span class="badge b-red"><span class="d"></span>停滞8日</span>
+    <span class="badge b-good"><span class="d"></span>成約</span>
     <div style="margin-left:auto;display:flex;gap:8px">
       <a class="btn btn-ghost btn-sm" href="company_detail.html">← 会社詳細へ</a><!-- E-04 to: 会社リンク→E-02 -->
-      <a class="btn btn-ghost btn-sm" href="portal.html">★ この案件のポータルをプレビュー</a><!-- E-04 to: ポータルプレビュー→ST-04 -->
+      <span class="btn btn-ghost btn-sm" onclick="openStatus('IS-2026-0074','won')">ステータスを更新</span>
+      <a class="btn btn-ghost btn-sm" href="portal.html">★ ポータルをプレビュー</a><!-- E-04 to: ポータルプレビュー→ST-04 -->
     </div>
   </div>
   <div class="content">
 
-    <!-- 案件サマリー（会社・ソリューション・金額・担当＝TimeRex基準） -->
     <div class="bento">
+      <!-- 案件サマリー（主表示=IS番号／Deal IDは副次・結合キー） -->
       <div class="card b12" style="padding:16px 18px">
         <div style="display:flex;flex-wrap:wrap;gap:26px;align-items:flex-start">
           <div style="min-width:180px">
@@ -36,27 +38,53 @@
             <div style="font-size:11px;color:var(--faint);margin-top:4px">成果報酬 15%（採択時）＝ 約37.2万円</div>
           </div>
           <div style="display:flex;gap:26px;flex-wrap:wrap;font-size:12px">
+            <div><div style="color:var(--faint);font-size:11px">案件番号</div><div class="tnum" style="font-weight:800">IS-2026-0074</div></div>
             <div><div style="color:var(--faint);font-size:11px">会社</div><a href="company_detail.html" style="font-weight:700;color:var(--blue)">アストロラボ株式会社</a></div>
             <div><div style="color:var(--faint);font-size:11px">ソリューション（種別）</div><div style="font-weight:700">補助金｜新事業進出補助金</div></div>
             <div><div style="color:var(--faint);font-size:11px">担当（TimeRex基準）</div><div style="font-weight:700">幸田</div></div>
-            <div><div style="color:var(--faint);font-size:11px">HubSpot Deal ID</div><div class="tnum" style="font-weight:700">21894-0074</div></div>
             <div><div style="color:var(--faint);font-size:11px">親案件（系譜）</div><a href="company_detail.html" class="tnum" style="font-weight:700;color:var(--blue)">IS-2026-0058</a></div>
           </div>
         </div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint)">結合キー（システム内部）：HubSpot Deal ID <span class="tnum">21894-0074</span> ／ freee・board・GreatSign はこのIDで突合。人が読む・言う・検索するのは案件番号 IS-2026-0074。</div>
       </div>
 
-      <!-- ステータス：A-03未確定につき表示のみ・遷移ロジックなし -->
-      <div class="card b12" style="padding:0">
-        <div class="card-h"><span class="t">ステータス</span><span class="sp"></span><span class="badge b-warn"><span class="d"></span>申請準備（仮）</span></div>
-        <div class="stepper">
-          <div class="step done"><span class="sn">✓</span><span class="st">相談</span></div><div class="step-line done"></div>
-          <div class="step done"><span class="sn">✓</span><span class="st">起票</span></div><div class="step-line done"></div>
-          <div class="step now"><span class="sn">3</span><span class="st">申請準備（仮）</span></div><div class="step-line"></div>
-          <div class="step"><span class="sn">4</span><span class="st">申請</span></div><div class="step-line"></div>
-          <div class="step"><span class="sn">5</span><span class="st">交付決定</span></div><div class="step-line"></div>
-          <div class="step"><span class="sn">6</span><span class="st">実施・報告</span></div>
+      <!-- ステータス：販売パイプライン（A-03確定・実ラベル） -->
+      <div class="card b8" style="padding:0">
+        <div class="card-h"><span class="t">案件ステータス（販売パイプライン）</span><span class="sp"></span><span class="badge b-good"><span class="d"></span>成約・契約書締結済</span><span class="btn btn-ghost btn-sm" style="margin-left:10px" onclick="openStatus('IS-2026-0074','won')">更新</span></div>
+        <div class="stepper" style="flex-wrap:wrap">
+          <div class="step done"><span class="sn">✓</span><span class="st">リード</span></div><div class="step-line done"></div>
+          <div class="step done"><span class="sn">✓</span><span class="st">アポ確</span></div><div class="step-line done"></div>
+          <div class="step done"><span class="sn">✓</span><span class="st">商談中</span></div><div class="step-line done"></div>
+          <div class="step done"><span class="sn">✓</span><span class="st">提案後</span></div><div class="step-line done"></div>
+          <div class="step done"><span class="sn">✓</span><span class="st">クロージング</span></div><div class="step-line done"></div>
+          <div class="step now"><span class="sn">★</span><span class="st">成約</span></div>
         </div>
-        <div class="hint-t" style="padding:0 18px 14px">12段階ステータスの正式名称・遷移条件は未確定（A-03）。<b>本画面は表示のみ</b>で、フェーズ操作（前進・差戻し）は正式名称の確定まで実装しない。正は <span class="tnum">domain/anken-status.state.mmd</span>。</div>
+        <div class="hint-t" style="padding:0 18px 14px">正＝domain/anken-status.state.mmd。成約は本流の終端。逆走・スキップ不可（例外はHubSpotで直接修正）。「更新」は許可遷移のみを提示し、成功応答後に反映（楽観更新なし）。</div>
+      </div>
+
+      <!-- 契約・議事録 -->
+      <div class="card b4" style="padding:0">
+        <div class="card-h"><span class="t">契約・議事録</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">GreatSign／Notta</span></div>
+        <div class="list-row"><span class="badge b-good"><span class="d"></span>締結済</span><div class="bd"><div class="nm">業務委託契約書（成果報酬型）</div><div class="sub">GreatSign・2026/06/28</div></div></div>
+        <div class="list-row"><span class="badge b-sub"><span class="d"></span>下書き</span><div class="bd"><div class="nm">交付申請 委任状</div><div class="sub">GreatSign・送信待ち</div></div></div>
+        <div class="list-row"><span class="badge b-blue"><span class="d"></span>議事録</span><div class="bd"><div class="nm">月次定例 7/2</div><div class="sub">Notta 文字起こし</div></div></div>
+      </div>
+
+      <!-- 補助金 履行（成約後の別軸） -->
+      <div class="card b12" style="padding:0;border-left:3px solid var(--good)">
+        <div class="card-h"><span class="t">補助金 履行フェーズ（成約後の履行管理）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">案件ステータスとは別軸・一方向・最長2年</span></div>
+        <div class="stepper">
+          <div class="step now"><span class="sn">1</span><span class="st">交付申請</span></div><div class="step-line"></div>
+          <div class="step"><span class="sn">2</span><span class="st">交付決定</span></div><div class="step-line"></div>
+          <div class="step"><span class="sn">3</span><span class="st">実施</span></div><div class="step-line"></div>
+          <div class="step"><span class="sn">4</span><span class="st">実績報告</span></div><div class="step-line"></div>
+          <div class="step"><span class="sn">5</span><span class="st">事業化状況報告</span></div>
+        </div>
+        <div style="display:flex;gap:16px;padding:0 18px 12px;flex-wrap:wrap">
+          <span class="badge b-red"><span class="d"></span>停滞8日</span>
+          <span style="font-size:11.5px;color:var(--sub)">交付申請の書類（賃金台帳・相見積2社）が未達で停滞中。順序ガード：交付決定前の発注は警告のみ。</span>
+        </div>
+        <div class="hint-t" style="padding:0 18px 14px">この履行フェーズは v0.3 では概念分離（別軸表示）まで。フェーズ遷移の状態機械は将来 別 domain の state.mmd に切り出し（A-03注記）。</div>
       </div>
 
       <!-- タスク（いまお願いしていること）＝P-01の社内側の双子 -->
@@ -67,33 +95,24 @@
           <div class="chk"><span class="bx"></span><span>相見積もり あと2社分の見積書</span><span class="sp" style="margin-left:auto"></span><span class="badge b-warn"><span class="d"></span>依頼中</span></div>
           <div class="chk done"><span class="bx">✓</span><span>決算書（2期分）のご提出</span><span class="sp" style="margin-left:auto"></span><span class="badge b-good"><span class="d"></span>受領 7/16</span></div>
           <div class="chk done"><span class="bx">✓</span><span>交付決定前の発注に関する注意喚起（証跡）</span><span class="sp" style="margin-left:auto"></span><span class="badge b-good"><span class="d"></span>完了</span></div>
-          <div class="hint-t" style="margin-top:8px">このリストが顧客ポータル（P-01）の「いまお願いしていること」に同じ内容で表示される。編集・依頼の送信は接点タブ（会社詳細）から行う。</div>
+          <div class="hint-t" style="margin-top:8px">このリストが顧客ポータル（P-01）の「いまお願いしていること」に同じ内容で表示される。依頼の送信は接点タブ（会社詳細）から。</div>
         </div>
-      </div>
-
-      <!-- 契約（GreatSign）／議事録（Notta） -->
-      <div class="card b6" style="padding:0">
-        <div class="card-h"><span class="t">契約・議事録</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">GreatSign／Notta（表示のみ）</span></div>
-        <div class="list-row"><span class="badge b-good"><span class="d"></span>締結済</span><div class="bd"><div class="nm">業務委託契約書（成果報酬型）</div><div class="sub">GreatSign・2026/06/28 締結</div></div><span class="btn btn-ghost btn-sm" style="margin-left:auto">開く</span></div>
-        <div class="list-row"><span class="badge b-sub"><span class="d"></span>下書き</span><div class="bd"><div class="nm">交付申請 委任状</div><div class="sub">GreatSign・送信待ち</div></div><span class="btn btn-ghost btn-sm" style="margin-left:auto">開く</span></div>
-        <div class="list-row"><span class="badge b-blue"><span class="d"></span>議事録</span><div class="bd"><div class="nm">月次定例 7/2</div><div class="sub">Notta 文字起こし・要点自動抽出</div></div><span class="btn btn-ghost btn-sm" style="margin-left:auto">Nottaで開く</span></div>
-        <div class="list-row"><span class="badge b-blue"><span class="d"></span>議事録</span><div class="bd"><div class="nm">キックオフ 6/20</div><div class="sub">Notta 文字起こし</div></div><span class="btn btn-ghost btn-sm" style="margin-left:auto">Nottaで開く</span></div>
       </div>
 
       <!-- 請求内訳（board連携・表示のみ） -->
-      <div class="card b12" style="padding:0">
-        <div class="card-h"><span class="t">請求内訳</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">正本＝board（表示のみ・本システムからは編集しない）</span></div>
+      <div class="card b6" style="padding:0">
+        <div class="card-h"><span class="t">請求内訳</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">正本＝board（表示のみ）</span></div>
         <div style="overflow-x:auto">
         <table>
-          <thead><tr><th>種別</th><th>締め</th><th class="r">金額</th><th>請求（board）</th><th>入金（freee）</th></tr></thead>
+          <thead><tr><th>種別</th><th>締め</th><th class="r">金額</th><th>請求</th><th>入金</th></tr></thead>
           <tbody>
             <tr><td>着手金</td><td class="tnum">2026/06</td><td class="r tnum">30万円</td><td><span class="badge b-good"><span class="d"></span>発行済</span></td><td><span class="badge b-warn"><span class="d"></span>期日 7/31</span></td></tr>
-            <tr><td>成果報酬（採択時 15%）</td><td>採択月</td><td class="r tnum" style="color:var(--faint)">（37.2万円）</td><td><span class="badge b-sub"><span class="d"></span>採択待ち</span></td><td>—</td></tr>
+            <tr><td>成果報酬（採択15%）</td><td>採択月</td><td class="r tnum" style="color:var(--faint)">（37.2万円）</td><td><span class="badge b-sub"><span class="d"></span>採択待ち</span></td><td>—</td></tr>
           </tbody>
-          <tfoot><tr><td colspan="2">受給予定 合計</td><td class="r tnum">248万円</td><td colspan="2" style="color:var(--faint);font-size:11px">補助金交付は交付決定・実績報告後</td></tr></tfoot>
+          <tfoot><tr><td colspan="2">受給予定 合計</td><td class="r tnum">248万円</td><td colspan="2" style="color:var(--faint);font-size:11px">交付は交付決定・実績報告後</td></tr></tfoot>
         </table>
         </div>
-        <div class="hint-t" style="padding:10px 18px">請求の発行・修正は board、入金消込は freee／K-02 で行う。本画面はミラー表示のみ（CLAUDE.md §1）。</div>
+        <div class="hint-t" style="padding:10px 18px">請求の発行・修正は board、入金消込は freee／K-02。本画面はミラー表示のみ（CLAUDE.md §1）。</div>
       </div>
     </div>
 
@@ -101,6 +120,6 @@
 </div>
 </div>
 
-<script src="assets/app.js?v=46"></script>
+<script src="assets/app.js?v=47"></script>
 </body>
 </html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ルール編集｜経営統合システム</title>
+<link rel="stylesheet" href="assets/tokens.css?v=47" /><link rel="stylesheet" href="assets/style.css?v=47" /><link rel="stylesheet" href="assets/ui.css?v=47" />
+</head>
+<!-- ST-02 ルール編集（編集エンジン＝値の正本）。A-07/A-11/Z-05：編集はここ、閲覧は rules.html。
+     A-09（会社独自ルールの設定値化）はv0.4。本画面はv0.3では「編集の枠」＝構造まで（値のランタイム反映はv0.4）。
+     保存/保存失敗の分岐あり・楽観更新なし（CLAUDE.md §1-2）。 -->
+<body data-page="rules" data-role="nakata">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">設定（管理者）</div><h1>ルール編集</h1></div>
+    <span class="sample">値はサンプル</span>
+    <a class="btn btn-ghost btn-sm" href="rules.html">現場向けの見え方（運用ルール集）を確認 →</a>
+  </div>
+  <div class="content">
+
+    <div class="card" style="display:flex;align-items:center;gap:10px;padding:12px 18px;margin-bottom:16px;flex-wrap:wrap;border-left:4px solid var(--orange)">
+      <span style="font-size:11px;font-weight:800;color:var(--orange-d)">ここが値の正本</span>
+      <span style="font-size:12px;color:var(--sub)">この画面で編集した値が、各画面のインライン表示・予算設計・評価・運用ルール集（閲覧）へ反映されます（二重管理しない）。</span>
+      <span class="badge b-navy" style="margin-left:auto">編集＝管理者のみ</span>
+    </div>
+
+    <div class="bento">
+      <!-- 承認・支払 -->
+      <div class="card b6" style="padding:0">
+        <div class="card-h"><span class="t">承認・支払しきい値</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">→ K-01 にインライン反映（A-06確定）</span></div>
+        <div style="padding:14px 18px">
+          <div class="inp-row">
+            <label class="field"><span class="fl">経営層会議 しきい値（円）</span><input class="inp tnum" value="500,000" /></label>
+            <label class="field"><span class="fl">一次承認者</span><input class="inp" value="北山" /></label>
+          </div>
+          <div class="inp-row">
+            <label class="field"><span class="fl">振込日</span><input class="inp" value="25日・月末" /></label>
+            <label class="field"><span class="fl">記帳・消込日</span><input class="inp" value="15日・月末" /></label>
+          </div>
+          <div class="hint-t">50万円以上＝経営層会議／未満＝一次承認。支払予定への計上は承認済のみ。</div>
+        </div>
+      </div>
+
+      <!-- 評価スコア -->
+      <div class="card b6" style="padding:0">
+        <div class="card-h"><span class="t">評価スコア基準</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">→ 予算設計・評価に反映</span></div>
+        <div style="padding:14px 18px">
+          <div class="inp-row">
+            <label class="field"><span class="fl">合格ライン</span><input class="inp tnum" value="60点" /></label>
+            <label class="field"><span class="fl">返済ライン（必達）</span><input class="inp tnum" value="40点" /></label>
+          </div>
+          <div class="inp-row">
+            <label class="field"><span class="fl">粗利 60点（月）</span><input class="inp tnum" value="9,910,000" /></label>
+            <label class="field"><span class="fl">営業利益 60点（月）</span><input class="inp tnum" value="4,410,000" /></label>
+          </div>
+          <div class="inp-row">
+            <label class="field"><span class="fl">60点超過分の配分</span><input class="inp" value="褒賞33／裁量33／留保34" /></label>
+            <label class="field"><span class="fl">借入返済（月）</span><input class="inp tnum" value="3,300,000" /></label>
+          </div>
+          <div class="hint-t">基準値は管理会計Excel準拠・四半期更新。60点未満は配分なし。</div>
+        </div>
+      </div>
+
+      <!-- 請求ルール -->
+      <div class="card b6" style="padding:0">
+        <div class="card-h"><span class="t">請求の起点（締め → 翌月請求）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">→ K-01 / E-04 に反映</span></div>
+        <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>種別</th><th>締め月</th><th class="r">標準金額</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>レポート</td><td><input class="inp" value="納品した月" style="height:30px" /></td><td class="r tnum">5万円</td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr><td>BPO顧問料</td><td><input class="inp" value="契約締結の月" style="height:30px" /></td><td class="r tnum">契約による</td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr><td>補助金 着手金</td><td><input class="inp" value="契約締結の月" style="height:30px" /></td><td class="r tnum">30万円</td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+            <tr><td>補助金 成果報酬</td><td><input class="inp" value="採択の月" style="height:30px" /></td><td class="r tnum">受給目標 × 15%</td><td class="r"><span class="btn btn-ghost btn-sm">編集</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- 案件しきい値 -->
+      <div class="card b6" style="padding:0">
+        <div class="card-h"><span class="t">案件のしきい値・アラート</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">→ E-03 / E-04 に反映</span></div>
+        <div style="padding:14px 18px">
+          <div class="inp-row">
+            <label class="field"><span class="fl">停滞アラート（営業日）</span><input class="inp tnum" value="7" /></label>
+            <label class="field"><span class="fl">受給目標 倍率</span><input class="inp" value="BPO契約金額 × 2" /></label>
+          </div>
+          <div class="inp-row">
+            <label class="field"><span class="fl">成果報酬率</span><input class="inp tnum" value="15%" /></label>
+            <label class="field"><span class="fl">実効税率</span><input class="inp tnum" value="31.5%" /></label>
+          </div>
+          <div class="hint-t">順序ガード：交付決定前の発注入力＝警告のみ（ブロックしない）。案件ステータスの遷移可否は domain/anken-status.state.mmd を正とする（本画面では編集しない）。</div>
+        </div>
+      </div>
+
+      <!-- 会社独自ルール（v0.4予告） -->
+      <div class="card b12" style="padding:14px 18px;opacity:.72;border-style:dashed">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span class="badge b-sub">v0.4 予定</span>
+          <span style="font-size:12.5px;font-weight:700">会社独自ルールの設定値化（A-09）／給与・手当の計算（A-10）</span>
+          <span style="font-size:11.5px;color:var(--faint)">就業規則→評価、決算書→予算などのドキュメント投入→AI構造化ドラフト→承認→反映の導出経路。本バッチ（v0.3）は枠のみ。</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <span class="btn btn-primary" onclick="openModal('mSave')">保存して再計算</span>
+      <span class="btn btn-ghost" onclick="openModal('mFail')">保存失敗を確認（デモ）</span>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- 保存（正常系・楽観更新なし） -->
+<div class="modal-bg" id="mSave">
+  <div class="modal">
+    <div class="modal-h"><span class="t">ルールを保存して再計算</span><span class="x" onclick="closeModal('mSave')">✕</span></div>
+    <div class="modal-b">
+      <div class="hint-t">保存すると <b>予算設計 → 予算・実績 → 評価・賞与</b> と各画面のインライン表示・運用ルール集（閲覧）へ順に反映されます。変更履歴を記録し、成功応答を受けてから反映します（楽観更新なし）。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mSave')">キャンセル</span><span class="btn btn-primary">保存して再計算</span></div>
+  </div>
+</div>
+
+<!-- 保存失敗（差戻し分岐） -->
+<div class="modal-bg" id="mFail">
+  <div class="modal">
+    <div class="modal-h"><span class="t">保存に失敗しました</span><span class="x" onclick="closeModal('mFail')">✕</span></div>
+    <div class="modal-b">
+      <div class="card" style="border-left:4px solid var(--red);padding:12px 14px;background:var(--red-bg)">
+        <div style="font-weight:800;color:var(--red-d);font-size:12.5px">再計算エンジン（管理会計）への反映に失敗</div>
+        <div style="font-size:12px;color:var(--sub);margin-top:4px">値は保存されていません。画面表示は変更前のままです（楽観更新なし）。時間をおいて再試行するか、連携設定（ST-07）で接続を確認してください。</div>
+      </div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mFail')">閉じる</span><a class="btn btn-primary" href="st07_integrations.html">連携設定を確認</a></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=47"></script>
+</body>
+</html>

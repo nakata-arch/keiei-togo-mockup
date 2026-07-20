@@ -1,1 +1,47 @@
-%% A-03: 12段階ステータスの正式名称が確定するまで作成保留。確定後この行を消して stateDiagram を記述する。
+%% 案件ステータス — 販売パイプライン（HubSpot default / ポータル 45826066）
+%% A-03確定: E-03/E-04 が追うのは販売パイプラインのみ。実体は10ステージ（「12」は近似）。
+%%
+%% id ↔ 表示ラベル ↔ HubSpot dealstage 内部値（結合キー・一情報一箇所）:
+%%   lead     リード                 = appointmentscheduled
+%%   apo      アポ確                 = qualifiedtobuy
+%%   shodan   商談中/提案準備中       = decisionmakerboughtin
+%%   teiango  提案後                 = 183346493
+%%   closing  クロージング/契約書締結待 = 189978275
+%%   won      成約/契約書締結済       = closedwon
+%%   longlead 長期リード             = 183370302
+%%   lost     失注                   = closedlost
+%%   noneeds  ニーズなし             = 183400476
+%%   haiki    破棄/ニーズ評価         = presentationscheduled
+%%
+%% 注: HubSpotは遷移を強制しないため、下の矢印は「UIが許可する遷移」の設計案（中田さん確認待ち）。
+%%     アクティブ全段階(apo〜closing)から lost へ遷移可。図では代表矢印のみ。
+
+stateDiagram-v2
+    [*] --> lead
+
+    lead: リード
+    apo: アポ確
+    shodan: 商談中・提案準備中
+    teiango: 提案後
+    closing: クロージング・契約書締結待
+    won: 成約・契約書締結済
+    longlead: 長期リード
+    lost: 失注
+    noneeds: ニーズなし
+    haiki: 破棄・ニーズ評価
+
+    lead --> apo
+    lead --> longlead
+    lead --> noneeds
+    apo --> shodan
+    apo --> haiki
+    shodan --> teiango
+    teiango --> closing
+    closing --> won
+    closing --> lost
+    longlead --> apo
+
+    won --> [*]
+    lost --> [*]
+    noneeds --> [*]
+    haiki --> [*]

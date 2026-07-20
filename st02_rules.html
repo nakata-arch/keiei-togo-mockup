@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ルール編集｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=47" /><link rel="stylesheet" href="assets/style.css?v=47" /><link rel="stylesheet" href="assets/ui.css?v=47" />
+<link rel="stylesheet" href="assets/tokens.css?v=48" /><link rel="stylesheet" href="assets/style.css?v=48" /><link rel="stylesheet" href="assets/ui.css?v=48" />
 </head>
 <!-- ST-02 ルール編集（編集エンジン＝値の正本）。A-07/A-11/Z-05：編集はここ、閲覧は rules.html。
      A-09（会社独自ルールの設定値化）はv0.4。本画面はv0.3では「編集の枠」＝構造まで（値のランタイム反映はv0.4）。
@@ -90,7 +90,11 @@
             <label class="field"><span class="fl">成果報酬率</span><input class="inp tnum" value="15%" /></label>
             <label class="field"><span class="fl">実効税率</span><input class="inp tnum" value="31.5%" /></label>
           </div>
-          <div class="hint-t">順序ガード：交付決定前の発注入力＝警告のみ（ブロックしない）。案件ステータスの遷移可否は domain/anken-status.state.mmd を正とする（本画面では編集しない）。</div>
+          <div class="inp-row">
+            <label class="field"><span class="fl">BPO 完了ライン（A-13仮）</span><select class="inp"><option>受給 同額（契約金額と同額で完了）</option><option>受給 ×2（目標倍率で完了）</option></select></label>
+            <label class="field"><span class="fl">受給目標倍率（ストレッチ・参考）</span><input class="inp" value="契約金額 × 2" /></label>
+          </div>
+          <div class="hint-t">順序ガード：交付決定前の発注入力＝警告のみ（ブロックしない）。案件ステータス＝domain/anken-status.state.mmd、役務進行＝domain/consult-status.state.mmd を正とする（遷移可否は本画面では編集しない）。A-13：BPO完了＝同額で仮確定・×2は参考目標（中田確認待ち）。</div>
         </div>
       </div>
 
@@ -138,6 +142,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=47"></script>
+<script src="assets/app.js?v=48"></script>
 </body>
 </html>

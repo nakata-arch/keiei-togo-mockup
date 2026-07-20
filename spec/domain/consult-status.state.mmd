@@ -1,0 +1,34 @@
+%% 補助金/助成金の役務進行（consult-status）— Z-08解決・v0.4 Pillar A
+%% 「案件管理」エリアの役務軸。案件ステータス（販売パイプライン＝anken-status.state.mmd）とは別軸。
+%% 「採択」＝成果確定の節目＝成果報酬の請求トリガー（役務軸→お金軸の連動点）。
+%% 「交付決定」前の発注は警告のみ（ブロックしない・顧客ポータルの注意と同旨）。
+%% 遷移は前進基本。逆走はHubSpotで直接修正。名称は補助金案内スキル（交付申請・実績報告・効果/事業化状況報告）から借用。
+%% 種別ごとの履行完了条件は rules.html / ST-02 を参照：
+%%   レポート＝納品（約1か月）／BPO＝実施 約1年・契約金額と同額の受給予定で完了（A-13仮）／補助金＝効果報告まで（約2年）。
+
+stateDiagram-v2
+    [*] --> chakushu
+    chakushu: 着手
+    kofushinsei: 交付申請
+    saitaku: 採択（成果確定・成果報酬トリガー）
+    kofukettei: 交付決定
+    jisshi: 実施
+    jissekihokoku: 実績報告
+    kokahokoku: 効果報告
+    kanryo: 完了
+    fusaitaku: 不採択
+    chushi: 中止
+
+    chakushu --> kofushinsei
+    kofushinsei --> saitaku
+    kofushinsei --> fusaitaku
+    saitaku --> kofukettei
+    kofukettei --> jisshi
+    jisshi --> jissekihokoku
+    jissekihokoku --> kokahokoku
+    kokahokoku --> kanryo
+    chakushu --> chushi
+    kofushinsei --> chushi
+    kanryo --> [*]
+    fusaitaku --> [*]
+    chushi --> [*]

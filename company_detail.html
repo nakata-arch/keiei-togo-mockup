@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>アストロラボ株式会社｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=47" /><link rel="stylesheet" href="assets/style.css?v=47" /><link rel="stylesheet" href="assets/ui.css?v=47" />
+<link rel="stylesheet" href="assets/tokens.css?v=48" /><link rel="stylesheet" href="assets/style.css?v=48" /><link rel="stylesheet" href="assets/ui.css?v=48" />
 </head>
 <body data-page="companies">
 <div class="app">
@@ -49,8 +49,9 @@
       <span class="dtab" data-g="c" data-t="t4" onclick="swTab('c','t4')">請求・入金<span class="n">4</span></span>
     </div>
 
-    <!-- t1 概要・案件（共通グリッド＝bento 12col に整列・Q3是正）。案件カード→E-04 案件詳細（screens.yaml v0.2 E-02 to: 案件カード=E-04） -->
+    <!-- t1 概要・案件（共通グリッド＝bento 12col に整列・Q3是正）。案件カード→E-04 案件詳細（2軸）。系譜＝営業案件→案件（履行）の連鎖（v0.4 Pillar A） -->
     <div class="dpane on" data-g="c" data-t="t1">
+      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">案件の系譜：<b>営業管理</b>で獲得（契約締結）→ <b>案件管理</b>で履行（役務・請求入金・売上経費）。カードで案件詳細（E-04・2軸）。</p>
       <div class="bento">
           <div class="card lineage b12">
             <div class="ln-node"><span class="lt" style="color:var(--blue)">診断レポート</span><div class="ln">IS-2026-0041</div><div class="ls">2026/01・5万円・新谷</div><div style="margin-top:8px"><span class="badge b-good"><span class="d"></span>完了</span></div></div>
@@ -174,6 +175,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=47"></script>
+<script src="assets/app.js?v=48"></script>
 </body>
 </html>

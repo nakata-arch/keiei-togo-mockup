@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>案件（履行）｜経営統合システム</title>
+<link rel="stylesheet" href="assets/tokens.css?v=48" /><link rel="stylesheet" href="assets/style.css?v=48" /><link rel="stylesheet" href="assets/ui.css?v=48" />
+</head>
+<!-- E-05 案件（履行）＝案件管理エリア（v0.4 Pillar A）。契約後の役務進行＋請求入金＋売上経費。
+     役務軸：補助金=consult-status.state.mmd（着手→…→効果報告→完了）／BPO=実施→完了（受給同額・A-13仮）／レポート=納品→完了。
+     案件クリック → E-04 案件詳細（2軸表示）。KPI＝コンサル＝採択金額／入金。 -->
+<body data-page="projects" data-role="kouda">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">案件管理</div><h1>案件（履行）</h1></div>
+    <span class="sample">値はサンプル</span>
+    <div class="search">案件番号・会社で検索<span class="kbd">⌘K</span></div>
+  </div>
+  <div class="content">
+
+    <div class="dtabs">
+      <span class="dtab on" data-g="p" data-t="subsidy" onclick="swTab('p','subsidy')">補助金/助成金（役務）<span class="n">3</span></span>
+      <span class="dtab" data-g="p" data-t="table" onclick="swTab('p','table')">テーブル（履行中）<span class="n">6</span></span>
+      <span class="dtab" data-g="p" data-t="bpo" onclick="swTab('p','bpo')">BPO 実施<span class="n">2</span></span>
+      <span class="dtab" data-g="p" data-t="report" onclick="swTab('p','report')">レポート 納品<span class="n">1</span></span>
+    </div>
+
+    <!-- 補助金 役務ボード（consult-status） -->
+    <div class="dpane on" data-g="p" data-t="subsidy">
+      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">列＝役務進行（正＝domain/consult-status.state.mmd）。<b>採択＝成果報酬の請求トリガー</b>。交付決定前の発注は警告のみ。カードで案件詳細（E-04）。</p>
+      <div style="overflow-x:auto">
+      <div class="ph-board" style="grid-template-columns:repeat(8,minmax(140px,1fr));min-width:1120px">
+        <div class="ph-col"><div class="ph-col-h"><span class="n" style="background:var(--navy-sub)">1</span><span class="t">着手</span><span class="c">0</span></div><div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">—</div></div></div>
+        <div class="ph-col"><div class="ph-col-h"><span class="n" style="background:var(--orange-d)">2</span><span class="t">交付申請</span><span class="c">1</span></div>
+          <div class="ph-col-b">
+            <a class="scard stale" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜課題解決型</div><div class="sc">IS-2026-0074・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>停滞8日</span><span class="amt tnum">248万円</span></div></a>
+          </div>
+        </div>
+        <div class="ph-col"><div class="ph-col-h"><span class="n" style="background:var(--good)">3</span><span class="t">採択</span><span class="c">0</span></div><div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">—</div></div></div>
+        <div class="ph-col"><div class="ph-col-h"><span class="n" style="background:var(--blue)">4</span><span class="t">交付決定</span><span class="c">1</span></div>
+          <div class="ph-col-b">
+            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">リサスティー｜経営力強化</div><div class="sc">IS-2026-0055・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>着手準備</span><span class="amt tnum">400万円</span></div></a>
+          </div>
+        </div>
+        <div class="ph-col"><div class="ph-col-h"><span class="n" style="background:var(--blue)">5</span><span class="t">実施</span><span class="c">1</span></div>
+          <div class="ph-col-b">
+            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">菱洋エレクトロ｜省力化投資</div><div class="sc">IS-2026-0032・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>証憑 不足2点</span><span class="amt tnum">1,200万円</span></div></a>
+          </div>
+        </div>
+        <div class="ph-col"><div class="ph-col-h"><span class="n" style="background:var(--orange-d)">6</span><span class="t">実績報告</span><span class="c">0</span></div><div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">—</div></div></div>
+        <div class="ph-col"><div class="ph-col-h"><span class="n" style="background:var(--navy)">7</span><span class="t">効果報告</span><span class="c">0</span></div><div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">—</div></div></div>
+        <div class="ph-col"><div class="ph-col-h"><span class="n" style="background:var(--good)">8</span><span class="t">完了</span><span class="c">0</span></div><div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">—</div></div></div>
+      </div>
+      </div>
+    </div>
+
+    <!-- テーブル（履行中の全案件・役務ステージ＋完了条件） -->
+    <div class="dpane" data-g="p" data-t="table">
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>案件番号</th><th>会社</th><th>種別</th><th>役務ステージ</th><th>完了条件</th><th class="r">売上見込</th><th>部門</th><th>担当</th><th></th></tr></thead>
+          <tbody>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'" style="background:var(--row-warn)"><td class="tnum" style="font-weight:800">IS-2026-0074</td><td>アストロラボ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-warn"><span class="d"></span>交付申請</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openConsult('IS-2026-0074','kofushinsei')">更新</span></td><td style="font-size:11px;color:var(--faint)">効果報告まで（約2年）</td><td class="r tnum">248万円</td><td>コンサル</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0055</td><td>リサスティー</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-blue"><span class="d"></span>交付決定</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openConsult('IS-2026-0055','kofukettei')">更新</span></td><td style="font-size:11px;color:var(--faint)">効果報告まで（約2年）</td><td class="r tnum">400万円</td><td>コンサル</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0032</td><td>菱洋エレクトロ</td><td><span class="badge b-good"><span class="d"></span>補助金</span></td><td><span class="badge b-blue"><span class="d"></span>実施</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openConsult('IS-2026-0032','jisshi')">更新</span></td><td style="font-size:11px;color:var(--faint)">効果報告まで（約2年）</td><td class="r tnum">1,200万円</td><td>コンサル</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td><span class="badge b-warn"><span class="d"></span>BPO</span></td><td><span class="badge b-blue"><span class="d"></span>実施中</span></td><td style="font-size:11px;color:var(--faint)">受給 同額240万で完了（約1年・A-13仮）</td><td class="r tnum">240万円/年</td><td>コンサル</td><td>幸田</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'" style="background:var(--row-red)"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-warn"><span class="d"></span>BPO</span></td><td><span class="badge b-red"><span class="d"></span>実施中・申請未着手</span></td><td style="font-size:11px;color:var(--faint)">受給 同額240万で完了（約1年・A-13仮）</td><td class="r tnum">240万円/年</td><td>コンサル</td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0041</td><td>アストロラボ</td><td><span class="badge b-blue"><span class="d"></span>レポート</span></td><td><span class="badge b-good"><span class="d"></span>納品・完了</span></td><td style="font-size:11px;color:var(--faint)">納品で完了（約1か月）</td><td class="r tnum">5万円</td><td>営業</td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:9px 16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">「更新」＝役務ステージを前進（正＝consult-status.state.mmd・楽観更新なし）。採択で成果報酬の請求が起票されます。</div>
+      </div>
+    </div>
+
+    <!-- BPO 実施（完了ライン＝受給同額・A-13仮／目標×2は参考） -->
+    <div class="dpane" data-g="p" data-t="bpo">
+      <div class="card" style="overflow-x:auto">
+        <div class="card-h"><span class="t">BPO 実施中（完了条件＝契約金額と同額の受給予定）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">A-13仮：完了＝同額／×2は参考目標</span></div>
+        <table>
+          <thead><tr><th>案件番号</th><th>会社</th><th>契約金額</th><th class="r">完了ライン（同額）</th><th class="r">受給予定</th><th>完了判定</th><th class="r">参考目標(×2)</th><th></th></tr></thead>
+          <tbody>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td class="tnum">240万円/年</td><td class="r tnum">240万円</td><td class="r tnum">248万円</td><td><span class="badge b-good"><span class="d"></span>達成（103%）</span></td><td class="r tnum" style="color:var(--faint)">480万円</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td class="tnum">240万円/年</td><td class="r tnum">240万円</td><td class="r tnum">0円</td><td><span class="badge b-red"><span class="d"></span>未達（0%・申請未着手）</span></td><td class="r tnum" style="color:var(--faint)">480万円</td><td class="r" style="color:var(--faint)">›</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:9px 16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">完了ライン・目標倍率の値は ST-02（ルール編集）が正本。A-13＝完了は「同額」で仮確定・中田確認待ち。</div>
+      </div>
+    </div>
+
+    <!-- レポート 納品 -->
+    <div class="dpane" data-g="p" data-t="report">
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>案件番号</th><th>会社</th><th>役務</th><th>納品日</th><th class="r">売上</th><th>入金</th><th>担当</th><th></th></tr></thead>
+          <tbody>
+            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0041</td><td>アストロラボ</td><td><span class="badge b-good"><span class="d"></span>納品・完了</span></td><td class="tnum">2026/01</td><td class="r tnum">5万円</td><td><span class="badge b-good"><span class="d"></span>入金済</span></td><td>新谷</td><td class="r" style="color:var(--faint)">›</td></tr>
+          </tbody>
+        </table>
+        <div style="padding:9px 16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">レポートは納品で完了（約1か月）。BPO契約時はレポート代5万円を割引（請求ルール＝ST-02）。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script src="assets/app.js?v=48"></script>
+</body>
+</html>

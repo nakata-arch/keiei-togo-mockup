@@ -49,7 +49,8 @@
     users:    svg('<circle cx="9" cy="8.5" r="3.5"/><path d="M3.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5M16 4.6a3.5 3.5 0 0 1 0 7.8M17.5 14.7c2 .7 3 2.3 3 4.8"/>'),
     master:   svg('<path d="M4 6.5C4 5 7.6 4 12 4s8 1 8 2.5S16.4 9 12 9 4 8 4 6.5zM4 6.5v11C4 19 7.6 20 12 20s8-1 8-2.5v-11M4 12c0 1.5 3.6 2.5 8 2.5s8-1 8-2.5"/>'),
     plug:     svg('<path d="M9 7V3.5M15 7V3.5M7 7h10v4a5 5 0 0 1-10 0zM12 16v4.5"/>'),
-    gear:     svg('<circle cx="12" cy="12" r="3.1"/><path d="M12 3v2.6M12 18.4V21M3 12h2.6M18.4 12H21M5.6 5.6l1.9 1.9M16.5 16.5l1.9 1.9M18.4 5.6l-1.9 1.9M7.5 16.5l-1.9 1.9"/>')
+    gear:     svg('<circle cx="12" cy="12" r="3.1"/><path d="M12 3v2.6M12 18.4V21M3 12h2.6M18.4 12H21M5.6 5.6l1.9 1.9M16.5 16.5l1.9 1.9M18.4 5.6l-1.9 1.9M7.5 16.5l-1.9 1.9"/>'),
+    flow:     svg('<circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="12" r="2.4"/><path d="M8.4 6H13a3 3 0 0 1 3 3v.6M8.4 18H13a3 3 0 0 0 3-3v-.6"/>')
   };
 
   var ALL = ["admin", "kanri", "bucho", "ippan", "asst"];
@@ -58,10 +59,12 @@
   var MAIN = [
     { items: [ { id: "home", file: U.home, ic: IC.home, label: "ホーム",
                  count: U.homeBadge, alert: true, anchor: "#alerts", sets: ALL } ] },
-    { label: "営業（獲得）", items: [
-      { id: "companies", file: "companies.html", ic: IC.company, label: "会社",  /* E-01（E-02はここから遷移） */
+    { label: "営業管理", items: [   /* v0.4 Pillar A: 獲得までの管理（lead→契約締結） */
+      { id: "companies", file: "companies.html", ic: IC.company, label: "会社（顧客）",  /* E-01（E-02はここから遷移） */
         sets: ["admin", "kanri", "bucho", "ippan"] },
-      { id: "deals",     file: "deals.html",     ic: IC.deals,   label: "案件", sets: ALL } ] },   /* E-03 */
+      { id: "deals",     file: "deals.html",     ic: IC.deals,   label: "営業案件", sets: ALL } ] },   /* E-03 販売パイプライン */
+    { label: "案件管理", items: [   /* v0.4 Pillar A: 契約後の履行管理（役務進行＋請求入金＋売上経費） */
+      { id: "projects",  file: "projects.html",  ic: IC.flow,    label: "案件（履行）", sets: ALL } ] },   /* E-05 */
     { label: "経理処理", items: [   /* A-01: 経理処理と経営管理の分離は仮 */
       { id: "invoices",  file: "invoices.html",  ic: IC.invoice, label: "支払処理", count: 4, anchor: "#alerts", sets: ["admin", "kanri"] },   /* K-01 */
       { id: "reconcile", file: "reconcile.html", ic: IC.recon,   label: "入金消込", count: 3, anchor: "#alerts", sets: ["admin", "kanri"] } ] }, /* K-02 */
@@ -244,6 +247,48 @@
                   '<div class="modal-b">' + body + '</div>' +
                   '<div class="modal-f">' + foot +
                   '</div><div class="hint-t" style="padding:0 20px 14px">HubSpot（正本）へ書き込み、成功応答を受けてから画面に反映します（楽観更新なし・CLAUDE.md §1-2）。失敗時は反映せずエラー表示。</div></div>';
+    document.body.appendChild(m);
+  };
+
+  /* ===== 役務進行（補助金/助成金の consult-status）=====
+     正＝domain/consult-status.state.mmd。案件ステータス（販売パイプライン）とは別軸。
+     「採択」＝成果報酬の請求トリガー。前進基本・逆走はHubSpotで直接。 */
+  var CONSULT = {
+    chakushu:     { label: "着手",       badge: "b-sub",  next: ["kofushinsei", "chushi"] },
+    kofushinsei:  { label: "交付申請",   badge: "b-warn", next: ["saitaku", "fusaitaku", "chushi"] },
+    saitaku:      { label: "採択",       badge: "b-good", next: ["kofukettei"] },
+    kofukettei:   { label: "交付決定",   badge: "b-blue", next: ["jisshi"] },
+    jisshi:       { label: "実施",       badge: "b-blue", next: ["jissekihokoku"] },
+    jissekihokoku:{ label: "実績報告",   badge: "b-warn", next: ["kokahokoku"] },
+    kokahokoku:   { label: "効果報告",   badge: "b-warn", next: ["kanryo"] },
+    kanryo:       { label: "完了",       badge: "b-good", next: [] },
+    fusaitaku:    { label: "不採択",     badge: "b-red",  next: [] },
+    chushi:       { label: "中止",       badge: "b-sub",  next: [] }
+  };
+  window.CONSULT = CONSULT;
+  window.consultBadge = function (k) { var s = CONSULT[k]; return s ? '<span class="badge ' + s.badge + '"><span class="d"></span>' + s.label + "</span>" : k; };
+  window.openConsult = function (dealNo, cur) {
+    var s = CONSULT[cur] || CONSULT.chakushu;
+    document.querySelectorAll("#stModal").forEach(function (n) { n.remove(); });
+    var body, foot;
+    if (s.next.length) {
+      body = '<div class="hint-t" style="margin-bottom:12px">' + dealNo + ' の役務ステージ 現在：' + window.consultBadge(cur) +
+             '<br>正＝consult-status.state.mmd。前進のみ（逆走はHubSpotで直接）。' +
+             (cur === "kofushinsei" ? '「採択」に進むと<b>成果報酬の請求</b>が起票されます。' : "") +
+             (cur === "saitaku" || cur === "kofushinsei" ? '交付決定前の発注は警告のみ（ブロックしない）。' : "") + "</div>" +
+             s.next.map(function (k) {
+               return '<div class="cand" data-k="' + k + '" style="display:flex;gap:10px;align-items:center;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;margin-bottom:8px">' +
+                      window.consultBadge(k) + (k === "saitaku" ? '<span style="font-size:11px;color:var(--good)">→ 成果報酬を請求へ</span>' : "") + "</div>";
+             }).join("");
+      foot = '<span class="btn btn-ghost" onclick="closeModal(\'stModal\')">キャンセル</span><span class="btn btn-primary">この役務ステージへ更新</span>';
+    } else {
+      body = '<div class="hint-t">' + dealNo + ' の役務ステージ：' + window.consultBadge(cur) + ' はこれ以上進みません。</div>';
+      foot = '<span class="btn btn-ghost" onclick="closeModal(\'stModal\')">閉じる</span>';
+    }
+    var m = document.createElement("div"); m.className = "modal-bg open"; m.id = "stModal";
+    m.innerHTML = '<div class="modal"><div class="modal-h"><span class="t">役務ステージを更新</span><span class="x" onclick="closeModal(\'stModal\')">✕</span></div>' +
+                  '<div class="modal-b">' + body + '</div><div class="modal-f">' + foot +
+                  '</div><div class="hint-t" style="padding:0 20px 14px">HubSpot（正本）へ書き込み、成功応答後に反映（楽観更新なし）。採択＝成果報酬の請求トリガー（board連携）。</div></div>';
     document.body.appendChild(m);
   };
 

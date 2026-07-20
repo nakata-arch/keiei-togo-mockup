@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>案件｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=47" /><link rel="stylesheet" href="assets/style.css?v=47" /><link rel="stylesheet" href="assets/ui.css?v=47" />
+<link rel="stylesheet" href="assets/tokens.css?v=48" /><link rel="stylesheet" href="assets/style.css?v=48" /><link rel="stylesheet" href="assets/ui.css?v=48" />
 </head>
-<!-- E-03 案件管理。tabs: [ボード, テーブル, レポート, BP, 補助金 履行]＝全タブ有効（CLAUDE.md §2-4）
-     ステータス＝販売パイプライン10ステージ（A-03確定）。正＝domain/anken-status.state.mmd。
-     遷移UIは window.openStatus（許可遷移のみ・楽観更新なし）。補助金の履行フェーズは成約後の別軸。
-     案件クリック → E-04 案件詳細（screens.yaml v0.2/0.3 to:） -->
+<!-- E-03 営業案件（営業管理エリア・v0.4 Pillar A）。獲得までの管理＝販売パイプライン lead→契約締結。
+     tabs: [ボード, テーブル, レポート, BP]＝全タブ有効（CLAUDE.md §2-4）。ステータス＝anken-status.state.mmd（10ステージ）。
+     遷移UI＝window.openStatus（許可遷移のみ・楽観更新なし）。契約後の役務進行・請求入金・売上経費は「案件管理」(E-05/projects.html)。
+     案件クリック → E-04 案件詳細（2軸表示）。 -->
 <body data-page="deals" data-role="kouda">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">営業（獲得）</div><h1>案件</h1></div>
+    <div><div class="crumb">営業管理</div><h1>営業案件（獲得パイプライン）</h1></div>
     <span class="sample">値はサンプル</span>
     <div class="search">案件番号・会社で検索<span class="kbd">⌘K</span></div>
+    <a class="btn btn-ghost btn-sm" href="projects.html">契約後の履行は 案件管理 へ →</a>
     <span class="btn btn-primary btn-sm" onclick="openModal('mDeal')">＋ 新規案件</span>
   </div>
   <div class="content">
@@ -26,7 +27,6 @@
       <span class="dtab" data-g="e" data-t="table" onclick="swTab('e','table')">テーブル<span class="n">10</span></span>
       <span class="dtab" data-g="e" data-t="report" onclick="swTab('e','report')">レポート<span class="n">2</span></span>
       <span class="dtab" data-g="e" data-t="bp" onclick="swTab('e','bp')">BP<span class="n">2</span></span>
-      <span class="dtab" data-g="e" data-t="subsidy" onclick="swTab('e','subsidy')">補助金 履行<span class="n">3</span></span>
     </div>
 
     <!-- ボード＝販売パイプライン（列＝ステータス。正＝anken-status.state.mmd） -->
@@ -125,39 +125,6 @@
       </div>
     </div>
 
-    <!-- 補助金 履行（成約後の履行管理＝案件ステータスとは別軸） -->
-    <div class="dpane" data-g="e" data-t="subsidy">
-      <p style="font-size:11px;color:var(--faint);margin-bottom:10px">これは<b>成約後の補助金 履行フェーズ</b>（交付申請→交付決定→実施→実績報告→事業化状況報告）です。案件の販売ステータス（＝成約）とは<b>別軸</b>。一方向・最長2年。※将来、別 domain の state.mmd に切り出し予定（v0.3では概念分離＝列を分けるまで）。</p>
-      <div class="ph-board" style="grid-template-columns:repeat(5,minmax(150px,1fr))">
-        <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--blue)">1</span><span class="t">交付申請</span><span class="c">1</span></div>
-          <div class="ph-col-b">
-            <a class="scard stale" href="deal_detail.html" style="display:block"><div class="sn">アストロラボ｜課題解決型</div><div class="sc">IS-2026-0074・幸田</div><div class="sf"><span class="badge b-red"><span class="d"></span>停滞8日</span><span class="amt tnum">248万円</span></div></a>
-          </div>
-        </div>
-        <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--orange-d)">2</span><span class="t">交付決定</span><span class="c">1</span></div>
-          <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">リサスティー｜経営力強化</div><div class="sc">IS-2026-0055・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>着手準備</span><span class="amt tnum">400万円</span></div></a>
-          </div>
-        </div>
-        <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--good)">3</span><span class="t">実施</span><span class="c">1</span></div>
-          <div class="ph-col-b">
-            <a class="scard" href="deal_detail.html" style="display:block"><div class="sn">菱洋エレクトロ｜省力化投資</div><div class="sc">IS-2026-0032・幸田</div><div class="sf"><span class="badge b-warn"><span class="d"></span>証憑 不足2点</span><span class="amt tnum">1,200万円</span></div></a>
-          </div>
-        </div>
-        <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--navy)">4</span><span class="t">実績報告</span><span class="c">0</span></div>
-          <div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">該当なし</div></div>
-        </div>
-        <div class="ph-col">
-          <div class="ph-col-h"><span class="n" style="background:var(--navy-sub)">5</span><span class="t">事業化状況報告</span><span class="c">0</span></div>
-          <div class="ph-col-b"><div style="padding:14px;text-align:center;font-size:11px;color:var(--faint)">該当なし</div></div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 </div>
@@ -181,6 +148,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=47"></script>
+<script src="assets/app.js?v=48"></script>
 </body>
 </html>

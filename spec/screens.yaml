@@ -24,10 +24,11 @@ meta:
 nav_structure:
   main:
     - ホーム: [H-01]
-    - 営業（獲得）: [E-01, E-02, E-03, E-04]   # E-02会社詳細・E-04案件詳細は詳細画面（トップメニュー項目ではなくパンくずで到達）
+    - 営業管理: [E-01, E-02, E-03]        # v0.4 Pillar A: 獲得（lead→契約締結）。E-02会社詳細はパンくず到達
+    - 案件管理: [E-05, E-04]              # v0.4 Pillar A: 履行（役務進行＋請求入金＋売上経費）。E-04案件詳細はパンくず到達
     - 経理処理: [K-01, K-02]
     - 経営管理: [M-01, M-02, M-03]
-    - 人事: [J-01, J-02, J-03]            # 配置は A-02（仮）
+    - 人事: [J-01, J-02, J-03]            # 配置は A-02（確定）
     - 設定: adminモードを開く（ページ遷移ではない。CLAUDE.md §2-1）
   admin:                                   # 設定モードのサイドバー
     - [ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07]
@@ -49,7 +50,7 @@ screens:
       本日の予定: E-02   # 該当会社の詳細へ
     progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}   # 既存モックを改修
 
-  # ---- 営業（獲得）----
+  # ---- 営業管理（獲得：lead→契約締結）----
   - id: E-01
     name: 会社一覧（顧客管理）
     nav: main
@@ -67,39 +68,57 @@ screens:
       ポータルプレビュー: ST-04
     progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
   - id: E-03
-    name: 案件（案件管理）
-    nav: main
-    tabs: [ボード, テーブル, レポート, BP, 補助金履行]   # 全タブ有効（CLAUDE.md §2-4）
-          # Gate1(v0.3): ボード=販売パイプライン（列＝ステータス）。テーブル=実ラベル＋許可遷移UI（window.openStatus）。
-          #   「補助金履行」タブ=成約後の履行フェーズ（交付申請→…→事業化状況報告）＝案件ステータスとは別軸。「（仮）」撤去。
+    name: 営業案件（獲得パイプライン）
+    nav: main   # 営業管理エリア
+    tabs: [ボード, テーブル, レポート, BP]   # 全タブ有効（CLAUDE.md §2-4）
+          # Gate1(v0.4): 販売パイプライン（獲得 lead→契約締結）のみ。ボード=ステータス列／テーブル=実ラベル＋openStatus遷移UI。
+          #   旧「補助金履行」タブは案件管理(E-05)へ移設（獲得と履行を2エリアに分離＝Pillar A）。
     state_ref: domain/anken-status.state.mmd          # 販売パイプライン10ステージ（A-03確定）
     to:
       案件クリック: E-04
       ステータス更新: E-03       # 許可遷移のみ・成功応答後に反映
       ステータス更新失敗: E-03   # 失敗時は同画面にエラー表示・楽観更新禁止
+      履行へ: E-05
     progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
 
+  # ---- 案件管理（履行：契約後の役務進行＋請求入金＋売上経費）----
+  - id: E-05
+    name: 案件（履行）一覧
+    nav: main   # 案件管理エリアの入口
+    role: 営業・経営・管理（顧客は不可）
+    tabs: [補助金/助成金（役務）, テーブル（履行中）, BPO実施, レポート納品]
+    note: |
+      契約後の履行を管理。KPI＝コンサル＝採択金額／入金。
+      # Gate1(v0.4): 補助金役務ボード＝consult-status.state.mmd。テーブルに役務ステージ＋完了条件。
+      #   BPO=完了ライン受給同額（A-13仮・×2は参考）。レポート=納品で完了。役務更新UI＝window.openConsult。
+    state_ref: domain/consult-status.state.mmd
+    to:
+      案件クリック: E-04
+      役務更新: E-05         # 前進のみ・成功応答後に反映（楽観更新なし）。採択＝成果報酬の請求トリガー
+      役務更新失敗: E-05
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}   # v0.4新設
+
   - id: E-04
-    name: 案件詳細
-    nav: main   # 詳細画面（パンくずで到達。トップメニューには出さない）
+    name: 案件詳細（2軸）
+    nav: main   # 詳細画面（パンくずで到達。案件管理エリア）
     role: 営業・経営・管理（顧客は不可）
     note: |
-      1案件を回す作業画面。主キー=HubSpot Deal ID。会社詳細(E-02)がハブ、本画面が作業単位。
-      顧客ポータル(P-01)の社内側の双子＝ここが案件別「依頼中／次回予定」の元データ。
-      # Gate1(v0.3): 主表示=IS番号／Deal IDは data-deal-id＋副次（Z-06）。ステータス=販売パイプライン実装（stepper＋openStatus遷移UI）。
-      #   補助金 履行フェーズを別軸セクションに分離（成約後・別state）。請求=board表示のみ／契約=GreatSign／議事録=Notta。
+      1案件を回す作業画面。主キー=HubSpot Deal ID（表示はIS番号）。会社詳細(E-02)がハブ、本画面が作業単位。
+      # Gate1(v0.4): 2軸表示。お金軸＝契約締結→着手金→成果報酬（採択後）。役務軸＝consult-status.state.mmd（着手→…→完了）。
+      #   連動：採択（役務）→成果報酬の請求（お金）。売上・経費・粗利＝案件別（正本＝freee/管理会計Excel・コンサル帰属）。
+      #   主表示=IS番号／Deal IDは data-deal-id＋副次（Z-06）。タスク＝P-01の社内側。役務更新UI＝window.openConsult。
     contains:
-      - 案件サマリー（案件番号IS＝主表示／Deal ID＝結合キー・会社・種別・金額・担当＝TimeRex）
-      - 案件ステータス（domain/anken-status.state.mmd 参照。販売パイプライン・遷移UIは許可遷移のみ・楽観更新なし）
-      - 補助金 履行フェーズ（成約後の別軸・v0.3は概念分離まで）
+      - 案件サマリー（IS番号＝主表示／Deal ID＝結合キー・種別・部門=コンサル・担当＝TimeRex）
+      - お金軸（契約締結→着手金→成果報酬。着手金=契約時／成果報酬=採択後）
+      - 役務軸（consult-status.state.mmd・前進のみ・楽観更新なし）
+      - 売上・経費・粗利（案件別。売上=着手金+成果報酬／原価=営業紹介料+現場人件費／外注費分類=営業紹介料は原価・管理外注は販管費）
       - タスク（いまお願いしていること＝P-01の社内側）
-      - 請求内訳（board連携・表示のみ）
       - 契約（GreatSign状態）／議事録（Notta リンク）
-    state_ref: domain/anken-status.state.mmd
+    state_ref: domain/consult-status.state.mmd
     to:
       会社リンク: E-02
       ポータルプレビュー: ST-04   # この案件のポータルをプレビュー
-    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}   # v0.2新設・カンプ到達可
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
 
   # ---- 経理処理 ----
   - id: K-01

@@ -17,6 +17,10 @@ meta:
                   Z-06=主表示IS番号/Deal IDは結合キー(data-deal-id)。rules二層＝編集ST-02(st02_rules.html)/閲覧rules.html(rules_view)。
                   A-01/A-02確定反映。Z-02〜06クローズ。A-09/A-10（会社独自ルール・給与手当計算）はv0.4。
   gate1_v0.3: 2026-07-20 実装後Gate1。全画面 kanpu=v。E-03/E-04ステータス実装。conformance参照。
+  changelog_v0.5: フェーズ1修正漏れ（ST-07正本化8系統・P-01同期・E-04売上経費明細分類/粗利=売上−原価）／
+                  フェーズ2 Pillar B（Track A/B・config/rules.json・J-03点数化根拠・J-02給与根拠と契約類型）／
+                  フェーズ3 Pillar C（R-01記録・通知＝操作ログ/日報/アーカイブ/通知フィード・ST-04会社紐付けA-05）。
+                  確定：A-13（顧客=同額下限/自社=×2目標）・Z-14（成約=当月締結）。据置：A-14。
   changelog_v0.4: Pillar A＝営業管理（獲得）／案件管理（履行）の2エリア分離。consult-status.state.mmd新設。E-05新設・E-04 2軸＋売上経費。
   changelog_v0.4.1: 案件管理を種別別の独立ステータスに（E-05タブ＝レポート/BPO/補助金助成金/その他・各独自ステージ）。
                     BPO(親)⇔補助金助成金(子)を Deal ID 関連で 1:N（A-14）。会社詳細/案件詳細は種別で分けず束ねる。
@@ -33,6 +37,7 @@ nav_structure:
     - 経理処理: [K-01, K-02]
     - 経営管理: [M-01, M-02, M-03]
     - 人事: [J-01, J-02, J-03]            # 配置は A-02（確定）
+    - 記録・通知: [R-01]                  # v0.5 Pillar C: 操作ログ→日報→アーカイブ→通知フィード
     - 設定: adminモードを開く（ページ遷移ではない。CLAUDE.md §2-1）
   admin:                                   # 設定モードのサイドバー
     - [ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07]
@@ -204,7 +209,7 @@ screens:
     name: 顧客ポータル管理
     nav: admin
     write: true
-    note: 会社・案件ごとにプレビュー必須。配信は LINE LIFF（A-04）。
+    note: 紐付け単位＝会社（1社1URL・A-05）。LIFF起動パラメータは会社を特定（A-04・発行トークン→会社）。1社の複数案件はポータル内でまとめて表示。配信は LINE LIFF。
     to:
       プレビュー: P-01            # プレビューモードで開く
       発行: ST-04
@@ -227,6 +232,20 @@ screens:
     write: true
     to: {接続テスト成功: ST-07, 接続テスト失敗: ST-07}
     progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}
+
+  # ---- 記録・通知（Pillar C）----
+  - id: R-01
+    name: 記録・通知
+    nav: main
+    role: 全ロール
+    tabs: [今日の日報, 記録アーカイブ, 操作ログ, 通知フィード]
+    note: |
+      # Gate1(v0.5 Pillar C): C1 操作ログ＝ステータス更新に actor＋timestamp（app.js window.logOp・localStorage）。
+      #   C2 日報＝操作ログから決定論的集約（事実列挙・AI要約は1行のみ＝検査対象）。C3 アーカイブ＝日付で遡れる・永続。
+      #   C4 通知フィード＝「通知済み」状態＋配信経路設計（社内LINEグループ）。LINE実配信の結線は後フェーズ。
+    to:
+      日報を開く: R-01
+    progress: {kanpu: v, mapping: "-", impl: "-", accepted: "-"}   # v0.5新設
 
   # ---- 外部（顧客向け）----
   - id: P-01

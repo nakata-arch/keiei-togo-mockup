@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ルール編集｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=49" /><link rel="stylesheet" href="assets/style.css?v=49" /><link rel="stylesheet" href="assets/ui.css?v=49" />
+<link rel="stylesheet" href="assets/tokens.css?v=50" /><link rel="stylesheet" href="assets/style.css?v=50" /><link rel="stylesheet" href="assets/ui.css?v=50" />
 </head>
 <!-- ST-02 ルール編集（編集エンジン＝値の正本）。A-07/A-11/Z-05：編集はここ、閲覧は rules.html。
      A-09（会社独自ルールの設定値化）はv0.4。本画面はv0.3では「編集の枠」＝構造まで（値のランタイム反映はv0.4）。
@@ -98,12 +98,12 @@
         </div>
       </div>
 
-      <!-- 会社独自ルール（v0.4予告） -->
-      <div class="card b12" style="padding:14px 18px;opacity:.72;border-style:dashed">
+      <!-- Track B の器（config/rules.json）＋後フェーズ予告 -->
+      <div class="card b12" style="padding:14px 18px;border-left:4px solid var(--blue)">
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span class="badge b-sub">v0.4 予定</span>
-          <span style="font-size:12.5px;font-weight:700">会社独自ルールの設定値化（A-09）／給与・手当の計算（A-10）</span>
-          <span style="font-size:11.5px;color:var(--faint)">就業規則→評価、決算書→予算などのドキュメント投入→AI構造化ドラフト→承認→反映の導出経路。本バッチ（v0.3）は枠のみ。</span>
+          <span class="badge b-blue">Track B（運用値の器）</span>
+          <span style="font-size:12.5px;font-weight:700">上記の値の実体＝<span class="tnum">config/rules.json</span>（ランタイム）</span>
+          <span style="font-size:11.5px;color:var(--faint);margin-left:auto">後フェーズ：A-09 会社独自ルールの設定値化（就業規則→評価／決算書→予算のドキュメント投入→AI構造化→承認→config反映）／A-10 給与手当の計算（数字未定・金額変換式は入れない）。</span>
         </div>
       </div>
     </div>
@@ -142,6 +142,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=49"></script>
+<script src="assets/app.js?v=50"></script>
 </body>
 </html>

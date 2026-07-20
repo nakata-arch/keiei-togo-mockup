@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>記録・通知｜経営統合システム</title>
+<link rel="stylesheet" href="assets/tokens.css?v=50" /><link rel="stylesheet" href="assets/style.css?v=50" /><link rel="stylesheet" href="assets/ui.css?v=50" />
+</head>
+<!-- R-01 記録・通知（Pillar C）。C1 操作ログ（actor+timestamp）／C2 日報の自動生成（操作ログから決定論的集約・AI要約1行のみ）／
+     C3 記録アーカイブ（日付で遡れる）／C4 通知フィード（常に通知されている状態・LINE実配信は後フェーズ・「通知済み」状態と経路設計まで）。
+     操作ログは app.js の window.getOpLog()（localStorage）。ステータス更新のたびに追記される。 -->
+<body data-page="kiroku" data-role="kouda">
+<div class="app">
+<aside class="sidebar" id="nav"></aside>
+<div class="main">
+  <div class="topbar">
+    <div><div class="crumb">記録・通知</div><h1>記録・通知</h1></div>
+    <span class="sample">値はサンプル</span>
+    <span class="badge b-good"><span class="d"></span>日報：毎営業日 9:05 自動通知</span>
+  </div>
+  <div class="content">
+
+    <div class="dtabs">
+      <span class="dtab on" data-g="k" data-t="today" onclick="swTab('k','today')">今日の日報</span>
+      <span class="dtab" data-g="k" data-t="archive" onclick="swTab('k','archive')">記録アーカイブ</span>
+      <span class="dtab" data-g="k" data-t="log" onclick="swTab('k','log')">操作ログ</span>
+      <span class="dtab" data-g="k" data-t="feed" onclick="swTab('k','feed')">通知フィード</span>
+    </div>
+
+    <!-- 今日の日報（操作ログから決定論的集約＋AI要約1行） -->
+    <div class="dpane on" data-g="k" data-t="today">
+      <div class="card" style="padding:0;max-width:820px;border-left:4px solid var(--good)">
+        <div class="card-h"><span class="t">2026-07-20（火） 日次ダイジェスト</span><span class="sp"></span><span class="badge b-good"><span class="d"></span>通知済み 9:05</span></div>
+        <div style="padding:14px 18px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="badge b-blue">AI要約（1行・検査対象）</span></div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:14px" id="aiSummary">本日は 獲得2件・役務1件・入金1件が前進。要注意：IS-2026-0074 が交付申請で停滞8日。</div>
+          <div style="font-size:11px;color:var(--faint);font-weight:700;margin-bottom:6px">事実（操作ログから決定論的に集約・AIは要約1行のみ）</div>
+          <div id="todayFacts"></div>
+          <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:11px;color:var(--sub)">配信：社内LINEグループへ 9:05 に通知済み（モック）。<b>実配信（LINE Messaging API・グループ配信）の結線は後フェーズ</b>。本フェーズは「通知済み」状態と配信経路の設計まで。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 記録アーカイブ（日付で遡れる・常に残る） -->
+    <div class="dpane" data-g="k" data-t="archive">
+      <div class="card" style="overflow-x:auto;max-width:820px">
+        <div class="card-h"><span class="t">日報アーカイブ（記録として常に残る）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">日付で遡れる</span></div>
+        <table>
+          <thead><tr><th>日付</th><th class="r">操作件数</th><th>要約</th><th>通知</th><th></th></tr></thead>
+          <tbody>
+            <tr class="rowlink" onclick="swTab('k','today')"><td class="tnum" style="font-weight:800">2026-07-20（火）</td><td class="r tnum" id="cntToday">—</td><td style="font-size:12px;color:var(--sub)">獲得2・役務1・入金1／停滞1件</td><td><span class="badge b-good"><span class="d"></span>通知済</span></td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum" style="font-weight:800">2026-07-19（月）</td><td class="r tnum">7</td><td style="font-size:12px;color:var(--sub)">採択1・交付決定1・請求発行2</td><td><span class="badge b-good"><span class="d"></span>通知済</span></td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum" style="font-weight:800">2026-07-18（金）</td><td class="r tnum">5</td><td style="font-size:12px;color:var(--sub)">レポート納品1・消込2</td><td><span class="badge b-good"><span class="d"></span>通知済</span></td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+            <tr><td class="tnum" style="font-weight:800">2026-07-17（木）</td><td class="r tnum">6</td><td style="font-size:12px;color:var(--sub)">新規リード2・アポ確1</td><td><span class="badge b-good"><span class="d"></span>通知済</span></td><td class="r"><span class="btn btn-ghost btn-sm">開く</span></td></tr>
+          </tbody>
+        </table>
+        <div style="padding:9px 16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">日報は削除されず永続保存（記録として常に残っている）。実運用ではオブジェクトストレージ／DBに保管。</div>
+      </div>
+    </div>
+
+    <!-- 操作ログ（C1：actor＋timestamp） -->
+    <div class="dpane" data-g="k" data-t="log">
+      <div class="card" style="overflow-x:auto;max-width:900px">
+        <div class="card-h"><span class="t">操作ログ（誰が・いつ・どの案件を・どう更新したか）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">ステータス更新のたびに自動記録</span></div>
+        <table>
+          <thead><tr><th>日時</th><th>実行者</th><th>案件</th><th>種別</th><th>変更（from → to）</th></tr></thead>
+          <tbody id="logRows"></tbody>
+        </table>
+        <div style="padding:9px 16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">この画面で「営業」「案件」のステータスを更新すると、ここに actor＋timestamp で追記されます（localStorage・モック）。実運用は HubSpot 監査＋自社ログ。</div>
+      </div>
+    </div>
+
+    <!-- 通知フィード（C4：常に通知されている状態） -->
+    <div class="dpane" data-g="k" data-t="feed">
+      <div style="max-width:720px">
+        <div class="card" style="display:flex;align-items:center;gap:10px;padding:12px 16px;margin-bottom:12px;border-left:4px solid var(--blue)">
+          <span class="badge b-blue"><span class="d"></span>配信経路</span>
+          <span style="font-size:12px;color:var(--sub)">社内 LINE 公式（グループ配信）＋ 本パネル。日報は毎営業日 9:05 に自動送信。<b>LINE 実配信の結線は後フェーズ</b>（いまは「通知済み」状態と経路の設計まで）。</span>
+        </div>
+        <div class="card" style="padding:13px 16px;margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px"><span class="badge b-good"><span class="d"></span>通知済 7/20 9:05</span><b style="font-size:12.5px">日次ダイジェスト 2026-07-20</b></div><div style="font-size:12px;color:var(--sub);margin-top:6px">獲得2・役務1・入金1が前進／IS-2026-0074 停滞8日 要フォロー</div></div>
+        <div class="card" style="padding:13px 16px;margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px"><span class="badge b-good"><span class="d"></span>通知済 7/19 9:05</span><b style="font-size:12.5px">日次ダイジェスト 2026-07-19</b></div><div style="font-size:12px;color:var(--sub);margin-top:6px">採択1・交付決定1・請求発行2</div></div>
+        <div class="card" style="padding:13px 16px"><div style="display:flex;align-items:center;gap:8px"><span class="badge b-good"><span class="d"></span>通知済 7/18 9:05</span><b style="font-size:12.5px">日次ダイジェスト 2026-07-18</b></div><div style="font-size:12px;color:var(--sub);margin-top:6px">レポート納品1・消込2</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script src="assets/app.js?v=50"></script>
+<script>
+/* 操作ログ（app.js window.getOpLog）から 操作ログ表 と 今日の事実 を描画 */
+(function () {
+  var DATE = "2026-07-20";
+  var log = (window.getOpLog ? window.getOpLog() : []);
+  var badgeKind = { "獲得": "b-blue", "役務": "b-warn", "入金": "b-good" };
+  function fmt(ts) { return (ts || "").replace("T", " "); }
+  // 操作ログ表
+  var rows = log.map(function (e) {
+    var k = badgeKind[e.kind] || "b-sub";
+    return '<tr><td class="tnum">' + fmt(e.ts) + '</td><td>' + e.actor + '</td><td class="tnum" style="font-weight:700">' + e.deal +
+           '</td><td><span class="badge ' + k + '"><span class="d"></span>' + e.kind + '</span></td><td>' + e.from + ' → <b>' + e.to + '</b></td></tr>';
+  }).join("");
+  var lr = document.getElementById("logRows");
+  if (lr) lr.innerHTML = rows || '<tr><td colspan="5" style="text-align:center;color:var(--faint);padding:16px">まだ操作がありません</td></tr>';
+  // 今日の事実（決定論的集約＝該当日のログを列挙）
+  var today = log.filter(function (e) { return (e.ts || "").slice(0, 10) === DATE; });
+  var tf = document.getElementById("todayFacts");
+  if (tf) {
+    tf.innerHTML = (today.length ? today : log.slice(0, 4)).map(function (e) {
+      var k = badgeKind[e.kind] || "b-sub";
+      return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--line-2);font-size:12.5px"><span class="badge ' + k + '"><span class="d"></span>' + e.kind + '</span><span class="tnum" style="font-weight:700">' + e.deal + '</span><span>' + e.from + ' → <b>' + e.to + '</b></span><span style="margin-left:auto;color:var(--faint);font-size:11px" class="tnum">' + fmt(e.ts).slice(11) + ' ' + e.actor + '</span></div>';
+    }).join("");
+  }
+  var ct = document.getElementById("cntToday");
+  if (ct) ct.textContent = (today.length || log.length);
+})();
+</script>
+</body>
+</html>

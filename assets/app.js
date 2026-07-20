@@ -76,7 +76,9 @@
       { id: "attendance", file: "attendance.html", ic: IC.clock,   label: "勤怠", sets: ["admin", "kanri", "ippan", "asst"] },  /* J-01 */
       { id: "payslips",   file: "payslips.html",   ic: IC.payslip, label: "給与・報酬明細", sets: ALL },                        /* J-02 */
       { id: "evaluation", file: (S === "ippan" || S === "asst") ? "evaluation_member.html" : "evaluation.html",
-        ic: IC.award, label: "評価・賞与", sets: ALL } ] }                                                                       /* J-03 */
+        ic: IC.award, label: "評価・賞与", sets: ALL } ] },                                                                      /* J-03 */
+    { label: "記録・通知", items: [   /* v0.5 Pillar C: 操作ログ→日報→アーカイブ→通知フィード */
+      { id: "kiroku", file: "kiroku.html", ic: IC.book, label: "記録・通知", sets: ALL } ] }                                     /* R-01 */
   ];
 
   /* ===== 設定モードのナビ（screens.yaml nav_structure.admin：ST-01〜07）===== */
@@ -208,6 +210,31 @@
     var t = document.createElement("div"); t.className = "toast"; t.textContent = msg; c.appendChild(t);
     setTimeout(function () { t.classList.add("out"); setTimeout(function () { t.remove(); }, 260); }, 2400);
   };
+  /* ===== 操作ログ（Pillar C1）：ステータス更新に actor＋timestamp =====
+     モックは localStorage(kv4_log) に保存。実wiring（HubSpot監査）は後フェーズ。 */
+  var LOG_KEY = "kv4_log";
+  window.getOpLog = function () { try { return JSON.parse(localStorage.getItem(LOG_KEY) || "[]"); } catch (e) { return []; } };
+  window.logOp = function (e) {
+    var l = window.getOpLog();
+    l.unshift(e);
+    try { localStorage.setItem(LOG_KEY, JSON.stringify(l.slice(0, 300))); } catch (x) {}
+  };
+  /* 初回のみサンプル操作ログを播種（日報・アーカイブ・通知が空にならないように） */
+  (function seedLog() {
+    try {
+      if (localStorage.getItem("kv4_log_seeded")) return;
+      var seed = [
+        { actor: "幸田 尚大", ts: "2026-07-20T09:12:00", deal: "IS-2026-0074", kind: "役務", from: "着手", to: "交付申請" },
+        { actor: "北山",      ts: "2026-07-20T10:03:00", deal: "IS-2026-0095", kind: "獲得", from: "アポ確", to: "商談中" },
+        { actor: "新谷 剛士", ts: "2026-07-20T11:40:00", deal: "IS-2026-0092", kind: "獲得", from: "提案後", to: "成約" },
+        { actor: "幸田 尚大", ts: "2026-07-19T16:22:00", deal: "IS-2026-0055", kind: "役務", from: "採択", to: "交付決定" },
+        { actor: "今井",      ts: "2026-07-19T14:05:00", deal: "IS-2026-0058", kind: "入金", from: "—", to: "消込済 235万" }
+      ];
+      localStorage.setItem(LOG_KEY, JSON.stringify(seed));
+      localStorage.setItem("kv4_log_seeded", "1");
+    } catch (e) {}
+  })();
+
   /* ===== 案件ステータス（販売パイプライン10ステージ）=====
      正＝domain/anken-status.state.mmd（A-03確定）。next[] は state.mmd の「UIが許可する遷移」。
      本流は前進のみ／失注はアクティブ全段階から／長期リード→アポ確の復帰／その他の逆走は不可（例外はHubSpotで直接修正）。 */
@@ -228,6 +255,7 @@
   window.stageBadge = function (k) { var s = STAGES[k]; return s ? '<span class="badge ' + s.badge + '"><span class="d"></span>' + s.label + "</span>" : k; };
   window.openStatus = function (dealNo, cur) {
     var s = STAGES[cur] || STAGES.lead;
+    window._pendingOp = { deal: dealNo, kind: "獲得", from: s.label };
     document.querySelectorAll("#stModal").forEach(function (n) { n.remove(); });
     var body, foot;
     if (s.next.length) {
@@ -270,6 +298,7 @@
   window.consultBadge = function (k) { var s = CONSULT[k]; return s ? '<span class="badge ' + s.badge + '"><span class="d"></span>' + s.label + "</span>" : k; };
   window.openConsult = function (dealNo, cur) {
     var s = CONSULT[cur] || CONSULT.chakushu;
+    window._pendingOp = { deal: dealNo, kind: "役務", from: s.label };
     document.querySelectorAll("#stModal").forEach(function (n) { n.remove(); });
     var body, foot;
     if (s.next.length) {
@@ -313,6 +342,7 @@
   window.openStage = function (kind, dealNo, cur) {
     var map = STAGEMAPS[kind]; if (!map) return;
     var s = map.steps[cur] || map.steps[Object.keys(map.steps)[0]];
+    window._pendingOp = { deal: dealNo, kind: map.title, from: s.label };
     document.querySelectorAll("#stModal").forEach(function (n) { n.remove(); });
     function bd(k) { var x = map.steps[k]; return x ? '<span class="badge ' + x.badge + '"><span class="d"></span>' + x.label + "</span>" : k; }
     var body, foot;
@@ -342,8 +372,17 @@
     if (cand) { cand.parentElement.querySelectorAll(".cand").forEach(function (c) { c.classList.remove("sel"); }); cand.classList.add("sel"); }
     var ok = t.closest ? t.closest(".modal-f .btn-primary") : null;
     if (ok) {
-      var m = ok.closest(".modal-bg"); if (m) m.classList.remove("open");
-      window.toast("✓ 「" + ok.textContent.trim() + "」を受け付けました（モックのためデータは変わりません）");
+      var m = ok.closest(".modal-bg");
+      /* Pillar C1：ステータス/役務の更新は操作ログに actor＋timestamp で残す */
+      if (m && m.id === "stModal" && window._pendingOp) {
+        var sel = m.querySelector(".cand.sel") || m.querySelector(".cand");
+        var toLabel = sel ? (sel.querySelector(".badge") ? sel.querySelector(".badge").textContent.trim() : sel.textContent.trim()) : "(更新)";
+        var now = new Date();
+        window.logOp({ actor: U.name, ts: now.toISOString().slice(0, 19), deal: window._pendingOp.deal, kind: window._pendingOp.kind, from: window._pendingOp.from, to: toLabel });
+        window._pendingOp = null;
+      }
+      if (m) m.classList.remove("open");
+      window.toast("✓ 「" + ok.textContent.trim() + "」を受け付けました（記録に残しました・モックのためデータは変わりません）");
     }
   });
 

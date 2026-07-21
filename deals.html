@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>営業｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
+<link rel="stylesheet" href="assets/tokens.css?v=53" /><link rel="stylesheet" href="assets/style.css?v=53" /><link rel="stylesheet" href="assets/ui.css?v=53" />
 </head>
 <!-- E-03 営業（営業管理エリア・v0.4.1）。獲得＝販売パイプライン lead→契約締結。
      表示は ボード＋テーブルの2つのみ（レポート/BPタブは廃止）。種別セグメント＝レポート/BPO/補助金助成金/その他。
@@ -164,6 +164,17 @@
       var okOwner = (!owner || el.textContent.indexOf(owner) > -1);
       el.style.display = (okType && okOwner) ? "" : "none";
     });
+    /* 件数バッジを実表示数に連動（一情報一箇所）＋ 権限あり0件は空状態 */
+    if (window.setTabN) {
+      window.setTabN('.dtab[data-t="table"]', window.countVisible('.dpane[data-t="table"] tbody tr'));
+      window.setTabN('.dtab[data-t="report"]', window.countVisible('.dpane[data-t="report"] tbody tr'));
+      window.setTabN('.dtab[data-t="bp"]', window.countVisible('.dpane[data-t="bp"] tbody tr'));
+    }
+    if (window.showEmpty) {
+      window.showEmpty('.dpane[data-t="table"] .card', 'tbody tr', '担当分の営業案件はまだありません。');
+      window.showEmpty('.dpane[data-t="report"] .card', 'tbody tr', '担当分のレポート案件はありません。');
+      window.showEmpty('.dpane[data-t="bp"] .card', 'tbody tr', '担当分のBP案件はありません。');
+    }
   }
   seg.addEventListener("click", function (e) {
     var b = e.target.closest("span[data-f]"); if (!b) return;
@@ -174,6 +185,6 @@
   apply();
 })();
 </script>
-<script src="assets/app.js?v=52"></script>
+<script src="assets/app.js?v=53"></script>
 </body>
 </html>

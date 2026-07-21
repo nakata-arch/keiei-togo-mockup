@@ -55,6 +55,25 @@
     if (typeof window.onPermReady === "function") { try { window.onPermReady(); } catch (e) {} }
   };
 
+  /* ===== 件数・空状態の共通プリミティブ（一情報一箇所：数は1回だけ数える）=====
+     禁止（割り当てなし）＝メニュー/項目を隠す（nav sets）。権限あり0件＝項目は残し空状態を出す。 */
+  window.countVisible = function (sel) {   /* owner-filter 後の実表示数（自分の style.display で判定・タブ非活性でも数えられる） */
+    var n = 0; document.querySelectorAll(sel).forEach(function (e) { if (e.style.display !== "none") n++; }); return n;
+  };
+  window.setTabN = function (tabSel, n) {   /* タブ/メニューの件数バッジを実数に更新 */
+    var t = document.querySelector(tabSel); if (!t) return;
+    var s = t.querySelector(".n"); if (s) s.textContent = n;
+  };
+  window.showEmpty = function (paneSel, rowSel, msg) {   /* 権限あり0件 → 空状態メッセージ（禁止時は項目ごと隠すので呼ばれない） */
+    var pane = document.querySelector(paneSel); if (!pane) return;
+    var vis = window.countVisible(paneSel + " " + rowSel);
+    var e = pane.querySelector(".perm-empty");
+    if (vis === 0) {
+      if (!e) { e = document.createElement("div"); e.className = "perm-empty"; e.style.cssText = "padding:26px 14px;text-align:center;color:var(--faint);font-size:12.5px"; pane.appendChild(e); }
+      e.textContent = msg; e.style.display = "";
+    } else if (e) { e.style.display = "none"; }
+  };
+
   /* SVGアイコン */
   function svg(p) { return '<svg viewBox="0 0 24 24">' + p + "</svg>"; }
   var IC = {
@@ -89,9 +108,11 @@
     { label: "営業管理", items: [   /* v0.4 Pillar A: 獲得までの管理（lead→契約締結） */
       { id: "companies", file: "companies.html", ic: IC.company, label: "会社（顧客）",  /* E-01（E-02はここから遷移） */
         sets: ["admin", "kanri", "bucho", "ippan"] },
-      { id: "deals",     file: "deals.html",     ic: IC.deals,   label: "営業", sets: ALL } ] },   /* E-03 販売パイプライン */
+      { id: "deals",     file: "deals.html",     ic: IC.deals,   label: "営業",
+        sets: ["admin", "kanri", "bucho", "ippan"] } ] },   /* E-03 §9：アシスタントは営業の割り当てなし＝項目非表示（禁止→隠す） */
     { label: "案件管理", items: [   /* v0.4 Pillar A: 契約後の履行管理（役務進行＋請求入金＋売上経費） */
-      { id: "projects",  file: "projects.html",  ic: IC.flow,    label: "案件", sets: ALL } ] },   /* E-05 種別別ビュー */
+      { id: "projects",  file: "projects.html",  ic: IC.flow,    label: "案件",
+        sets: ["admin", "kanri", "bucho", "ippan"] } ] },   /* E-05 §9：アシスタントは案件の割り当てなし＝項目非表示（禁止→隠す） */
     { label: "経理処理", items: [   /* A-01: 経理処理と経営管理の分離は仮 */
       { id: "invoices",  file: "invoices.html",  ic: IC.invoice, label: "支払処理", count: 4, anchor: "#alerts", sets: ["admin", "kanri"] },   /* K-01 */
       { id: "reconcile", file: "reconcile.html", ic: IC.recon,   label: "入金消込", count: 3, anchor: "#alerts", sets: ["admin", "kanri"] } ] }, /* K-02 */

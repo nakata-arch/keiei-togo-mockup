@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>案件｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
+<link rel="stylesheet" href="assets/tokens.css?v=53" /><link rel="stylesheet" href="assets/style.css?v=53" /><link rel="stylesheet" href="assets/ui.css?v=53" />
 </head>
 <!-- E-05 案件（案件管理エリア・v0.4.1）。契約後の履行を種別別の独立ステータスで管理。
      混在テーブルは廃止。種別タブごとに独自の役務ステータス列（他種別のステージを混ぜない）。
@@ -97,17 +97,32 @@
 </div>
 </div>
 
-<script src="assets/app.js?v=52"></script>
+<script src="assets/app.js?v=53"></script>
 <script>
 /* 権-4：部門長・一般は担当分のみ（担当名で判定。板カード＝.sc内テキスト／BPO行＝data-tanto） */
 (function () {
   function apply() {
     var owner = (window.KV && window.KV.tanto) ? window.KV.tanto : null;
-    if (!owner) return;
-    document.querySelectorAll(".dpane .scard, .dpane tr.rowlink").forEach(function (el) {
-      var mine = (el.textContent.indexOf(owner) > -1) || (el.getAttribute("data-tanto") === owner);
-      el.style.display = mine ? "" : "none";
-    });
+    if (owner) {
+      document.querySelectorAll(".dpane .scard, .dpane tr.rowlink").forEach(function (el) {
+        var mine = (el.textContent.indexOf(owner) > -1) || (el.getAttribute("data-tanto") === owner);
+        el.style.display = mine ? "" : "none";
+      });
+    }
+    /* 種別タブの件数バッジを実表示数に連動（一情報一箇所） */
+    if (window.setTabN) {
+      window.setTabN('.dtab[data-t="report"]',  window.countVisible('.dpane[data-t="report"] .scard'));
+      window.setTabN('.dtab[data-t="bpo"]',      window.countVisible('.dpane[data-t="bpo"] tbody tr'));
+      window.setTabN('.dtab[data-t="subsidy"]',  window.countVisible('.dpane[data-t="subsidy"] .scard'));
+      window.setTabN('.dtab[data-t="other"]',    window.countVisible('.dpane[data-t="other"] .scard'));
+    }
+    /* 権限あり0件 → 空状態（禁止＝アシスタントは項目ごと非表示なので呼ばれない） */
+    if (window.showEmpty) {
+      window.showEmpty('.dpane[data-t="report"]',      '.scard',   '担当分のレポート案件はありません。');
+      window.showEmpty('.dpane[data-t="bpo"] .card',   'tbody tr', '担当分のBPO案件はありません。');
+      window.showEmpty('.dpane[data-t="subsidy"]',     '.scard',   '担当分の補助金助成金案件はありません。');
+      window.showEmpty('.dpane[data-t="other"]',       '.scard',   '担当分のその他案件はありません。');
+    }
   }
   window.onPermReady = apply;
 })();

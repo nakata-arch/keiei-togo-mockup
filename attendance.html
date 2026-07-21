@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>勤怠｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 </head>
 <body data-page="attendance" data-role="arakaki">
 <div class="app">
 <aside class="sidebar" id="nav"></aside>
 <div class="main">
   <div class="topbar">
-    <div><div class="crumb">人事・総務</div><h1>勤怠（自前勤怠・スーパーフレックス）</h1></div><span class="sample">値はサンプル</span>
-    <span class="badge b-sub"><span class="d"></span>業務委託者は対象外（請求書が正）</span>
+    <div><div class="crumb">管理部（⑤・自前勤怠）</div><h1>勤怠（自前勤怠・スーパーフレックス）</h1></div><span class="sample">値はサンプル</span>
+    <span class="badge b-sub"><span class="d"></span>業務委託者は対象外（雇用者ベース・請求書が正）</span>
+    <span id="permBanner" class="badge b-blue" style="margin-left:8px"><span class="d"></span></span>
     <div style="margin-left:auto"><select class="inp" style="width:150px"><option>2026年7月</option><option>6月</option></select></div>
   </div>
   <div class="content">
@@ -60,6 +61,22 @@
         </tbody>
       </table>
     </div>
+
+    <!-- 全社勤怠集計＝管理部・経営のみ（権-1・§9）。一般/部門長には表示しない。ロール切替で出/消しを実演 -->
+    <div class="card" data-see="admin,kanri" style="padding:0;margin-top:16px;border-left:4px solid var(--navy)">
+      <div class="card-h"><span class="t">全社 勤怠集計</span><span class="sp"></span><span class="badge b-navy"><span class="d"></span>管理部・経営のみ</span></div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>従業員（雇用者）</th><th class="r">当月 労働時間</th><th class="r">所定</th><th class="r">残業</th><th>状態</th></tr></thead>
+          <tbody>
+            <tr><td>従業員A</td><td class="r tnum">140:10</td><td class="r tnum">140:00</td><td class="r tnum">3:20</td><td><span class="badge b-good"><span class="d"></span>確定</span></td></tr>
+            <tr><td>新垣（アシスタント）</td><td class="r tnum">98:20</td><td class="r tnum">112:00</td><td class="r tnum">2:45</td><td><span class="badge b-warn"><span class="d"></span>補正待ち1件</span></td></tr>
+          </tbody>
+          <tfoot><tr><td>全社（雇用者ベース）</td><td class="r tnum">238:30</td><td class="r tnum">252:00</td><td class="r tnum">6:05</td><td><span style="font-size:11px;color:var(--faint)">→ ⑤時間削減スコアへ</span></td></tr></tfoot>
+        </table>
+      </div>
+      <div class="hint-t" style="padding:9px 18px">委託者（幸田・中田 等）は対象外。総労働時間の削減ダッシュボード（⑤管理部）は別画面（宿題）。この集計は管理部・経営のみ閲覧。</div>
+    </div>
   </div>
 </div>
 </div>
@@ -95,6 +112,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=51"></script>
+<script src="assets/app.js?v=52"></script>
 </body>
 </html>

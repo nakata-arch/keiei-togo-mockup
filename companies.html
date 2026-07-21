@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>会社｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 </head>
 <body data-page="companies">
 <div class="app">
@@ -25,6 +25,7 @@
       <select class="inp" style="width:150px" id="tantoSel"><option value="all">担当：すべて</option><option>幸田</option><option>北山</option><option>新谷</option></select>
       <select class="inp" style="width:170px"><option>並び順：最終接点が新しい</option><option>受給目標達成率が低い</option><option>経過年数が長い</option></select>
     </div>
+    <div id="permBanner" style="font-size:11px;color:var(--sub);margin:2px 0 8px"></div><!-- 権-3：ロールで担当分に絞る -->
 
     <div class="card" style="overflow-x:auto">
       <table>
@@ -60,13 +61,15 @@
   if (!chips || !body) return;
   var stF = "all";
   function apply() {
+    var owner = (window.KV && window.KV.tanto) ? window.KV.tanto : null;   /* 権-3：部門長・一般は担当分のみ */
     var tF = tanto ? tanto.value : "all", shown = 0;
     body.querySelectorAll("tr").forEach(function (r) {
       var okSt = (stF === "all" || r.getAttribute("data-st") === stF);
       var okTa = (tF === "all" || r.getAttribute("data-tanto") === tF);
-      var vis = okSt && okTa; r.style.display = vis ? "" : "none"; if (vis) shown++;
+      var okOwner = (!owner || r.getAttribute("data-tanto") === owner);
+      var vis = okSt && okTa && okOwner; r.style.display = vis ? "" : "none"; if (vis) shown++;
     });
-    if (count) count.textContent = "128社中 " + shown + "社を表示（サンプル）";
+    if (count) count.textContent = (owner ? ("担当分 " + shown + "社を表示（" + owner + "）") : ("128社中 " + shown + "社を表示（サンプル）"));
   }
   chips.addEventListener("click", function (e) {
     var c = e.target.closest("span[data-f]"); if (!c) return;
@@ -74,6 +77,8 @@
     stF = c.getAttribute("data-f"); apply();
   });
   if (tanto) tanto.addEventListener("change", apply);
+  window.onPermReady = apply;   /* app.js が KV 確定後に呼ぶ（ロール切替で担当分に絞る） */
+  apply();
 })();
 </script>
 
@@ -97,6 +102,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=51"></script>
+<script src="assets/app.js?v=52"></script>
 </body>
 </html>

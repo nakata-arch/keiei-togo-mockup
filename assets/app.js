@@ -6,13 +6,14 @@
 (function () {
 
   /* ロール定義（ST-05 スタッフマスタ相当・モック用） */
+  /* dept＝部門／tanto＝担当分フィルタの担当名（null＝全件。§9：管理者経営・管理部＝全件／部門長・一般＝担当分） */
   var USERS = {
-    nakata:   { name: "中田 雄斗", role: "CAIO・管理者/経営", av: "中", home: "home_nakata.html",   set: "admin", homeBadge: 2 },
-    kitayama: { name: "北山",      role: "代表・経営（営業）", av: "北", home: "home_kitayama.html", set: "admin", homeBadge: 2 },
-    imai:     { name: "今井",      role: "管理部（経理）",     av: "今", home: "home_imai.html",     set: "kanri", homeBadge: 4 },
-    kouda:    { name: "幸田 尚大", role: "コンサル部長（PM）", av: "幸", home: "home.html",          set: "bucho", homeBadge: 4 },
-    shintani: { name: "新谷 剛士", role: "営業部",             av: "新", home: "home_shintani.html", set: "ippan", homeBadge: 2 },
-    arakaki:  { name: "新垣",      role: "アシスタント",       av: "垣", home: "home_arakaki.html",  set: "asst", homeBadge: 2 },
+    nakata:   { name: "中田 雄斗", role: "CAIO・管理者/経営", av: "中", home: "home_nakata.html",   set: "admin", homeBadge: 2, dept: "経営",       tanto: null },
+    kitayama: { name: "北山",      role: "代表・経営（営業）", av: "北", home: "home_kitayama.html", set: "admin", homeBadge: 2, dept: "経営",       tanto: null },
+    imai:     { name: "今井",      role: "管理部（経理）",     av: "今", home: "home_imai.html",     set: "kanri", homeBadge: 4, dept: "管理部",     tanto: null },
+    kouda:    { name: "幸田 尚大", role: "コンサル部長（PM）", av: "幸", home: "home.html",          set: "bucho", homeBadge: 4, dept: "コンサル",   tanto: "幸田" },
+    shintani: { name: "新谷 剛士", role: "営業部",             av: "新", home: "home_shintani.html", set: "ippan", homeBadge: 2, dept: "営業",       tanto: "新谷" },
+    arakaki:  { name: "新垣",      role: "アシスタント",       av: "垣", home: "home_arakaki.html",  set: "asst", homeBadge: 2, dept: "アシスタント", tanto: "新垣" },
     customer: { name: "豊田 隆",   role: "アストロラボ株式会社 様", av: "豊", home: "portal_customer.html", set: "customer" }
   };
 
@@ -27,6 +28,32 @@
     location.replace("portal_customer.html");
     return;
   }
+
+  /* ===== 権限エンジン（§9・要件v1.1）＝ロール切替で表示範囲が変わる（HTML/JSで実演）=====
+     window.KV：現ロールの set / 部門 / 担当名（tanto）。
+     data-see="admin,kanri" … その set のみ表示（例：全社集計＝管理部・経営のみ）。
+     [data-owner-filter] 内の [data-tanto] … 部門長・一般は自分の担当分のみ表示（tanto一致）。管理者・管理部は全件。 */
+  window.KV = { role: ROLE, set: S, name: (U.name || ""), dept: (U.dept || ""), tanto: (U.tanto || null) };
+  window.applyPerm = function () {
+    document.querySelectorAll("[data-see]").forEach(function (el) {
+      var allow = el.getAttribute("data-see").split(",").map(function (s) { return s.trim(); });
+      el.style.display = allow.indexOf(S) > -1 ? "" : "none";
+    });
+    if (window.KV.tanto) {
+      document.querySelectorAll("[data-owner-filter]").forEach(function (box) {
+        box.querySelectorAll("[data-tanto]").forEach(function (row) {
+          if (!row.hasAttribute("data-owner-locked"))
+            row.style.display = (row.getAttribute("data-tanto") === window.KV.tanto) ? "" : "none";
+        });
+      });
+    }
+    var b = document.getElementById("permBanner");
+    if (b) b.textContent = window.KV.tanto
+      ? ("表示は担当分のみ（" + window.KV.name + "／" + window.KV.dept + "）。管理者・管理部は全件。")
+      : ("全件表示（" + window.KV.dept + "）。");
+    /* ページ側フィルタ（担当分＋種別/状態）を KV 確定後に再実行させるフック */
+    if (typeof window.onPermReady === "function") { try { window.onPermReady(); } catch (e) {} }
+  };
 
   /* SVGアイコン */
   function svg(p) { return '<svg viewBox="0 0 24 24">' + p + "</svg>"; }
@@ -69,9 +96,9 @@
       { id: "invoices",  file: "invoices.html",  ic: IC.invoice, label: "支払処理", count: 4, anchor: "#alerts", sets: ["admin", "kanri"] },   /* K-01 */
       { id: "reconcile", file: "reconcile.html", ic: IC.recon,   label: "入金消込", count: 3, anchor: "#alerts", sets: ["admin", "kanri"] } ] }, /* K-02 */
     { label: "経営管理", items: [
-      { id: "exec",     file: "exec.html",     ic: IC.exec,   label: "経営サマリー", sets: ["admin", "kanri", "bucho"] },   /* M-01 */
-      { id: "budget",   file: "budget.html",   ic: IC.budget, label: "予算・実績",   sets: ["admin", "kanri", "bucho"] },   /* M-02 閲覧のみ・編集はST-01(A-01仮) */
-      { id: "cashflow", file: "cashflow.html", ic: IC.cash,   label: "キャッシュフロー", sets: ["admin", "kanri", "bucho"] } ] }, /* M-03 */
+      { id: "exec",     file: "exec.html",     ic: IC.exec,   label: "経営サマリー", sets: ALL },   /* M-01 権-6：一般も粗利・営業利益まで開示（詳細は画面側でdata-seeで絞る） */
+      { id: "budget",   file: "budget.html",   ic: IC.budget, label: "予算・実績",   sets: ALL },   /* M-02 権-7：一般も粗利・営業利益まで（詳細はdata-seeで絞る） */
+      { id: "cashflow", file: "cashflow.html", ic: IC.cash,   label: "キャッシュフロー", sets: ["admin", "kanri", "bucho"] } ] }, /* M-03 §9：一般＝— */
     { label: "人事", items: [   /* A-02: 評価・賞与の「人事」配置は仮 */
       { id: "attendance", file: "attendance.html", ic: IC.clock,   label: "勤怠", sets: ["admin", "kanri", "ippan", "asst"] },  /* J-01 */
       { id: "payslips",   file: "payslips.html",   ic: IC.payslip, label: "給与・報酬明細", sets: ALL },                        /* J-02 */
@@ -185,6 +212,7 @@
   if (el) {
     if (isAdminPage && S !== "admin") { location.replace(U.home); return; }  /* 権限外はST-xxに入れない */
     paint();
+    window.applyPerm();   /* §9 権限：ロールに応じて表示範囲を絞る */
     document.addEventListener("click", function () {
       var p = document.getElementById("userPop"), b = document.getElementById("userBtn");
       if (p) p.classList.remove("open"); if (b) b.classList.remove("open");

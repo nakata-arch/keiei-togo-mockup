@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>予算・実績｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 <style>
 .pl-mx td,.pl-mx th{white-space:nowrap}
 .pl-mx td.cur,.pl-mx th.cur{background:var(--warm-bg);border-left:1px solid var(--warn-line);border-right:1px solid var(--warn-line)}
@@ -20,6 +20,7 @@
   <div class="topbar">
     <div><div class="crumb">経営管理</div><h1>予算・実績</h1></div>
     <span class="sample">数値はサンプル</span>
+    <span id="permBanner" class="badge b-blue" style="margin-left:8px"><span class="d"></span></span>
     <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
       <select class="inp" style="width:180px"><option>2026年度（5月〜4月）</option><option>2025年度</option></select>
       <a class="btn btn-ghost btn-sm" href="budget_design.html">予算の編集は 設定 › 予算設計 へ</a><!-- M-02は閲覧のみ・編集=ST-01（A-01仮） -->
@@ -43,8 +44,8 @@
         </table>
       </div>
 
-      <!-- 予算→実績ブリッジ（ウォーターフォール） -->
-      <div class="tile b6">
+      <!-- 予算→実績ブリッジ（ウォーターフォール）＝詳細（§9 権-7：一般は非表示） -->
+      <div class="tile b6" data-see="admin,kanri,bucho">
         <div class="tl">営業利益：予算 → 実績のブリッジ（7月）</div>
         <div class="wf">
           <div class="wcol"><span class="wv tnum">441万</span><i style="height:136px;background:var(--navy)"></i><span class="wk">予算</span></div>
@@ -55,8 +56,8 @@
         <div style="font-size:11px;color:var(--faint);margin-top:6px">差異の要因を予算から実績へ橋渡しで表示。要因の内訳は行をクリック（実装時）。</div>
       </div>
 
-      <!-- 月次推移マトリクス -->
-      <div class="tile b12" style="padding:0">
+      <!-- 月次推移マトリクス＝詳細（§9 権-7：一般は非表示） -->
+      <div class="tile b12" data-see="admin,kanri,bucho" style="padding:0">
         <div class="card-h" style="border-radius:14px 14px 0 0">
           <span class="t">月次P&L（実績 → 予定）</span><span class="sp"></span>
           <span style="font-size:10.5px;color:var(--faint)">5〜7月＝実績／8月以降＝予算（淡色）・単位 万円</span>
@@ -79,8 +80,8 @@
         </div>
       </div>
 
-      <!-- 部門別 -->
-      <div class="tile b12" style="padding:0">
+      <!-- 部門別＝詳細（§9 権-7：一般は非表示） -->
+      <div class="tile b12" data-see="admin,kanri,bucho" style="padding:0">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">部門別（売上〜粗利・7月）</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">案件別の売上・原価（案件詳細E-04）から積み上げ。補助金/助成金＝コンサル帰属・レポート/営業獲得＝営業。販管費以下は全社のみ</span></div>
         <table>
           <thead><tr><th>部門</th><th class="r">売上 予算</th><th class="r">売上 実績</th><th class="r">差異</th><th class="r">粗利 実績</th><th></th></tr></thead>
@@ -118,6 +119,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=51"></script>
+<script src="assets/app.js?v=52"></script>
 </body>
 </html>

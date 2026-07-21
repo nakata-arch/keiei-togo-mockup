@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>給与・報酬明細｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 </head>
 <body data-page="payslips" data-role="kouda">
 <div class="app">
@@ -18,51 +18,49 @@
 
     <div class="dtabs">
       <span class="dtab on" data-g="p" data-t="mine" onclick="swTab('p','mine')">自分の明細</span>
-      <span class="dtab" data-g="p" data-t="all" onclick="swTab('p','all')">全体管理（管理部）<span class="n">9</span></span>
+      <span class="dtab" data-g="p" data-t="all" data-see="admin,kanri" onclick="swTab('p','all')">全体管理（管理部・経営のみ）<span class="n">9</span></span>
     </div>
 
-    <!-- 自分の明細：支給額が主役 -->
+    <!-- 自分の明細：結果と行動の2枚看板（主画面は2点＝金額と次の一手に絞る・詳細はモーダル） -->
     <div class="dpane on" data-g="p" data-t="mine">
-      <div class="bento" style="max-width:980px">
-        <div class="tile b6">
-          <div class="tl">7月のお支払い（あなた宛）</div>
-          <div class="hero tnum">50.1<small>万円</small></div>
-          <div style="font-size:12px;color:var(--sub);margin-top:8px" class="tnum">7/25 振込予定 ・ 三井住友 ****1234</div>
-          <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin-top:16px;max-width:420px">
-            <div style="flex:42;background:var(--navy-3)"></div>
-            <div style="flex:8.1;background:var(--orange)"></div>
-          </div>
-          <div style="display:flex;gap:16px;margin-top:8px;font-size:11.5px;color:var(--sub)" class="tnum">
-            <span><i style="display:inline-block;width:9px;height:9px;border-radius:3px;background:var(--navy-3);margin-right:5px"></i>基本報酬 42.0万</span>
-            <span><i style="display:inline-block;width:9px;height:9px;border-radius:3px;background:var(--orange);margin-right:5px"></i>賞与・褒賞 8.1万</span>
-          </div>
-          <div style="margin-top:14px;padding:10px 12px;background:var(--surface-2);border-radius:9px;font-size:11.5px">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="badge b-sub"><span class="d"></span>契約類型：業務委託</span><span style="color:var(--faint)">なぜこの金額か</span></div>
-            <div class="tnum" style="color:var(--sub);line-height:1.9">基本報酬 42.0万 ＝ 業務委託 契約額（月額固定）<br>賞与・褒賞 8.1万 ＝ コンサル部 個人配分 45% ×（褒賞原資より）→ <a href="evaluation.html#scoreBasis">評価で辿る</a></div>
-          </div>
-          <div style="display:flex;gap:8px;margin-top:14px">
-            <span class="btn btn-primary btn-sm">明細PDFを開く</span>
-            <a class="btn btn-ghost btn-sm" href="evaluation.html#scoreBasis">賞与の根拠を見る</a>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px;align-items:stretch">
+        <!-- 看板A：結果（金額が主役・Q1） -->
+        <div class="card" style="padding:22px 24px;border-left:4px solid var(--good)">
+          <div style="font-size:12px;font-weight:800;color:var(--sub)">今月のお支払い（<span id="payWho">あなた</span>宛）</div>
+          <div class="hero tnum" id="payAmt" style="margin-top:2px">50.1<small>万円</small></div>
+          <div style="font-size:11.5px;color:var(--faint);margin-top:4px">7/25 振込予定</div>
+          <div style="height:1px;background:var(--line);margin:16px 0"></div>
+          <div style="font-size:12px;font-weight:800;color:var(--sub)">次回 賞与の見込み</div>
+          <div class="tnum" id="bonusAmt" style="font-size:30px;font-weight:800;color:var(--orange-d);line-height:1.1;margin-top:2px">＋8.1<small style="font-size:13px">万円</small></div>
+          <div style="font-size:11px;color:var(--faint);margin-top:4px">評価の褒賞分から（見込み・目安／確定計算は未＝A-10）</div>
+          <div style="display:flex;gap:8px;margin-top:18px">
+            <span class="btn btn-primary btn-sm" onclick="openModal('mBreak')">金額の内訳を見る</span>
+            <span class="btn btn-ghost btn-sm" onclick="openModal('mCalc')">計算ルール</span>
           </div>
         </div>
-        <div class="tile b6" style="padding:0">
-          <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">これまでの明細</span></div>
-          <table>
-            <thead><tr><th>月</th><th class="r">支給額</th><th class="r">うち賞与</th><th></th></tr></thead>
-            <tbody>
-              <tr><td class="tnum">2026年7月</td><td class="r tnum" style="font-weight:800">50.1万円</td><td class="r tnum" style="color:var(--orange-d)">＋8.1万</td><td class="r"><span class="btn btn-ghost btn-sm">PDF</span></td></tr>
-              <tr><td class="tnum">2026年6月</td><td class="r tnum">42.0万円</td><td class="r tnum">—</td><td class="r"><span class="btn btn-ghost btn-sm">PDF</span></td></tr>
-              <tr><td class="tnum">2026年5月</td><td class="r tnum">42.0万円</td><td class="r tnum">—</td><td class="r"><span class="btn btn-ghost btn-sm">PDF</span></td></tr>
-              <tr><td class="tnum">2026年4月</td><td class="r tnum">42.0万円</td><td class="r tnum">—</td><td class="r"><span class="btn btn-ghost btn-sm">PDF</span></td></tr>
-            </tbody>
-          </table>
-          <div style="padding:9px 17px;border-top:1px solid var(--line);font-size:11px;color:var(--faint)">明細はあなたにだけ表示されます。</div>
+        <!-- 看板B：行動（何を頑張れば上がるか＝評価指標に直結） -->
+        <div class="card" style="padding:22px 24px;border-left:4px solid var(--orange)">
+          <div style="font-size:12px;font-weight:800;color:var(--sub)">何を頑張れば上がるか</div>
+          <div id="actionList" style="margin-top:14px"></div>
+          <a class="btn btn-ghost btn-sm" href="evaluation.html#scoreBasis" style="margin-top:12px">評価の根拠を見る →</a>
         </div>
+      </div>
+      <!-- これまでの明細（補足・小さく） -->
+      <div class="card" style="padding:0;max-width:900px;margin-top:16px;overflow-x:auto">
+        <div class="card-h"><span class="t">これまでの明細</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">あなたにだけ表示</span></div>
+        <table>
+          <thead><tr><th>月</th><th class="r">支給額</th><th class="r">うち賞与</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="tnum">2026年7月</td><td class="r tnum" style="font-weight:800">50.1万円</td><td class="r tnum" style="color:var(--orange-d)">＋8.1万</td><td class="r"><span class="btn btn-ghost btn-sm">PDF</span></td></tr>
+            <tr><td class="tnum">2026年6月</td><td class="r tnum">42.0万円</td><td class="r tnum">—</td><td class="r"><span class="btn btn-ghost btn-sm">PDF</span></td></tr>
+            <tr><td class="tnum">2026年5月</td><td class="r tnum">42.0万円</td><td class="r tnum">—</td><td class="r"><span class="btn btn-ghost btn-sm">PDF</span></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <!-- 全体管理（管理部視点のみ運用情報） -->
-    <div class="dpane" data-g="p" data-t="all">
+    <!-- 全体管理（管理部・経営のみ＝権-2。本人は自分の明細のみ） -->
+    <div class="dpane" data-g="p" data-t="all" data-see="admin,kanri">
       <div class="card" style="overflow-x:auto">
         <div class="flow-mini"><span class="st on">外部計算 取込 7/12</span><span class="ar">→</span><span class="st on">賞与反映 7/13</span><span class="ar">→</span><span class="st on">承認 7/14</span><span class="ar">→</span><span class="st on">保存・配布 7/15</span><span class="ar">→</span><span class="st">支払突合 7/25</span></div>
         <table>
@@ -81,6 +79,66 @@
   </div>
 </div>
 </div>
-<script src="assets/app.js?v=51"></script>
+<!-- 金額の内訳（契約類型・基本・賞与）＝押したら出る階層 -->
+<div class="modal-bg" id="mBreak">
+  <div class="modal">
+    <div class="modal-h"><span class="t">金額の内訳（あなたの7月）</span><span class="x" onclick="closeModal('mBreak')">✕</span></div>
+    <div class="modal-b">
+      <div class="kv"><span class="k">契約類型（雇用条件）</span><span class="v" id="brkType">業務委託</span></div>
+      <div class="kv"><span class="k">基本（固定/計算）</span><span class="v" id="brkBase">契約額 42.0万（月額固定）</span></div>
+      <div class="kv"><span class="k">賞与・褒賞（見込み）</span><span class="v" id="brkBonus">＋8.1万（評価の褒賞分）</span></div>
+      <div class="hint-t">賞与は評価（褒賞原資 → 部門 → 個人配分）から。<a href="evaluation.html#scoreBasis">評価の根拠を見る</a>。金額の確定計算（変動ピッチ・給与テーブル）は未確定＝A-10のため「見込み・目安」表記です。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mBreak')">閉じる</span><span class="btn btn-primary">明細PDFを開く</span></div>
+  </div>
+</div>
+
+<!-- 計算ルール（見たい人が押す） -->
+<div class="modal-bg" id="mCalc">
+  <div class="modal">
+    <div class="modal-h"><span class="t">給与・賞与の計算ルール</span><span class="x" onclick="closeModal('mCalc')">✕</span></div>
+    <div class="modal-b">
+      <div class="hint-t" style="margin-bottom:8px">契約類型ごとの算出：</div>
+      <div class="kv"><span class="k">雇用（時給型）</span><span class="v">時給 × 労働時間 ＋ 褒賞</span></div>
+      <div class="kv"><span class="k">業務委託</span><span class="v">契約額（固定）＋ 褒賞</span></div>
+      <div class="kv"><span class="k">成果報酬</span><span class="v">実績 × 率（変動）</span></div>
+      <div class="hint-t">賞与＝全社スコア60点超の褒賞原資 → 部門（人数比）→ 個人配分（部門長）。しきい値・配分の値は ST-02（config/rules.json）が正本。正本＝PL（役員報酬＋外注費）。freee 給与API は使いません。</div>
+    </div>
+    <div class="modal-f"><span class="btn btn-ghost" onclick="closeModal('mCalc')">閉じる</span><a class="btn btn-primary" href="evaluation.html#scoreBasis">評価の根拠へ</a></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=52"></script>
+<script>
+/* 自分の明細を現ロールに合わせて描画（結果＝金額／行動＝評価指標に直結する一手） */
+(function () {
+  var PAY = {
+    kouda:    { who: "幸田 さん", pay: "50.1", bonus: "＋8.1", type: "業務委託", base: "契約額 42.0万（月額固定）", bonus2: "＋8.1万（コンサル部 個人配分45% ×褒賞原資）",
+      actions: [["採択額をあと 120万円", "賞与見込み ＋18万", "b-good"], ["担当案件の停滞を解消（IS-2026-0074・8日）", "評価スコア ＋", "b-warn"]] },
+    shintani: { who: "新谷 さん", pay: "31.0", bonus: "見込 ＋4", type: "成果報酬", base: "基本 25.0万 ＋ 成果 6.0万（採択3件×率）", bonus2: "評価＝獲得スコアより",
+      actions: [["BPO化をあと 1件", "獲得スコア ＋・賞与見込み ＋", "b-good"], ["新規アポ→レポート受注 ＋2件", "獲得スコア ＋", "b-blue"]] },
+    arakaki:  { who: "新垣 さん", pay: "38.8", bonus: "見込 ＋3", type: "雇用（時給型）", base: "時給 2,000円 × 労働時間 ＋ 褒賞", bonus2: "評価配分より",
+      actions: [["実績報告の期限を守る", "評価 ＋", "b-good"], ["書類保管の抜け漏れゼロ", "評価 ＋", "b-blue"]] },
+    imai:     { who: "今井 さん", pay: "—", bonus: "—", type: "出向（当社明細対象外）", base: "当社明細なし（負担金は支払処理）", bonus2: "—",
+      actions: [["出向のため当社の給与明細は対象外です", "—", "b-sub"]] },
+    nakata:   { who: "中田 さん", pay: "55.0", bonus: "—", type: "業務委託（役員報酬）", base: "契約額 55.0万（固定・PL役員報酬）", bonus2: "—",
+      actions: [["全社スコア 60点超で賞与原資が発生", "全社粗利991万・営業利益441万が目安", "b-navy"]] },
+    kitayama: { who: "北山 さん", pay: "55.0", bonus: "—", type: "業務委託（役員報酬）", base: "契約額（固定・PL役員報酬）", bonus2: "—",
+      actions: [["全社スコア 60点超で賞与原資が発生", "全社粗利・営業利益が目安", "b-navy"]] }
+  };
+  var role = (window.KV && window.KV.role) || "kouda";
+  var p = PAY[role] || PAY.kouda;
+  function set(id, html) { var e = document.getElementById(id); if (e) e.innerHTML = html; }
+  set("payWho", p.who);
+  set("payAmt", p.pay === "—" ? "—" : (p.pay + '<small>万円</small>'));
+  set("bonusAmt", p.bonus === "—" ? "—" : (p.bonus + '<small style="font-size:13px">万円</small>'));
+  set("brkType", p.type); set("brkBase", p.base); set("brkBonus", p.bonus2);
+  set("actionList", p.actions.map(function (a) {
+    return '<div style="display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px dashed var(--line-2)">' +
+           '<span class="badge ' + a[2] + '" style="flex-shrink:0;margin-top:1px"><span class="d"></span>一手</span>' +
+           '<div><div style="font-size:13px;font-weight:700">' + a[0] + '</div><div style="font-size:11.5px;color:var(--good);margin-top:2px">→ ' + a[1] + '</div></div></div>';
+  }).join(""));
+})();
+</script>
 </body>
 </html>

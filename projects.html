@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>案件｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 </head>
 <!-- E-05 案件（案件管理エリア・v0.4.1）。契約後の履行を種別別の独立ステータスで管理。
      混在テーブルは廃止。種別タブごとに独自の役務ステータス列（他種別のステージを混ぜない）。
@@ -26,6 +26,7 @@
       <span class="dtab" data-g="p" data-t="subsidy" onclick="swTab('p','subsidy')">補助金助成金<span class="n">3</span></span>
       <span class="dtab" data-g="p" data-t="other" onclick="swTab('p','other')">その他<span class="n">1</span></span>
     </div>
+    <div id="permBanner" style="font-size:11px;color:var(--sub);margin:-2px 0 10px"></div><!-- 権-4：ロールで担当分に絞る -->
 
     <!-- レポート：受注→制作→納品→完了 -->
     <div class="dpane on" data-g="p" data-t="report">
@@ -49,8 +50,8 @@
         <table>
           <thead><tr><th>案件番号</th><th>会社</th><th>役務</th><th class="r">契約金額</th><th class="r">完了ライン(同額)</th><th class="r">受給予定</th><th>完了判定</th><th class="r">参考目標(×2)</th><th></th></tr></thead>
           <tbody>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td><span class="badge b-blue"><span class="d"></span>実施中</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStage('bpo','IS-2026-0058','jisshi')">更新</span></td><td class="r tnum">240万円/年</td><td class="r tnum">240万円</td><td class="r tnum">248万円</td><td><span class="badge b-good"><span class="d"></span>達成(103%)</span></td><td class="r tnum" style="color:var(--faint)">480万円</td><td class="r" style="color:var(--faint)">›</td></tr>
-            <tr class="rowlink" onclick="location.href='deal_detail.html'" style="background:var(--row-red)"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-blue"><span class="d"></span>実施中</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStage('bpo','IS-2026-0067','jisshi')">更新</span></td><td class="r tnum">240万円/年</td><td class="r tnum">240万円</td><td class="r tnum">0円</td><td><span class="badge b-red"><span class="d"></span>未達(0%・申請未着手)</span></td><td class="r tnum" style="color:var(--faint)">480万円</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="bpo" data-tanto="幸田" onclick="location.href='deal_detail.html'"><td class="tnum" style="font-weight:800">IS-2026-0058</td><td>アストロラボ</td><td><span class="badge b-blue"><span class="d"></span>実施中</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStage('bpo','IS-2026-0058','jisshi')">更新</span></td><td class="r tnum">240万円/年</td><td class="r tnum">240万円</td><td class="r tnum">248万円</td><td><span class="badge b-good"><span class="d"></span>達成(103%)</span></td><td class="r tnum" style="color:var(--faint)">480万円</td><td class="r" style="color:var(--faint)">›</td></tr>
+            <tr class="rowlink" data-type="bpo" data-tanto="新谷" onclick="location.href='deal_detail.html'" style="background:var(--row-red)"><td class="tnum" style="font-weight:800">IS-2026-0067</td><td>ヤマモト食品</td><td><span class="badge b-blue"><span class="d"></span>実施中</span> <span class="lk" style="font-size:11px;color:var(--blue);cursor:pointer" onclick="event.stopPropagation();openStage('bpo','IS-2026-0067','jisshi')">更新</span></td><td class="r tnum">240万円/年</td><td class="r tnum">240万円</td><td class="r tnum">0円</td><td><span class="badge b-red"><span class="d"></span>未達(0%・申請未着手)</span></td><td class="r tnum" style="color:var(--faint)">480万円</td><td class="r" style="color:var(--faint)">›</td></tr>
           </tbody>
         </table>
         <div style="padding:9px 16px;font-size:11px;color:var(--faint);border-top:1px solid var(--line)">補助金助成金の子案件（受給の実体）は各BPOに紐付く（親子1:N・A-14）。子の進行は「補助金助成金」タブ。</div>
@@ -96,6 +97,20 @@
 </div>
 </div>
 
-<script src="assets/app.js?v=51"></script>
+<script src="assets/app.js?v=52"></script>
+<script>
+/* 権-4：部門長・一般は担当分のみ（担当名で判定。板カード＝.sc内テキスト／BPO行＝data-tanto） */
+(function () {
+  function apply() {
+    var owner = (window.KV && window.KV.tanto) ? window.KV.tanto : null;
+    if (!owner) return;
+    document.querySelectorAll(".dpane .scard, .dpane tr.rowlink").forEach(function (el) {
+      var mine = (el.textContent.indexOf(owner) > -1) || (el.getAttribute("data-tanto") === owner);
+      el.style.display = mine ? "" : "none";
+    });
+  }
+  window.onPermReady = apply;
+})();
+</script>
 </body>
 </html>

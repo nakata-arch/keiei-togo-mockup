@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>経営サマリー｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 </head>
 <body data-page="exec" data-role="nakata">
 <div class="app">
@@ -12,6 +12,7 @@
   <div class="topbar">
     <div><div class="crumb">経営管理</div><h1>経営サマリー</h1></div>
     <span class="sample">数値はサンプル</span>
+    <span id="permBanner" class="badge b-blue" style="margin-left:8px"><span class="d"></span></span>
     <div style="margin-left:auto"><select class="inp" style="width:150px"><option>2026年7月</option><option>2026年6月</option></select></div>
   </div>
   <div class="content">
@@ -19,7 +20,7 @@
     <div class="bento">
       <!-- HERO 1：粗利（先月・当月・次月） -->
       <div class="tile b4">
-        <div class="tl">粗利（限界利益）<span class="lk" onclick="openModal('mGross')">内訳を見る</span></div>
+        <div class="tl">粗利（限界利益）<span class="lk" data-see="admin,kanri,bucho" onclick="openModal('mGross')">内訳を見る</span></div>
         <div class="hero tnum" style="color:var(--good)">1,038<small>万円</small></div>
         <div style="font-size:11px;color:var(--faint);margin-top:4px">当月実績 ・ 合格ライン 991万 <a href="rules.html">→ルール</a></div>
         <div class="tri">
@@ -33,7 +34,7 @@
 
       <!-- HERO 2：営業利益 -->
       <div class="tile b4">
-        <div class="tl">営業利益<span class="lk" onclick="openModal('mGross')">内訳を見る</span></div>
+        <div class="tl">営業利益<span class="lk" data-see="admin,kanri,bucho" onclick="openModal('mGross')">内訳を見る</span></div>
         <div class="hero tnum" style="color:var(--orange-d)">418<small>万円</small></div>
         <div style="font-size:11px;color:var(--faint);margin-top:4px">当月実績 ・ 合格ライン 441万（あと23万）</div>
         <div class="tri">
@@ -45,8 +46,8 @@
         <div style="height:28px"></div>
       </div>
 
-      <!-- 右カラム：資金・受注 -->
-      <div class="b4" style="display:flex;flex-direction:column;gap:14px">
+      <!-- 右カラム：資金・受注（詳細＝管理部・経営・部門長のみ。§9 権-6 一般＝粗利/営業利益まで） -->
+      <div class="b4" data-see="admin,kanri,bucho" style="display:flex;flex-direction:column;gap:14px">
         <a class="tile" href="cashflow.html" style="display:block">
           <div class="tl">資金</div>
           <div class="mid"><span class="badge b-warn" style="font-size:13px;padding:5px 14px"><span class="d"></span>イエロー</span></div>
@@ -60,7 +61,7 @@
       </div>
 
       <!-- 要対応（事実＋期限＋窓口） -->
-      <div class="tile b8" style="padding:0">
+      <div class="tile b8" data-see="admin,kanri,bucho" style="padding:0">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">要対応</span><span class="sp"></span><span class="badge b-red"><span class="d"></span>4件</span></div>
         <div class="list-row">
           <span class="badge b-red"><span class="d"></span>支払</span>
@@ -85,7 +86,7 @@
       </div>
 
       <!-- 入金漏れ内訳（期間明示） -->
-      <div class="tile b4" style="padding:0">
+      <div class="tile b4" data-see="admin,kanri,bucho" style="padding:0">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">未入金の内訳</span><span class="sp"></span><span style="font-size:10.5px;color:var(--faint)">7/17時点・期日超過分</span></div>
         <div class="list-row"><div class="bd"><div class="nm tnum">deex｜実績報告 残金 33万円</div><div class="sub tnum">期日 6/30（17日超過）・担当 幸田</div></div><span class="badge b-red"><span class="d"></span>催促中</span></div>
         <div class="list-row"><div class="bd"><div class="nm tnum">47マーケ｜着手金 差額 2万円</div><div class="sub tnum">期日 7/10（7日超過）・入金28万/請求30万</div></div><span class="badge b-warn"><span class="d"></span>調査中</span></div>
@@ -93,7 +94,7 @@
       </div>
 
       <!-- 部門スコア -->
-      <div class="tile b6" style="padding:0">
+      <div class="tile b6" data-see="admin,kanri,bucho" style="padding:0">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">部門スコア（7月）</span><span class="sp"></span><a class="badge b-blue" href="evaluation.html"><span class="d"></span>評価・賞与</a></div>
         <div class="list-row"><span class="av" style="background:var(--orange-d)">営</span><div class="bd"><div class="nm">営業＝獲得</div><div class="sub">レポート7件・BPO2件</div></div><b class="tnum" style="font-size:17px;color:var(--good)">67<small style="font-size:11px;color:var(--faint)">点</small></b></div>
         <div class="list-row"><span class="av" style="background:var(--blue)">コ</span><div class="bd"><div class="nm">コンサル＝採択金額</div><div class="sub tnum">四半期 520万円／目標560万円</div></div><b class="tnum" style="font-size:17px;color:var(--orange-d)">58<small style="font-size:11px;color:var(--faint)">点</small></b></div>
@@ -101,7 +102,7 @@
       </div>
 
       <!-- 締め -->
-      <div class="tile b6" style="padding:0">
+      <div class="tile b6" data-see="admin,kanri,bucho" style="padding:0">
         <div class="card-h" style="border-radius:14px 14px 0 0"><span class="t">締めの状態（7月）</span></div>
         <div class="list-row"><span class="badge b-good"><span class="d"></span>完了</span><div class="bd"><div class="nm">15日記帳（入金消込・出金記帳）</div><div class="sub">7/15 今井</div></div></div>
         <div class="list-row"><span class="badge b-sub"><span class="d"></span>予定</span><div class="bd"><div class="nm">契約締め（岩下）・月末記帳（今井）</div><div class="sub">7/31</div></div></div>
@@ -154,6 +155,6 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=51"></script>
+<script src="assets/app.js?v=52"></script>
 </body>
 </html>

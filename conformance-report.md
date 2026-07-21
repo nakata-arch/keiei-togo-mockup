@@ -1,8 +1,17 @@
 # conformance-report.md — Gate 1 自己監査（経営統合システム モック）
 
-対象: keiei-togo-mockup ／ 正本: keiei-togo-spec-bundle **v0.6**（repo内 `spec/`）
+対象: keiei-togo-mockup ／ 正本: **要件定義書 v1.1** ＋ spec/（screens.yaml等）
 記載ルール: **ズレ・仮定・未検証・定規違反のみ**（合格項目は書かない。Gate 2 で人が読むのはここだけ）。
 **目的の再確認：本システムは提案用HTMLカンプ。判定基準＝HTMLとして動くか。実バックエンド結線は目的外。**
+
+## 実装バッチ①（2026-07-20）— 権限是正6件 ＋ 予算→評価→給与のUI/UX強化
+- **権限エンジン（app.js）**：`window.KV`（role/set/dept/tanto）＋`applyPerm()`＋`data-see`（setで表示）＋`[data-owner-filter]/data-tanto`（担当分に絞る）＋`window.onPermReady`フック。ロール切替（localStorage kv4_role）で表示範囲が変わる。
+- **権-1 勤怠**：全社集計カードを `data-see="admin,kanri"`（管理部・経営のみ）／個人打刻は本人・委託対象外の明記／部門長はnav未収載。
+- **権-3/4/5 顧客・案件・営業**：companies/deals/projects を担当分フィルタ（bucho=幸田／ippan=新谷／asst=新垣）。admin・kanriは全件。permBanner表示。
+- **権-6/7 経営サマリー・予算**：nav sets に ippan/asst 追加（一般に開放）。詳細タイルは `data-see="admin,kanri,bucho"`＝一般は粗利・営業利益まで。
+- **給与2枚看板（J-02）**：結果（今月給与＋次回賞与見込み・金額主役）／行動（何を頑張れば上がるか＝評価指標直結・role別）。根拠・契約類型・計算式はモーダル（金額の内訳／計算ルール）。「全体管理」タブは `data-see="admin,kanri"`（権-2）。
+- **経営導線（J-03）**：予算(ST-01)→評価→給与(J-02)の繋がりバンドを `data-see="admin,kanri,bucho"`（従業員主画面には出さない）。評価member に「上げる一手」を前面（role別）。
+- **未検証（重要）**：**本セッションはプレビューがタブ再読込しないため、ロール切替の"ライブ描画"（一般で予算の詳細が消える／給与2看板がrole別に出る／会社が担当分に絞られる）の実機キャプチャは未取得**。権限エンジンは budget で検証（KV populated・applyPerm有・admin=3タイル可視・ippanなら0＝ロジックと属性は正）。node構文・リンク・v52は合格。→ push後Vercelでロール切替の実挙動を要確認（Gate 2）。
 
 - v0.1〜v0.5 は Gate 2 裁定済み
 - **v0.6: 2026-07-20** — 提案用カンプの仕上げ（5点）。P-01提案品質化／経費追加→粗利がその場で動く（HTML/JS）／E-04端正化／評価・給与の"なぜ"面取り／死んでいる箇所の解消

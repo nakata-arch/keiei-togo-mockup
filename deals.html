@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>営業｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 </head>
 <!-- E-03 営業（営業管理エリア・v0.4.1）。獲得＝販売パイプライン lead→契約締結。
      表示は ボード＋テーブルの2つのみ（レポート/BPタブは廃止）。種別セグメント＝レポート/BPO/補助金助成金/その他。
@@ -36,6 +36,7 @@
         </span>
       </div>
     </div>
+    <div id="permBanner" style="font-size:11px;color:var(--sub);margin:-4px 0 10px"></div><!-- 権-5：ロールで担当分に絞る -->
 
     <!-- ボード＝販売パイプライン（列＝ステータス・正＝anken-status.state.mmd） -->
     <div class="dpane on" data-g="e" data-t="board">
@@ -155,16 +156,24 @@
 (function () {
   var seg = document.getElementById("typeSeg");
   if (!seg) return;
+  var typeF = "all";
+  function apply() {
+    var owner = (window.KV && window.KV.tanto) ? window.KV.tanto : null;   /* 権-5：一般・部門長は担当分のみ（担当名で判定） */
+    document.querySelectorAll("[data-type]").forEach(function (el) {
+      var okType = (typeF === "all" || el.getAttribute("data-type") === typeF);
+      var okOwner = (!owner || el.textContent.indexOf(owner) > -1);
+      el.style.display = (okType && okOwner) ? "" : "none";
+    });
+  }
   seg.addEventListener("click", function (e) {
     var b = e.target.closest("span[data-f]"); if (!b) return;
     seg.querySelectorAll("span[data-f]").forEach(function (s) { s.classList.toggle("on", s === b); });
-    var f = b.getAttribute("data-f");
-    document.querySelectorAll("[data-type]").forEach(function (el) {
-      el.style.display = (f === "all" || el.getAttribute("data-type") === f) ? "" : "none";
-    });
+    typeF = b.getAttribute("data-f"); apply();
   });
+  window.onPermReady = apply;   /* app.js が KV 確定後に呼ぶ */
+  apply();
 })();
 </script>
-<script src="assets/app.js?v=51"></script>
+<script src="assets/app.js?v=52"></script>
 </body>
 </html>

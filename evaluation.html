@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>評価・賞与｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 </head>
 <body data-page="evaluation" data-role="kouda">
 <div class="app">
@@ -17,6 +17,15 @@
   <div class="content">
 
     <p style="font-size:12px;color:var(--sub);margin-bottom:12px;max-width:760px">賞与は上から下へ一本の流れで決まります：<b>全社スコア → 60点超過分が原資 → 3分割 → 部門へ人数比 → 個人へ部門長配分</b>。しきい値・目標・点数化テーブルの<b>値の正本は ST-02（config/rules.json）</b>。閲覧は<a href="rules.html">運用ルール集</a>。</p>
+
+    <!-- 経営導線：予算→評価→給与が1つのシステムで繋がる（経営・管理部・部門長のみ／従業員の主画面には出さない） -->
+    <div class="card" data-see="admin,kanri,bucho" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px 16px;margin-bottom:14px;border-left:4px solid var(--navy)">
+      <span style="font-size:11px;font-weight:800;color:var(--navy-deep)">1つのシステムで繋がる</span>
+      <a class="badge b-blue" href="budget_design.html"><span class="d"></span>① 予算で目標（ST-01）</a><span style="color:var(--faint);font-weight:800">→</span>
+      <span class="badge b-navy"><span class="d"></span>② 評価で実績と突合・点数化（この画面）</span><span style="color:var(--faint);font-weight:800">→</span>
+      <a class="badge b-blue" href="payslips.html"><span class="d"></span>③ 給与・賞与の根拠（J-02）</a>
+      <span style="font-size:11px;color:var(--sub);margin-left:auto">「この点数はどこから来たか」＝予算（目標）×実績（freee）で辿れる</span>
+    </div>
 
     <!-- 点数化の根拠（なぜこの点数か・値はST-02/config参照） -->
     <div class="card" id="scoreBasis" style="padding:0;margin-bottom:14px;border-left:4px solid var(--blue)">
@@ -114,7 +123,7 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=51"></script>
+<script src="assets/app.js?v=52"></script>
 <script>
 function calcPct(){
   var ps=[].slice.call(document.querySelectorAll('.pct')).map(function(i){return parseFloat(i.value)||0});

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>評価・賞与（自分）｜経営統合システム</title>
-<link rel="stylesheet" href="assets/tokens.css?v=51" /><link rel="stylesheet" href="assets/style.css?v=51" /><link rel="stylesheet" href="assets/ui.css?v=51" />
+<link rel="stylesheet" href="assets/tokens.css?v=52" /><link rel="stylesheet" href="assets/style.css?v=52" /><link rel="stylesheet" href="assets/ui.css?v=52" />
 </head>
 <body data-page="evaluation" data-role="shintani">
 <div class="app">
@@ -32,6 +32,12 @@
       </div>
     </div>
     <p style="font-size:11px;color:var(--faint);margin-top:8px">🔒 金額の内訳（P&L詳細）・部門の原資・他の人の配分は、一般権限では表示されません（粗利・営業利益の点数まで）。</p>
+
+    <!-- 上げるための一手（行動を前面に・Q1）。分解・計算は下の詳細/モーダルへ -->
+    <div class="card" style="border-left:4px solid var(--orange);padding:16px 20px;margin-top:14px;max-width:960px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:12.5px;font-weight:800">あなたの点数を上げる一手</span><span class="sp" style="flex:1"></span><a class="btn btn-ghost btn-sm" href="payslips.html">賞与の見込みを見る →</a></div>
+      <div id="memAction" style="margin-top:10px"></div>
+    </div>
 
     <div class="cols" style="margin-top:16px">
       <div>
@@ -78,6 +84,24 @@
   </div>
 </div>
 </div>
-<script src="assets/app.js?v=51"></script>
+<script src="assets/app.js?v=52"></script>
+<script>
+/* 上げる一手を現ロール（部門）に合わせて描画 */
+(function () {
+  var A = {
+    "営業":       [["新規アポ → レポート受注 ＋2件", "獲得スコア ＋（部門＝獲得）"], ["BPO化をあと 1件", "獲得スコア ＋・賞与見込み ＋"]],
+    "アシスタント": [["実績報告・事業化状況報告の期限を守る", "評価 ＋"], ["書類保管の抜け漏れゼロ", "評価 ＋"]],
+    "コンサル":   [["採択額をあと 120万円", "コンサルスコア ＋・賞与見込み ＋"], ["担当案件の停滞を解消", "評価 ＋"]]
+  };
+  var dept = (window.KV && window.KV.dept) || "営業";
+  var list = A[dept] || A["営業"];
+  var el = document.getElementById("memAction");
+  if (el) el.innerHTML = list.map(function (a) {
+    return '<div style="display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px dashed var(--line-2)">' +
+           '<span class="badge b-good" style="flex-shrink:0;margin-top:1px"><span class="d"></span>一手</span>' +
+           '<div><div style="font-size:13px;font-weight:700">' + a[0] + '</div><div style="font-size:11.5px;color:var(--good);margin-top:2px">→ ' + a[1] + '</div></div></div>';
+  }).join("");
+})();
+</script>
 </body>
 </html>
